@@ -61,7 +61,7 @@ function HeroSection() {
             </p>
           </motion.article>
 
-          {/* Glass Card */}
+          {/* Glass Card
           <motion.aside
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
@@ -83,7 +83,7 @@ function HeroSection() {
             <p className="text-[1.35rem] font-medium leading-tight">
               Recent Project
             </p>
-          </motion.aside>
+          </motion.aside> */}
 
           {/* Stats Panel */}
           <motion.footer
