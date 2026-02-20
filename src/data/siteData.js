@@ -1,32 +1,6 @@
 export const imageAssets = {
-  heroPrimary:
-    "https://images.pexels.com/photos/4483610/pexels-photo-4483610.jpeg?auto=compress&cs=tinysrgb&w=1600",
-  heroBackground:
-    "https://images.pexels.com/photos/3846264/pexels-photo-3846264.jpeg?auto=compress&cs=tinysrgb&w=1600",
   productsBackground:
     "https://images.pexels.com/photos/12673377/pexels-photo-12673377.jpeg?auto=compress&cs=tinysrgb&w=1600",
-  ctaBackground:
-    "https://images.pexels.com/photos/175039/pexels-photo-175039.jpeg?auto=compress&cs=tinysrgb&w=1600",
-};
-
-export const heroData = {
-  brand: "PIXELPLAST",
-  subtitle: "OEM Manufacturing Solutions",
-  tag: "OEM Manufacturing & Injection Molding Solutions",
-  headingLineOne: "Precision Engineering.",
-  headingLineTwo: "Moulded for the Future.",
-  description:
-    "PixelPlast delivers high-precision sheet metal and large-scale injection molded components — engineered to spec and built to perform.",
-  primaryCta: "Explore Our Products",
-  secondaryCta: "Request a Quote",
-  brochureCta: "Download Brochure",
-  brochureHref: "/sheetmetalprintfile.pdf",
-  stats: [
-    "₹100 Cr Investment",
-    "160T-3000T Capacity",
-    "ISO 9001 & 14001",
-    "99% Quality Rate",
-  ],
 };
 
 export const aboutData = {
@@ -51,14 +25,14 @@ export const aboutData = {
 export const productSegments = [
   {
     title: "Segment 1 — Sheet Metal Components",
-    intro: "Precision-fabricated metal parts for OEM applications:",
+    intro: "Precision-fabricated metal parts for OEM & ODM applications:",
     items: [
       "Enclosures & Chassis",
       "Brackets & Structural Supports",
       "Perforated & Formed Panels",
       "Slide Rails & Profiles",
       "Welded Sub-Assemblies",
-      "Custom OEM Parts",
+      "Custom OEM & ODM Parts",
     ],
   },
   {
@@ -110,16 +84,16 @@ export const sectionVisuals = {
   ],
   products: [
     {
-      src: "https://images.pexels.com/photos/4491881/pexels-photo-4491881.jpeg?auto=compress&cs=tinysrgb&w=1000",
-      alt: "Industrial molded component",
+      src: "/Images/1.jpeg",
+      alt: "Product engineering and manufacturing workstation",
     },
     {
-      src: "https://images.pexels.com/photos/1462725/pexels-photo-1462725.jpeg?auto=compress&cs=tinysrgb&w=1000",
-      alt: "Sheet metal component line",
+      src: "/Images/2.jpeg",
+      alt: "Sheet metal component production line",
     },
     {
-      src: "https://images.pexels.com/photos/6133159/pexels-photo-6133159.jpeg?auto=compress&cs=tinysrgb&w=1000",
-      alt: "Injection moulding product part",
+      src: "/Images/4.jpeg",
+      alt: "Injection molding machine and tooling setup",
     },
   ],
   advantages: [
@@ -181,11 +155,12 @@ export const features = [
   },
   {
     title: "Future-Ready Infrastructure",
-    description: "Upgrade-ready systems support automation and process expansion.",
+    description:
+      "Upgrade-ready systems support automation and process expansion.",
     iconKey: "tech",
   },
   {
-    title: "Dedicated OEM Partnership",
+    title: "Dedicated OEM & ODM Partnership",
     description: "Single-point coordination from design support to delivery.",
     iconKey: "partnership",
   },
@@ -193,8 +168,8 @@ export const features = [
 
 export const processSteps = [
   {
-    title: "Design Review",
-    description: "Feasibility and manufacturability validation.",
+    title: "Engineering Assessment",
+    description: " Validating design practicality and production readiness.",
     iconKey: "design",
   },
   {
@@ -219,16 +194,6 @@ export const processSteps = [
   },
 ];
 
-export const certificationsData = {
-  tag: "Standards We Uphold",
-  heading: "Certified for Quality",
-  items: [
-    "ISO 9001:2015",
-    "ISO 14001:2015",
-    "Structured Machine Inspection Standards",
-  ],
-};
-
 export const industriesData = {
   tag: "Sectors We Power",
   heading: "Industries We Serve",
@@ -239,17 +204,9 @@ export const industries = [
   "Automotive",
   "Consumer Durables",
   "Logistics",
-  "Telecom",
-  "Medical",
-  "Defence",
-  "Aerospace",
   "Electronics",
-  "Railways",
   "EV",
 ];
 
-export const ctaData = {
-  heading: "Ready to Build?",
-  body: "Send us your drawings. Get a quote within 24 hours.",
-  button: "Get a Free Quote",
-};
+
+

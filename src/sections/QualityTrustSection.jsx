@@ -45,14 +45,14 @@ const qualityFeatures = [
 function QualityTrustSection() {
   return (
     <section id="about" className="w-full bg-[#fff] px-4 pb-16 pt-4 sm:px-6 sm:pt-5 lg:px-8">
-      <div className="space-y-14 px-6 pb-12 pt-10 sm:px-8 lg:px-10">
+      <div className="space-y-12 px-2 pb-12 pt-10 sm:space-y-14 sm:px-8 lg:px-10">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16">
           <motion.h2
             initial={{ opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.45 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="text-4xl font-medium leading-tight tracking-tight text-[#111827] sm:text-5xl"
+            className="text-3xl font-medium leading-tight tracking-tight text-[#111827] sm:text-5xl"
           >
             Focusing on quality, <span className="text-[#8b929b]">we maintain customer trust</span>
           </motion.h2>
@@ -62,7 +62,7 @@ function QualityTrustSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.45 }}
             transition={{ duration: 0.85, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-            className="max-w-xl text-lg leading-relaxed text-[#6b7280]"
+            className="max-w-xl text-base leading-relaxed text-[#6b7280] sm:text-lg"
           >
             We ensure that every installation we build has strict quality checks. Sustainable
             solutions for an environmentally friendly and renewable future.
@@ -74,7 +74,7 @@ function QualityTrustSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
-          className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5"
+          className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5"
         >
           {partners.map((partner, index) => (
             <motion.div
@@ -83,7 +83,7 @@ function QualityTrustSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.35 }}
               transition={{ duration: 0.7, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
-              className="mx-auto flex h-40 w-40 items-center justify-center rounded-full border border-[#e5e7eb] bg-[#f8fafc] text-center text-lg font-medium text-[#22252a] sm:h-44 sm:w-44 lg:h-48 lg:w-48"
+              className="mx-auto flex aspect-square w-full max-w-[10rem] items-center justify-center rounded-full border border-[#e5e7eb] bg-[#f8fafc] text-center text-lg font-medium text-[#22252a] sm:max-w-[11rem] lg:max-w-[12rem]"
             >
               <span className="px-5 text-sm sm:text-base">{partner}</span>
             </motion.div>
@@ -91,8 +91,8 @@ function QualityTrustSection() {
         </motion.div>
       </div>
 
-      <div className="mt-10 rounded-t-[2rem] bg-[#f3f4f6] px-6 py-14 text-center sm:px-10">
-        <h3 className="text-4xl font-medium leading-tight tracking-tight text-[#111827] sm:text-6xl">
+      <div className="mt-10 rounded-t-[2rem] bg-[#f3f4f6] px-4 py-12 text-center sm:px-10 sm:py-14">
+        <h3 className="text-3xl font-medium leading-tight tracking-tight text-[#111827] sm:text-6xl">
           We offer quality, <span className="text-[#8b929b]">with the best materials and service</span>
         </h3>
 
@@ -101,10 +101,10 @@ function QualityTrustSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.25 }}
           transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
-          className="mx-auto mt-10 grid max-w-6xl overflow-hidden rounded-2xl border border-[#e5e7eb] bg-[#fff] text-left md:grid-cols-3"
+          className="mx-auto mt-8 grid max-w-6xl overflow-hidden rounded-2xl border border-[#e5e7eb] bg-[#fff] text-left sm:mt-10 md:grid-cols-3"
         >
           {qualityFeatures.map(({ title, body, Icon }) => (
-            <article key={title} className="border-b border-r border-[#e5e7eb] p-6 md:min-h-[190px]">
+            <article key={title} className="border-b border-[#e5e7eb] p-5 last:border-b-0 md:min-h-[190px] md:border-b md:border-r md:p-6 md:[&:nth-child(3n)]:border-r-0 md:[&:nth-last-child(-n+3)]:border-b-0">
               <span className="mb-5 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#ecfdf5] text-[#22c55e] shadow-sm">
                 <Icon size={18} />
               </span>

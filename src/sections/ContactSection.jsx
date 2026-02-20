@@ -66,17 +66,17 @@ function ContactSection() {
   return (
     <section
       id="contact"
-      className="w-full bg-[#fff] px-6 py-16 sm:px-10 lg:px-20 lg:py-20"
+      className="w-full bg-[#fff] px-4 py-14 sm:px-10 sm:py-16 lg:px-20 lg:py-20"
     >
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        className="rounded-[1.8rem] border border-[#e5e7eb] bg-white p-6 shadow-xl shadow-slate-100 sm:p-8 lg:p-10"
+        className="rounded-[1.8rem] border border-[#e5e7eb] bg-white p-4 shadow-xl shadow-slate-100 sm:p-8 lg:p-10"
       >
-        <div className="grid gap-8 lg:grid-cols-[1fr_1.15fr] lg:gap-10">
-          <article className="relative min-h-[22rem] overflow-hidden rounded-2xl">
+        <div className="grid gap-6 sm:gap-8 lg:grid-cols-[1fr_1.15fr] lg:gap-10">
+          <article className="relative min-h-[17rem] overflow-hidden rounded-2xl sm:min-h-[22rem]">
             <img
               src="/Images/machine.jpeg"
               alt="PixelPlast manufacturing facility"
@@ -85,7 +85,7 @@ function ContactSection() {
               className="h-full w-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/75 via-[#111827]/35 to-transparent" />
-            <div className="absolute bottom-0 left-0 p-6 sm:p-8">
+            <div className="absolute bottom-0 left-0 p-5 sm:p-8">
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/90">
                 Contact Us
               </p>
@@ -103,7 +103,7 @@ function ContactSection() {
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#2563eb]">
               Contact Us
             </p>
-            <h3 className="mt-2 text-2xl font-semibold tracking-tight text-[#111827]">
+            <h3 className="mt-2 text-xl font-semibold tracking-tight text-[#111827] sm:text-2xl">
               Get In Touch With Our Team
             </h3>
             <p className="mt-2 text-sm leading-relaxed text-[#6b7280]">

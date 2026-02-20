@@ -14,7 +14,6 @@ import MachinesSection from "./components/MachinesSection";
 import ManufacturingProcessSection from "./components/ManufacturingProcessSection";
 import WhyChooseSection from "./components/WhyChooseSection";
 import IndustriesSection from "./components/IndustriesSection";
-import CTASection from "./components/CTASection";
 
 function App() {
   return (
@@ -33,7 +32,6 @@ function App() {
       <WhyChooseSection />
 
       <IndustriesSection />
-      {/* <CTASection /> */}
       <OutroSection />
       <ContactSection />
       <Footer />

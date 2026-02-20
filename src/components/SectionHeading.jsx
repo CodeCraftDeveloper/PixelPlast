@@ -21,7 +21,7 @@ function SectionHeading({ tag, title, subtitle }) {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.4 }}
         transition={{ duration: 0.9, ease: easing }}
-        className="text-4xl font-semibold leading-tight tracking-tight text-[#111827] sm:text-5xl lg:text-6xl"
+        className="text-3xl font-semibold leading-tight tracking-tight text-[#111827] sm:text-5xl lg:text-6xl"
       >
         {title}
       </motion.h2>
@@ -31,7 +31,7 @@ function SectionHeading({ tag, title, subtitle }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
           transition={{ duration: 0.9, delay: 0.08, ease: easing }}
-          className="max-w-3xl text-base text-[#6b7280] sm:text-lg"
+          className="max-w-3xl text-sm text-[#6b7280] sm:text-lg"
         >
           {subtitle}
         </motion.p>
