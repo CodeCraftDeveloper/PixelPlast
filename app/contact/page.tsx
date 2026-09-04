@@ -225,7 +225,7 @@ export default function ContactPage() {
                   sizes="(max-width: 900px) 95vw, 50vw"
                 />
                 <div className="facility-badge">
-                  <span>Manufacturing Plant · Dadri, UP</span>
+                  <span>Manufacturing Plant</span>
                   <strong>Pixel Technoplast Pvt. Ltd.</strong>
                 </div>
               </div>
