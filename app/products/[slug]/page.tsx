@@ -12,7 +12,6 @@ import {
 
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
-import { ZoomableImage } from "@/components/ui/ZoomableImage";
 import { company } from "@/data/company";
 import {
   getProductCategory,
@@ -218,10 +217,10 @@ export default async function ProductCategoryPage({
                   Why Plastic Pallets Outperform Wood
                 </h2>
               </div>
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {category.palletAdvantages.map((adv) => (
                   <div
-                    className="bg-white border border-slate-200 p-4 sm:p-6 rounded-lg shadow-sm"
+                    className="bg-white border border-slate-200 p-6 rounded-lg shadow-sm"
                     key={adv.title}
                   >
                     <div className="w-10 h-10 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold mb-4">
@@ -316,7 +315,7 @@ export default async function ProductCategoryPage({
                                 src={String(spec.image)}
                                 alt={`${spec.code} product photo`}
                                 fill
-                                sizes="120px"
+                                sizes="84px"
                               />
                             </div>
                           )}
@@ -379,7 +378,7 @@ export default async function ProductCategoryPage({
                             src={String(spec.image)}
                             alt={`${spec.code} product photo`}
                             fill
-                            sizes="120px"
+                            sizes="68px"
                           />
                         </div>
                       )}
@@ -478,16 +477,6 @@ export default async function ProductCategoryPage({
                   </div>
                 ))}
               </div>
-
-              {/* Technical Note Footnote */}
-              <div className="mt-12 pt-6 border-t border-white/10">
-                <p className="text-slate-400 text-sm leading-relaxed max-w-3xl">
-                  <strong className="text-white uppercase tracking-wider text-xs mr-2 font-bold">
-                    Technical Note:
-                  </strong>
-                  {category.technicalNote}
-                </p>
-              </div>
             </div>
           </section>
         )}
@@ -500,7 +489,7 @@ export default async function ProductCategoryPage({
           >
             <div className="site-container product-material-grid">
               <div>
-                <p className="eyebrow">Verified Polymers</p>
+                <p className="eyebrow eyebrow--light">Verified Polymers</p>
                 <h2 id="materials-heading">Engineered Resin Selection.</h2>
               </div>
               <div className="product-material-list">
@@ -514,6 +503,17 @@ export default async function ProductCategoryPage({
             </div>
           </section>
         )}
+
+        {/* TECHNICAL NOTE ASIDE */}
+        <section className="site-container my-12">
+          <aside
+            className="product-technical-note"
+            aria-label="Technical information note"
+          >
+            <span>Technical Note</span>
+            <p>{category.technicalNote}</p>
+          </aside>
+        </section>
 
         {/* CONTACT / NEXT CATEGORIES */}
         <section
