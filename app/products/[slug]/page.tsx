@@ -12,6 +12,7 @@ import {
 
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
+import { ZoomableImage } from "@/components/ui/ZoomableImage";
 import { company } from "@/data/company";
 import {
   getProductCategory,
