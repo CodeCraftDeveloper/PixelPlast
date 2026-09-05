@@ -110,7 +110,7 @@ export default function AboutPage() {
                 teams together around real industrial applications.
               </p>
               <Button asChild variant="ghost" className="about-redesign-story-link">
-                <Link href="/manufacturing">
+                <Link href="/capabilities">
                   Explore our facility <ArrowUpRight aria-hidden="true" />
                 </Link>
               </Button>
@@ -120,7 +120,7 @@ export default function AboutPage() {
               <span className="about-redesign-plate about-redesign-plate--top" aria-hidden="true" />
               <figure>
                 <Image
-                  src="/assets/01_products_photos_composites/08_injection_moulding_factory.png"
+                  src="/assets/4.png"
                   alt="Injection-moulding machines inside the Pixelplast production facility"
                   fill
                   sizes="(max-width: 900px) calc(100vw - 40px), 52vw"
@@ -257,7 +257,7 @@ export default function AboutPage() {
               <span aria-hidden="true" />
               <figure>
                 <Image
-                  src="/assets/01_products_photos_composites/08_injection_moulding_factory.png"
+                  src="/assets/6.png"
                   alt="Plastic injection-moulding machinery at the Pixelplast facility"
                   fill
                   sizes="(max-width: 900px) calc(100vw - 40px), 48vw"

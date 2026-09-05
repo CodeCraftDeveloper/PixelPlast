@@ -15,7 +15,7 @@ const companyLinks = [
 const productLinks = [
   ["Tote Bins", "/products/tote-bins"],
   ["Plastic Spools", "/products/spools"],
-  ["Injection Moulding", "/injection-moulding"],
+  ["Injection Moulding", "/capabilities"],
   ["OEM Manufacturing", "/capabilities#capability-programs"],
 ] as const;
 

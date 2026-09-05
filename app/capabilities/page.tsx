@@ -53,7 +53,7 @@ export default function CapabilitiesPage() {
           <div className="capabilities-hero-frame">
             <Image
               className="capabilities-hero-image"
-              src="/assets/01_products_photos_composites/08_injection_moulding_factory.png"
+              src="/assets/7.png"
               alt="Plastic injection-moulding machines on the Pixelplast production floor"
               fill
               priority
@@ -132,7 +132,7 @@ export default function CapabilitiesPage() {
         <section className="capability-range" aria-labelledby="capability-range-heading">
           <div className="capability-range-media">
             <Image
-              src="/assets/01_products_photos_composites/08_injection_moulding_factory.png"
+              src="/assets/3.png"
               alt="Pixelplast injection-moulding production environment"
               fill
               sizes="(max-width: 900px) 100vw, 52vw"

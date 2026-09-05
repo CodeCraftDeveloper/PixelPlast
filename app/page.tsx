@@ -55,7 +55,7 @@ const productFlowStages = [
     stage: "Bulk Storage & Racking",
     title: "Industrial Pallets",
     slug: "pallets",
-    image: "/assets/01_products_photos_composites/05_green_pallet.png",
+    image: "/assets/products/pallets/pt0001-01.jpg",
     alt: "Pixelplast heavy duty industrial plastic pallet",
     tagline: "Heavy-duty foundation for automated warehouse racking systems.",
     features: ["Up to 6000 kg static load", "Conveyor & ASRS ready", "Hygienic & pest-free"],
@@ -65,7 +65,7 @@ const productFlowStages = [
     stage: "Plant Sorting & Movement",
     title: "Crates & Bins",
     slug: "crates",
-    image: "/assets/01_products_photos_composites/04_crate_and_bin.png",
+    image: "/assets/products/crates/pt0010-01.jpg",
     alt: "Pixelplast heavy-duty plastic crate",
     tagline: "Solid & perforated crates for internal shopfloor material flow.",
     features: ["Perforated & solid walls", "Reinforced ribbed base", "Ergonomic hand-grips"],
@@ -75,7 +75,7 @@ const productFlowStages = [
     stage: "Line Picking & Kitting",
     title: "Modular Part Bins",
     slug: "bins",
-    image: "/assets/01_products_photos_composites/07_storage_bin.png",
+    image: "/assets/products/bins/pt0016-01.jpg",
     alt: "Pixelplast modular front-hopper parts bin",
     tagline: "High-density front-hopper bins for assembly and lean inventory.",
     features: ["Front-hopper instant access", "Stackable & panel-mount", "6 modular sizes"],
@@ -85,7 +85,7 @@ const productFlowStages = [
     stage: "Conveyance & Secure Transit",
     title: "Attached-Lid Totes",
     slug: "tote-bins",
-    image: "/assets/01_products_photos_composites/03_attached_lid_tote.png",
+    image: "/assets/products/totes/pt0022-01.jpg",
     alt: "Pixelplast attached lid tote container",
     tagline: "Tamper-evident nesting containers for automated closed-loop transit.",
     features: ["Interlocking lid design", "Up to 70% nesting return", "Zip-seal security slots"],
@@ -241,7 +241,7 @@ export default function HomePage() {
               <Reveal className="why-choose-media-wrap">
                 <div className="why-choose-image-card">
                   <Image
-                    src="/assets/01_products_photos_composites/08_injection_moulding_factory.png"
+                    src="/assets/3.png"
                     alt="Pixelplast modern injection moulding production plant"
                     width={900}
                     height={580}
@@ -255,7 +255,7 @@ export default function HomePage() {
               <Reveal className="why-choose-content" delay={0.08}>
                 <div className="why-choose-header-row">
                   <h2 id="why-choose-heading" className="why-choose-title">
-                    Why Choose Pixelplast?
+                    Why Choose Pixel Technoplast?
                   </h2>
                   <span className="why-choose-line" aria-hidden="true" />
                 </div>
@@ -481,7 +481,8 @@ export default function HomePage() {
                 Manufacturing Infrastructure
               </p>
               <h2 id="manufacturing-heading">
-                160 to 3000 Tonnes of Precision Capacity.
+                <span className="h2-accent">160 to 3000 Tonnes</span> of
+                Precision Capacity.
               </h2>
               <p className="manufacturing-deck">
                 Our plant houses modern injection

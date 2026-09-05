@@ -321,7 +321,7 @@ export default function ProductsPage() {
             </div>
             <div className="canva-manufacturing-art">
               <Image
-                src="/assets/01_products_photos_composites/08_injection_moulding_factory.png"
+                src="/assets/1.png"
                 alt="Advanced injection moulding plant machinery"
                 fill
                 sizes="(max-width: 900px) 95vw, 50vw"

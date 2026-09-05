@@ -1,6 +1,8 @@
 "use client";
 
-import { motion, useReducedMotion, type Variants } from "motion/react";
+import { motion, type Variants } from "motion/react";
+
+import { usePrefersReducedMotion } from "@/components/motion/use-prefers-reduced-motion";
 
 const container: Variants = {
   hidden: {},
@@ -17,7 +19,7 @@ const word: Variants = {
 };
 
 export function KineticHeading() {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = usePrefersReducedMotion();
   const lines = ["Plastic moulding.", "Built for industry."];
 
   return (

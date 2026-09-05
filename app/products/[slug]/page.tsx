@@ -12,12 +12,12 @@ import {
 
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
-import { ZoomableImage } from "@/components/ui/ZoomableImage";
 import { company } from "@/data/company";
 import {
   getProductCategory,
   productCategories,
   type ProductCategory,
+  type ProductSpec,
 } from "@/app/products/data";
 
 type ProductCategoryPageProps = {
@@ -44,6 +44,93 @@ export async function generateMetadata({
     title: `${category.title} | Pixelplast`,
     description: category.description,
   };
+}
+
+function ProductKeySpecs({
+  category,
+  product,
+}: {
+  category: ProductCategory;
+  product: ProductSpec;
+}) {
+  const rows: { label: string; value?: string }[] =
+    category.slug === "pallets"
+      ? [
+          { label: "Dimensions", value: product.dimensions },
+          { label: "Static", value: product.staticLoad },
+          { label: "Dynamic", value: product.dynamicLoad },
+          { label: "Racking", value: product.rackingLoad },
+        ]
+      : category.slug === "crates" || category.slug === "tote-bins"
+        ? [
+            { label: "Outer (OD)", value: product.outer },
+            { label: "Inner (ID)", value: product.inner },
+            { label: "Versions", value: product.versions },
+            { label: "Colours", value: product.colors },
+          ]
+        : category.slug === "bins"
+          ? [
+              { label: "Outer (OD)", value: product.outer },
+              { label: "Height", value: product.effectiveHeight },
+              { label: "Colours", value: product.colors },
+            ]
+          : [
+              { label: "Dimensions", value: product.dimensions },
+              { label: "Materials", value: product.materials },
+            ];
+
+  return (
+    <ul className="product-card-specs">
+      {rows.map(
+        (row) =>
+          row.value && (
+            <li key={row.label}>
+              <span>{row.label}</span>
+              <strong>{row.value}</strong>
+            </li>
+          ),
+      )}
+    </ul>
+  );
+}
+
+function ProductCard({
+  category,
+  product,
+}: {
+  category: ProductCategory;
+  product: ProductSpec;
+}) {
+  return (
+    <article className="product-card">
+      <Link
+        href={`/products/${category.slug}/${product.slug}`}
+        className="product-card-link"
+        aria-label={`View details of ${product.title} (${product.code})`}
+      >
+        <div className="product-card-media">
+          <div className="product-card-img-wrap">
+            <Image
+              src={product.image}
+              alt={product.imageAlt}
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            />
+          </div>
+          <span className="product-card-code">{product.code}</span>
+        </div>
+
+        <div className="product-card-body">
+          <p className="product-card-tag">{product.tagline}</p>
+          <h3>{product.title}</h3>
+          <ProductKeySpecs category={category} product={product} />
+          <span className="product-card-cta">
+            View Product Details <ArrowRight aria-hidden="true" />
+          </span>
+        </div>
+      </Link>
+    </article>
+  );
 }
 
 export default async function ProductCategoryPage({
@@ -160,9 +247,7 @@ export default async function ProductCategoryPage({
                     item.slug === category.slug ? "is-active" : undefined
                   }
                   href={`/products/${item.slug}`}
-                  aria-current={
-                    item.slug === category.slug ? "page" : undefined
-                  }
+                  aria-current={item.slug === category.slug ? "page" : undefined}
                   key={item.slug}
                 >
                   {item.shortTitle}
@@ -203,36 +288,24 @@ export default async function ProductCategoryPage({
         {/* PALLET ADVANTAGES (IF PALLETS) */}
         {category.palletAdvantages && (
           <section
-            className="pallet-advantages-section section"
+            className="pallet-advantages-section"
             aria-labelledby="pallet-adv-heading"
           >
             <div className="site-container">
-              <div className="text-center max-w-2xl mx-auto mb-12">
-                <p className="eyebrow justify-center">
-                  Built to Last, Designed for Efficiency
-                </p>
-                <h2
-                  id="pallet-adv-heading"
-                  className="text-3xl lg:text-4xl font-extrabold uppercase tracking-tight text-navy-950"
-                >
+              <div className="pallet-adv-heading">
+                <p className="eyebrow">Built to Last, Designed for Efficiency</p>
+                <h2 id="pallet-adv-heading">
                   Why Plastic Pallets Outperform Wood
                 </h2>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="pallet-adv-list">
                 {category.palletAdvantages.map((adv) => (
-                  <div
-                    className="bg-white border border-slate-200 p-6 rounded-lg shadow-sm"
-                    key={adv.title}
-                  >
-                    <div className="w-10 h-10 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold mb-4">
-                      <ShieldCheck className="w-5 h-5" />
-                    </div>
-                    <h3 className="font-heading text-lg font-bold uppercase text-navy-950 mb-2">
-                      {adv.title}
-                    </h3>
-                    <p className="text-slate-600 text-sm leading-relaxed">
-                      {adv.description}
-                    </p>
+                  <div className="pallet-adv-card" key={adv.title}>
+                    <span className="pallet-adv-icon" aria-hidden="true">
+                      <ShieldCheck />
+                    </span>
+                    <h3>{adv.title}</h3>
+                    <p>{adv.description}</p>
                   </div>
                 ))}
               </div>
@@ -240,247 +313,36 @@ export default async function ProductCategoryPage({
           </section>
         )}
 
-        {/* DETAILED SPECIFICATIONS TABLE */}
-        {category.specifications && (
-          <section
-            className="product-spec-section"
-            aria-labelledby="specifications-heading"
-          >
-            <div className="site-container">
-              <div className="product-spec-heading">
-                <div>
-                  <p className="eyebrow eyebrow--light">
-                    Approved Product Data
-                  </p>
-                  <h2 id="specifications-heading">
-                    Standard {category.shortTitle} Specifications.
-                  </h2>
-                </div>
-                <p>
-                  Technical parameters from verified manufacturing
-                  documentation.
-                </p>
+        {/* PRODUCT CARDS */}
+        <section
+          className="product-card-section"
+          aria-labelledby="specifications-heading"
+        >
+          <div className="site-container">
+            <div className="product-spec-heading">
+              <div>
+                <p className="eyebrow eyebrow--light">Approved Product Data</p>
+                <h2 id="specifications-heading">
+                  Standard {category.shortTitle} Range.
+                </h2>
               </div>
-
-              <div className="product-spec-table-wrap">
-                <table className="product-spec-table">
-                  <caption className="sr-only">
-                    {category.title} specifications table
-                  </caption>
-                  <thead>
-                    <tr>
-                      <th scope="col">Image</th>
-                      <th scope="col">Model / Code</th>
-                      {category.slug === "pallets" && (
-                        <>
-                          <th scope="col">Type</th>
-                          <th scope="col">Dimensions</th>
-                          <th scope="col">Static Load</th>
-                          <th scope="col">Dynamic Load</th>
-                          <th scope="col">Racking Load</th>
-                          <th scope="col">Material</th>
-                        </>
-                      )}
-                      {(category.slug === "crates" ||
-                        category.slug === "tote-bins") && (
-                        <>
-                          <th scope="col">Outer Dimensions (OD)</th>
-                          <th scope="col">Inner Dimensions (ID)</th>
-                          <th scope="col">Versions / Features</th>
-                          <th scope="col">Colors</th>
-                        </>
-                      )}
-                      {category.slug === "bins" && (
-                        <>
-                          <th scope="col">Outer Dimensions (OD)</th>
-                          <th scope="col">Effective Height</th>
-                          <th scope="col">Colors</th>
-                        </>
-                      )}
-                      {category.slug === "spools" && (
-                        <>
-                          <th scope="col">Dimensions (Traverse × Flange)</th>
-                          <th scope="col">Materials</th>
-                          <th scope="col">Rotational Balance</th>
-                        </>
-                      )}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {category.specifications.map((spec) => (
-                      <tr key={String(spec.code)}>
-                        <td>
-                          {spec.image && (
-                            <div className="product-spec-img-wrap">
-                              <ZoomableImage
-                                src={String(spec.image)}
-                                alt={`${spec.code} product photo`}
-                                fill
-                                sizes="84px"
-                              />
-                            </div>
-                          )}
-                        </td>
-                        <th scope="row">
-                          <strong className="text-emerald-700 font-bold">
-                            {spec.code}
-                          </strong>
-                        </th>
-                        {category.slug === "pallets" && (
-                          <>
-                            <td>{spec.type}</td>
-                            <td>{spec.dimensions}</td>
-                            <td>{spec.staticLoad}</td>
-                            <td>{spec.dynamicLoad}</td>
-                            <td>{spec.rackingLoad}</td>
-                            <td>{spec.material}</td>
-                          </>
-                        )}
-                        {(category.slug === "crates" ||
-                          category.slug === "tote-bins") && (
-                          <>
-                            <td>{spec.outer}</td>
-                            <td>{spec.inner}</td>
-                            <td>{spec.versions}</td>
-                            <td>{spec.colors}</td>
-                          </>
-                        )}
-                        {category.slug === "bins" && (
-                          <>
-                            <td>{spec.outer}</td>
-                            <td>{spec.effectiveHeight}</td>
-                            <td>{spec.colors}</td>
-                          </>
-                        )}
-                        {category.slug === "spools" && (
-                          <>
-                            <td>{spec.dimensions}</td>
-                            <td>{spec.materials}</td>
-                            <td>{spec.features}</td>
-                          </>
-                        )}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-
-              {/* Mobile Specifications Card View */}
-              <div className="product-spec-mobile-view">
-                {category.specifications.map((spec) => (
-                  <div
-                    className="product-spec-mobile-card"
-                    key={String(spec.code)}
-                  >
-                    <div className="product-spec-mobile-card-header">
-                      {spec.image && (
-                        <div className="product-spec-img-wrap">
-                          <ZoomableImage
-                            src={String(spec.image)}
-                            alt={`${spec.code} product photo`}
-                            fill
-                            sizes="68px"
-                          />
-                        </div>
-                      )}
-                      <div className="product-spec-mobile-header-details">
-                        <span className="product-spec-mobile-code">
-                          {spec.code}
-                        </span>
-                        {spec.type && (
-                          <span className="product-spec-mobile-type">
-                            {spec.type}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                    <div className="product-spec-mobile-card-body">
-                      {category.slug === "pallets" && (
-                        <>
-                          <div className="product-spec-mobile-row">
-                            <span className="label">Dimensions</span>
-                            <span className="value">{spec.dimensions}</span>
-                          </div>
-                          <div className="product-spec-mobile-row">
-                            <span className="label">Static Load</span>
-                            <span className="value">{spec.staticLoad}</span>
-                          </div>
-                          <div className="product-spec-mobile-row">
-                            <span className="label">Dynamic Load</span>
-                            <span className="value">{spec.dynamicLoad}</span>
-                          </div>
-                          <div className="product-spec-mobile-row">
-                            <span className="label">Racking Load</span>
-                            <span className="value">{spec.rackingLoad}</span>
-                          </div>
-                          <div className="product-spec-mobile-row">
-                            <span className="label">Material</span>
-                            <span className="value">{spec.material}</span>
-                          </div>
-                        </>
-                      )}
-                      {(category.slug === "crates" ||
-                        category.slug === "tote-bins") && (
-                        <>
-                          <div className="product-spec-mobile-row">
-                            <span className="label">Outer Dimensions</span>
-                            <span className="value">{spec.outer}</span>
-                          </div>
-                          <div className="product-spec-mobile-row">
-                            <span className="label">Inner Dimensions</span>
-                            <span className="value">{spec.inner}</span>
-                          </div>
-                          <div className="product-spec-mobile-row">
-                            <span className="label">Versions</span>
-                            <span className="value">{spec.versions}</span>
-                          </div>
-                          <div className="product-spec-mobile-row">
-                            <span className="label">Colors</span>
-                            <span className="value">{spec.colors}</span>
-                          </div>
-                        </>
-                      )}
-                      {category.slug === "bins" && (
-                        <>
-                          <div className="product-spec-mobile-row">
-                            <span className="label">Outer Dimensions</span>
-                            <span className="value">{spec.outer}</span>
-                          </div>
-                          <div className="product-spec-mobile-row">
-                            <span className="label">Effective Height</span>
-                            <span className="value">
-                              {spec.effectiveHeight}
-                            </span>
-                          </div>
-                          <div className="product-spec-mobile-row">
-                            <span className="label">Colors</span>
-                            <span className="value">{spec.colors}</span>
-                          </div>
-                        </>
-                      )}
-                      {category.slug === "spools" && (
-                        <>
-                          <div className="product-spec-mobile-row">
-                            <span className="label">Dimensions</span>
-                            <span className="value">{spec.dimensions}</span>
-                          </div>
-                          <div className="product-spec-mobile-row">
-                            <span className="label">Materials</span>
-                            <span className="value">{spec.materials}</span>
-                          </div>
-                          <div className="product-spec-mobile-row">
-                            <span className="label">Balance / Features</span>
-                            <span className="value">{spec.features}</span>
-                          </div>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <p>
+                Select a model to view full technical specifications and
+                product gallery.
+              </p>
             </div>
-          </section>
-        )}
+
+            <div className="product-card-grid">
+              {category.products.map((product) => (
+                <ProductCard
+                  category={category}
+                  product={product}
+                  key={product.code}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
 
         {/* MATERIAL CAPABILITIES */}
         {category.materials && (

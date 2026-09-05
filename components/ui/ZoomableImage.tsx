@@ -13,6 +13,7 @@ interface ZoomableImageProps {
   height?: number;
   fill?: boolean;
   sizes?: string;
+  priority?: boolean;
 }
 
 export function ZoomableImage({
@@ -23,6 +24,7 @@ export function ZoomableImage({
   height,
   fill,
   sizes,
+  priority,
 }: ZoomableImageProps) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -71,6 +73,7 @@ export function ZoomableImage({
           height={height}
           fill={fill}
           sizes={sizes}
+          priority={priority}
           className={className}
         />
         <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center cursor-zoom-in">

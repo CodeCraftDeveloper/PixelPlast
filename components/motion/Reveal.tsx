@@ -1,8 +1,9 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 
 import { cn } from "@/lib/utils";
+import { usePrefersReducedMotion } from "@/components/motion/use-prefers-reduced-motion";
 
 export function Reveal({
   children,
@@ -15,7 +16,7 @@ export function Reveal({
   delay?: number;
   id?: string;
 }) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
 
   if (shouldReduceMotion) {
     return <div id={id} className={cn(className)}>{children}</div>;
