@@ -7,7 +7,6 @@ import {
   ArrowRight,
   ArrowUpRight,
   Check,
-  ShieldCheck,
 } from "lucide-react";
 
 import { SiteFooter } from "@/components/layout/SiteFooter";
@@ -290,34 +289,6 @@ export default async function ProductCategoryPage({
           </div>
         </section>
 
-        {/* PALLET ADVANTAGES (IF PALLETS) */}
-        {category.palletAdvantages && (
-          <section
-            className="pallet-advantages-section"
-            aria-labelledby="pallet-adv-heading"
-          >
-            <div className="site-container">
-              <div className="pallet-adv-heading">
-                <p className="eyebrow">Built to Last, Designed for Efficiency</p>
-                <h2 id="pallet-adv-heading">
-                  Why Plastic Pallets Outperform Wood
-                </h2>
-              </div>
-              <div className="pallet-adv-list">
-                {category.palletAdvantages.map((adv) => (
-                  <div className="pallet-adv-card" key={adv.title}>
-                    <span className="pallet-adv-icon" aria-hidden="true">
-                      <ShieldCheck />
-                    </span>
-                    <h3>{adv.title}</h3>
-                    <p>{adv.description}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
-
         {/* PRODUCT CARDS */}
         <section
           className="product-card-section"
@@ -347,40 +318,6 @@ export default async function ProductCategoryPage({
               ))}
             </div>
           </div>
-        </section>
-
-        {/* MATERIAL CAPABILITIES */}
-        {category.materials && (
-          <section
-            className="product-material-section"
-            aria-labelledby="materials-heading"
-          >
-            <div className="site-container product-material-grid">
-              <div>
-                <p className="eyebrow eyebrow--light">Verified Polymers</p>
-                <h2 id="materials-heading">Engineered Resin Selection.</h2>
-              </div>
-              <div className="product-material-list">
-                {category.materials.map((material, index) => (
-                  <div key={material}>
-                    <span>{String(index + 1).padStart(2, "0")}</span>
-                    <strong>{material}</strong>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* TECHNICAL NOTE ASIDE */}
-        <section className="site-container my-12">
-          <aside
-            className="product-technical-note"
-            aria-label="Technical information note"
-          >
-            <span>Technical Note</span>
-            <p>{category.technicalNote}</p>
-          </aside>
         </section>
 
         {/* CONTACT / NEXT CATEGORIES */}

@@ -15,14 +15,26 @@ export function ProductGallery({ product }: { product: ProductSpec }) {
   return (
     <div className="product-gallery">
       <figure className="product-gallery-main">
-        <ZoomableImage
-          src={activeImage.src}
-          alt={activeImage.alt}
-          fill
-          priority
-          sizes="(max-width: 900px) 100vw, 55vw"
-          className="object-contain p-2 sm:p-3"
-        />
+        {images.map((image, index) => (
+          <div
+            key={image.src}
+            inert={index !== active}
+            aria-hidden={index !== active}
+            className={cn(
+              "absolute inset-0 transition-opacity duration-300 ease-out",
+              index !== active && "opacity-0 pointer-events-none",
+            )}
+          >
+            <ZoomableImage
+              src={image.src}
+              alt={image.alt}
+              fill
+              priority={index === 0}
+              sizes="(max-width: 900px) 100vw, 55vw"
+              className="object-contain p-2 sm:p-3"
+            />
+          </div>
+        ))}
         <figcaption>{activeImage.label}</figcaption>
       </figure>
       <div

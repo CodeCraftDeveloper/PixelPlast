@@ -125,36 +125,58 @@ const palletLabels: Record<string, [string, string, string, string]> = {
     "Hygienic Solid Top & Safety Rim",
     "Euro Profile & Runner Clearance",
   ],
+  PT0004: [
+    "Isometric Solid Deck View",
+    "4-Way Low-Angle Forklift Entry",
+    "Diamond Anti-Slip Embossing Detail",
+    "3/4 Low-Profile Support Structure",
+  ],
+  PT0005: [
+    "Isometric Medium-Duty Mesh View",
+    "4-Way Entry & Underside Ribs",
+    "Ventilated Grid Lattice Detail",
+    "3/4 Profile & Runner Skids",
+  ],
+  PT0006: [
+    "Isometric Extra-Large Deck View",
+    "4-Way Full-Perimeter Base Entry",
+    "Reinforced Slotted Deck & Lattice Detail",
+    "3/4 Profile & Runner Skid Structure",
+  ],
+  PT0007: [
+    "Isometric Euro Nestable Deck View",
+    "4-Way Low-Angle Forklift Entry",
+    "Triangular Gusset & Nesting Cup Detail",
+    "3/4 Side Profile & Export Nesting Elevation",
+  ],
+  PT0008: [
+    "Isometric Square Low-Profile View",
+    "4-Way Eye-Level Entry Tunnel View",
+    "Corner Nesting Foot & Alignment Notch Detail",
+    "3/4 Profile & 120mm Nestable Elevation",
+  ],
+  PT0009: [
+    "Isometric Square Standard Nestable View",
+    "4-Way Chamfered Fork Entry Tunnel",
+    "Bevelled Entry Ramp & Waffle Grid Detail",
+    "3/4 Profile & 150mm Heavy Nesting Elevation",
+  ],
 };
 
 const palletProducts: readonly ProductSpec[] = plasticPallets.map((p) => {
   const code = p.code.toLowerCase();
-  const num = Number(p.code.replace(/\D/g, ""));
-  const labels = palletLabels[p.code];
-  let images: readonly ProductImage[];
-  if (labels) {
-    images = gallery([
-      [`${palletDir}${code}-01.jpg`, p.type, labels[0]],
-      [`${palletDir}${code}-02.jpg`, p.type, labels[1]],
-      [`${palletDir}${code}-03.jpg`, p.type, labels[2]],
-      [`${palletDir}${code}-04.jpg`, p.type, labels[3]],
-    ]);
-  } else {
-    const extra: [string, string, string][] = [];
-    if (num <= 7) {
-      extra.push(
-        [`${palletDir}${code}-03.jpg`, p.type, "Detail & Deck View"],
-        [`${palletDir}${code}-04.jpg`, p.type, "Side Profile & Entry"],
-      );
-    } else {
-      extra.push([`${palletDir}${code}-03.jpg`, p.type, "Additional View"]);
-    }
-    images = gallery([
-      [`${palletDir}${code}-01.jpg`, p.type, "Isometric Deck View"],
-      [`${palletDir}${code}-02.jpg`, p.type, "4-Way Forklift Entry"],
-      ...extra,
-    ]);
-  }
+  const labels = palletLabels[p.code] ?? [
+    "Isometric Deck View",
+    "4-Way Forklift Entry",
+    "Detail & Deck View",
+    "Side Profile & Entry",
+  ];
+  const images = gallery([
+    [`${palletDir}${code}-01.jpg`, p.type, labels[0]],
+    [`${palletDir}${code}-02.jpg`, p.type, labels[1]],
+    [`${palletDir}${code}-03.jpg`, p.type, labels[2]],
+    [`${palletDir}${code}-04.jpg`, p.type, labels[3]],
+  ]);
   return {
     code: p.code,
     slug: p.code.toLowerCase(),
