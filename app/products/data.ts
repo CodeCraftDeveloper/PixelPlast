@@ -106,23 +106,55 @@ const spoolImages = [
   },
 ];
 
+const palletLabels: Record<string, [string, string, string, string]> = {
+  PT0001: [
+    "Isometric Deck View",
+    "4-Way Low-Angle Forklift Entry",
+    "Anti-Skid Mesh & Rubber Grommets",
+    "Dual-Side Entry Profile",
+  ],
+  PT0002: [
+    "Isometric Deck View",
+    "4-Way Low-Angle Forklift Entry",
+    "Steel Rod & Mesh Macro Detail",
+    "3/4 Profile & Heavy-Duty Skids",
+  ],
+  PT0003: [
+    "Isometric Deck View",
+    "4-Way Euro Forklift Entry",
+    "Hygienic Solid Top & Safety Rim",
+    "Euro Profile & Runner Clearance",
+  ],
+};
+
 const palletProducts: readonly ProductSpec[] = plasticPallets.map((p) => {
   const code = p.code.toLowerCase();
   const num = Number(p.code.replace(/\D/g, ""));
-  const extra: [string, string, string][] = [];
-  if (num <= 7) {
-    extra.push(
-      [`${palletDir}${code}-03.jpg`, p.type, "Detail & Deck View"],
-      [`${palletDir}${code}-04.jpg`, p.type, "Side Profile & Entry"],
-    );
+  const labels = palletLabels[p.code];
+  let images: readonly ProductImage[];
+  if (labels) {
+    images = gallery([
+      [`${palletDir}${code}-01.jpg`, p.type, labels[0]],
+      [`${palletDir}${code}-02.jpg`, p.type, labels[1]],
+      [`${palletDir}${code}-03.jpg`, p.type, labels[2]],
+      [`${palletDir}${code}-04.jpg`, p.type, labels[3]],
+    ]);
   } else {
-    extra.push([`${palletDir}${code}-03.jpg`, p.type, "Additional View"]);
+    const extra: [string, string, string][] = [];
+    if (num <= 7) {
+      extra.push(
+        [`${palletDir}${code}-03.jpg`, p.type, "Detail & Deck View"],
+        [`${palletDir}${code}-04.jpg`, p.type, "Side Profile & Entry"],
+      );
+    } else {
+      extra.push([`${palletDir}${code}-03.jpg`, p.type, "Additional View"]);
+    }
+    images = gallery([
+      [`${palletDir}${code}-01.jpg`, p.type, "Isometric Deck View"],
+      [`${palletDir}${code}-02.jpg`, p.type, "4-Way Forklift Entry"],
+      ...extra,
+    ]);
   }
-  const images: readonly ProductImage[] = gallery([
-    [`${palletDir}${code}-01.jpg`, p.type, "Isometric Deck View"],
-    [`${palletDir}${code}-02.jpg`, p.type, "4-Way Forklift Entry"],
-    ...extra,
-  ]);
   return {
     code: p.code,
     slug: p.code.toLowerCase(),

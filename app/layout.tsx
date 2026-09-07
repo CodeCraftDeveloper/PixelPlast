@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Poppins } from "next/font/google";
+import Script from "next/script";
 
 import { MotionProvider } from "@/components/motion/MotionProvider";
 import { SITE_URL } from "@/lib/site";
@@ -23,6 +24,10 @@ export const metadata: Metadata = {
     default: "Pixelplast | Plastic Injection Moulding, Tote Bins & Spools",
     template: "%s | Pixelplast",
   },
+  robots: {
+    index: true,
+    follow: true,
+  },
   icons: {
     icon: {
       url: "/assets/pixelplast.png?v=20260827",
@@ -43,6 +48,19 @@ export default function RootLayout({
   return (
     <html lang="en" className={poppins.variable}>
       <body className="antialiased font-sans">
+        <Script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-07TED1H9BW"
+          strategy="afterInteractive"
+        />
+        <Script id="gtag-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-07TED1H9BW');
+          `}
+        </Script>
         <MotionProvider>{children}</MotionProvider>
       </body>
     </html>

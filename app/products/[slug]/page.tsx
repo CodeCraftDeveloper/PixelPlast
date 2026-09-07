@@ -13,6 +13,7 @@ import {
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { company } from "@/data/company";
+import { SITE_URL } from "@/lib/site";
 import {
   getProductCategory,
   productCategories,
@@ -41,8 +42,12 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${category.title} | Pixelplast`,
+    title: category.title,
     description: category.description,
+    robots: { index: true, follow: true },
+    alternates: {
+      canonical: `${SITE_URL}/products/${category.slug}/`,
+    },
   };
 }
 

@@ -18,11 +18,16 @@ import {
 
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
+import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Products & Standard Range | Pixelplast",
+  title: "Products & Standard Range",
   description:
     "Explore Pixelplast attached-lid totes, industrial spools, pallets, crates, and storage bins designed for industrial strength and repeatability.",
+  robots: { index: true, follow: true },
+  alternates: {
+    canonical: `${SITE_URL}/products/`,
+  },
 };
 
 const featuredProductsList = [
