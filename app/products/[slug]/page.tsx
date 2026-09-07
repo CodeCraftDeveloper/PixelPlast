@@ -3,15 +3,23 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
-  ArrowLeft,
   ArrowRight,
   ArrowUpRight,
-  Check,
+  Cable,
+  Factory,
+  PackageCheck,
+  Ruler,
+  Settings2,
+  Truck,
+  Cog,
+  Layers,
+  Zap,
 } from "lucide-react";
 
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
-import { company } from "@/data/company";
+import { ProductRange } from "./ProductRange";
+import styles from "./category-middle.module.css";
 import { SITE_URL } from "@/lib/site";
 import {
   getProductCategory,
@@ -84,7 +92,7 @@ function ProductKeySpecs({
             ];
 
   return (
-    <ul className="product-card-specs">
+    <ul className={styles.specs}>
       {rows.map(
         (row) =>
           row.value && (
@@ -106,30 +114,28 @@ function ProductCard({
   product: ProductSpec;
 }) {
   return (
-    <article className="product-card">
+    <article className={styles.card}>
       <Link
         href={`/products/${category.slug}/${product.slug}`}
-        className="product-card-link"
+        className={styles.cardLink}
         aria-label={`View details of ${product.title} (${product.code})`}
       >
-        <div className="product-card-media">
-          <div className="product-card-img-wrap">
+        <div className={styles.cardMedia}>
+          <div className={styles.cardImage}>
             <Image
               src={product.image}
               alt={product.imageAlt}
               fill
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              sizes="(max-width: 640px) 75vw, (max-width: 1000px) 30vw, 23vw"
             />
           </div>
-          <span className="product-card-code">{product.code}</span>
         </div>
 
-        <div className="product-card-body">
-          <p className="product-card-tag">{product.tagline}</p>
+        <div className={styles.cardBody}>
           <h3>{product.title}</h3>
           <ProductKeySpecs category={category} product={product} />
-          <span className="product-card-cta">
-            View Product Details <ArrowRight aria-hidden="true" />
+          <span className={styles.cardCta}>
+            View Details <ArrowRight aria-hidden="true" />
           </span>
         </div>
       </Link>
@@ -147,9 +153,13 @@ export default async function ProductCategoryPage({
     notFound();
   }
 
-  const siblingCategories = productCategories.filter(
-    (item): item is ProductCategory => item.slug !== category.slug,
-  );
+  const features = category.products[0]?.features ?? category.highlights;
+  const benefits = [
+    { icon: Layers, title: "Material options", text: category.materials?.join(" / ") ?? category.shortTitle },
+    { icon: Cog, title: "Manufacturing", text: "Injection moulding" },
+    { icon: Settings2, title: "Application review", text: "Discuss your specification" },
+    { icon: PackageCheck, title: "Product range", text: `${category.products.length} standard models` },
+  ];
 
   return (
     <>
@@ -159,201 +169,149 @@ export default async function ProductCategoryPage({
       <SiteHeader />
 
       <main id="main-content" className="product-detail-page">
-        <section
-          className={`product-detail-hero product-detail-hero--${category.slug}`}
-        >
-          <div
-            className="site-container product-detail-breadcrumbs"
-            aria-label="Breadcrumb"
-          >
+        <section className={`product-reference-hero product-reference-hero--${category.slug}`}>
+          <div className="product-reference-scene" aria-hidden="true" />
+          <div className="product-reference-panel" aria-hidden="true" />
+          <nav className="product-reference-breadcrumbs" aria-label="Breadcrumb">
             <Link href="/products">Products</Link>
             <span aria-hidden="true">/</span>
+            <span aria-current="page">{category.shortTitle}</span>
+          </nav>
+
+          <div className="product-reference-copy">
+            <p className="product-reference-eyebrow">Built for a stronger tomorrow</p>
+            <h1>
+              <span>{category.heroTitleLines[0]}</span>
+              <span><em>{category.heroTitleLines[1]}</em> {category.heroTitleLines[2]}</span>
+            </h1>
+            <p className="product-reference-description">{category.description}</p>
+            <ul className="product-reference-highlights" aria-label="Product highlights">
+              {(category.slug === "spools"
+                ? ["High Strength", "Engineered Polymers (PP/ABS)", "High-Speed Winding"]
+                : category.highlights
+              ).map((highlight, index) => {
+                const Icon = [Cog, Layers, Zap][index % 3];
+                return (
+                  <li key={highlight}>
+                    <span className="product-reference-icon"><Icon aria-hidden="true" /></span>
+                    <span>{highlight}</span>
+                  </li>
+                );
+              })}
+            </ul>
+            <Link className="product-reference-cta" href="/contact#quote">
+              Discuss Your Requirement <ArrowUpRight aria-hidden="true" />
+            </Link>
+            <nav className="product-reference-sections" aria-label="Explore this category">
+              <a href="#category-overview-heading" aria-label="01 Category overview">01</a>
+              <a href="#specifications-heading" aria-label="02 Product range">02</a>
+              <a href="#product-contact-heading" aria-label="03 Discuss requirements">03</a>
+            </nav>
+          </div>
+
+          <figure className="product-reference-product">
+            <Image
+              src={category.heroImage}
+              alt={`${category.title} category visual`}
+              fill
+              preload
+              sizes="(max-width: 900px) 90vw, 43vw"
+            />
+          </figure>
+          <div className="product-reference-side-label" aria-hidden="true">
             <span>{category.shortTitle}</span>
+            <i />
+            <span>{category.slug === "spools" ? "Reliable\nDurable\nVersatile" : category.label}</span>
           </div>
-
-          <div className="product-detail-hero-frame">
-            <div className="product-tech-hero-stage">
-              <div className="product-tech-hero-copy">
-                <p className="eyebrow">Product Category / {category.index}</p>
-                <h1>
-                  {category.heroTitleLines.map((line, index) => (
-                    <span
-                      className={
-                        index === 1 ? "product-tech-title-accent" : undefined
-                      }
-                      key={line}
-                    >
-                      {line}
-                    </span>
-                  ))}
-                </h1>
-                <p>{category.description}</p>
-                <Link className="product-tech-hero-cta" href="/contact#quote">
-                  Discuss Your Requirement <ArrowUpRight aria-hidden="true" />
-                </Link>
-              </div>
-
-              <figure className="product-tech-hero-product">
-                <span className="product-tech-hero-index" aria-hidden="true">
-                  {category.index}
-                </span>
-                <span
-                  className="product-tech-hero-measure product-tech-hero-measure--x"
-                  aria-hidden="true"
-                />
-                <span
-                  className="product-tech-hero-measure product-tech-hero-measure--y"
-                  aria-hidden="true"
-                />
-                <div className="product-tech-hero-image">
-                  <Image
-                    src={category.heroImage}
-                    alt={`${category.title} category visual`}
-                    fill
-                    priority
-                    sizes="(max-width: 820px) 100vw, 58vw"
-                  />
-                </div>
-                <figcaption>
-                  <strong>{category.label}</strong>
-                  <span>
-                    {category.shortTitle} / Category {category.index}
-                  </span>
-                </figcaption>
-                <span
-                  className="product-tech-hero-coordinate"
-                  aria-hidden="true"
-                >
-                  {category.applications[0]}
-                </span>
-              </figure>
-
-              <div
-                className="product-tech-hero-features"
-                aria-label="Category overview"
-              >
-                <p>Product highlights</p>
-                {category.highlights.map((highlight) => (
-                  <span key={highlight}>{highlight}</span>
-                ))}
-              </div>
-            </div>
-          </div>
+          <span className="product-reference-index" aria-hidden="true">{category.index}</span>
+          <p className="product-reference-caption">For industrial<br />&amp; commercial applications</p>
         </section>
 
-        <nav className="product-category-nav" aria-label="Product categories">
-          <div className="site-container">
-            <span>Browse Categories</span>
-            <div>
-              {productCategories.map((item) => (
-                <Link
-                  className={
-                    item.slug === category.slug ? "is-active" : undefined
-                  }
-                  href={`/products/${item.slug}`}
-                  aria-current={item.slug === category.slug ? "page" : undefined}
-                  key={item.slug}
-                >
-                  {item.shortTitle}
-                </Link>
-              ))}
-            </div>
-          </div>
-        </nav>
-
-        {/* OVERVIEW & APPLICATIONS */}
-        <section
-          className="product-detail-overview"
-          aria-labelledby="category-overview-heading"
-        >
-          <div className="site-container product-detail-overview-grid">
-            <div>
-              <p className="eyebrow">Category Overview</p>
-              <h2 id="category-overview-heading">
-                Engineered for Demanding Industrial Workflows.
-              </h2>
-            </div>
-            <div className="product-detail-overview-copy">
-              <p>{category.overview}</p>
-              <div className="product-application-list">
-                <p>Core Applications</p>
-                <ul>
-                  {category.applications.map((application) => (
-                    <li key={application}>
-                      <Check aria-hidden="true" /> {application}
-                    </li>
-                  ))}
-                </ul>
+        <div className={styles.middle}>
+          <section className={styles.directory} aria-labelledby="category-directory-heading">
+            <div className={styles.container}>
+              <div className={styles.sectionHeading}>
+                <div><p className={styles.eyebrow}>Explore our product range</p>                <h2 id="category-directory-heading">{category.shortTitle} Manufacturer — Range for Every Application</h2></div>
+                    <p><strong>Injection moulding near me</strong> — find Pixelplast, your trusted injection moulding products manufacturer serving India and global markets.</p>
+                <Link className={styles.allProducts} href="/products"><ArrowRight aria-hidden="true" /><span>View all products</span></Link>
               </div>
-            </div>
-          </div>
-        </section>
-
-        {/* PRODUCT CARDS */}
-        <section
-          className="product-card-section"
-          aria-labelledby="specifications-heading"
-        >
-          <div className="site-container">
-            <div className="product-spec-heading">
-              <div>
-                <p className="eyebrow eyebrow--light">Approved Product Data</p>
-                <h2 id="specifications-heading">
-                  Standard {category.shortTitle} Range.
-                </h2>
-              </div>
-              <p>
-                Select a model to view full technical specifications and
-                product gallery.
-              </p>
-            </div>
-
-            <div className="product-card-grid">
-              {category.products.map((product) => (
-                <ProductCard
-                  category={category}
-                  product={product}
-                  key={product.code}
-                />
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* CONTACT / NEXT CATEGORIES */}
-        <section
-          className="product-detail-contact"
-          aria-labelledby="product-contact-heading"
-        >
-          <div className="site-container product-detail-contact-grid">
-            <div>
-              <p className="eyebrow eyebrow--light">Application Review</p>
-              <h2 id="product-contact-heading">
-                Discuss Your Plastic Specification.
-              </h2>
-            </div>
-            <div>
-              <p>
-                Share your target dimensions, annual batch volume, operating
-                environment, and technical drawings. Our team will verify
-                tooling and deliver a formal quotation.
-              </p>
-              <div className="product-contact-actions">
-                <a href={company.emailHref}>
-                  Request Formal Quote <ArrowUpRight aria-hidden="true" />
-                </a>
-                {siblingCategories.slice(0, 3).map((item) => (
-                  <Link href={`/products/${item.slug}`} key={item.slug}>
-                    View {item.shortTitle} <ArrowRight aria-hidden="true" />
+              <nav className={styles.categories} aria-label="Product categories">
+                {productCategories.map((item) => (
+                  <Link className={styles.category} href={`/products/${item.slug}`} aria-current={item.slug === category.slug ? "page" : undefined} key={item.slug}>
+                    <span className={styles.categoryImage}><Image src={item.products[0]?.image ?? item.heroImage} alt={item.shortTitle} fill sizes="(max-width: 640px) 130px, 17vw" /></span>
+                    <strong>{item.shortTitle}</strong>
                   </Link>
                 ))}
+              </nav>
+            </div>
+          </section>
+
+          <section className={styles.overview} aria-labelledby="category-overview-heading">
+            <div className={`${styles.container} ${styles.overviewGrid}`}>
+              <div className={styles.overviewImage}>
+                <Image src={category.heroImage} alt={`${category.shortTitle} construction`} fill sizes="(max-width: 640px) 90vw, 40vw" />
+                <span className={styles.badge}><Cog aria-hidden="true" /><span>Engineered<br />for performance</span></span>
+              </div>
+              <div className={styles.overviewCopy}>
+                <p className={styles.eyebrow}>Category overview</p>
+                <h2 id="category-overview-heading">Engineered Injection Moulding for Demanding Industrial Workflows</h2>
+                <p>{category.overview}</p>
+                <ul className={styles.highlights}>
+                  {features.slice(0, 4).map((feature, index) => {
+                    const Icon = [Layers, Ruler, Settings2, Cog][index];
+                    return <li key={feature}><Icon aria-hidden="true" /><span>{feature}</span></li>;
+                  })}
+                </ul>
+                <a className={styles.textLink} href="#specifications-heading">Explore {category.shortTitle} <ArrowRight aria-hidden="true" /></a>
               </div>
             </div>
-          </div>
-          <Link className="product-back-link" href="/products">
-            <ArrowLeft aria-hidden="true" /> All Product Categories
-          </Link>
-        </section>
+          </section>
+
+          <ProductRange title={category.shortTitle}>
+            {category.products.map((product) => <ProductCard category={category} product={product} key={product.code} />)}
+          </ProductRange>
+
+          <section className={styles.applications} aria-labelledby="applications-heading">
+            <div className={`${styles.container} ${styles.applicationGrid}`}>
+              <div className={styles.applicationCopy}>
+                <p className={styles.eyebrow}>Applications</p>
+                <h2 id="applications-heading">Trusted Across<br />Industries</h2>
+                <p>Explore the uses of our {category.shortTitle.toLowerCase()} and discuss your operating requirements with our team.</p>
+                <Link className={styles.textLink} href="/contact#quote">Discuss your application <ArrowUpRight aria-hidden="true" /></Link>
+              </div>
+              <div className={styles.applicationTiles}>
+                {category.applications.map((application, index) => {
+                  const Icon = [Cable, Factory, Zap, Truck][index % 4];
+                  return <article className={styles.applicationTile} key={application}><Icon aria-hidden="true" /><h3>{application}</h3></article>;
+                })}
+              </div>
+            </div>
+          </section>
+
+          <section className={styles.why} aria-labelledby="why-pixelplast-heading">
+            <div className={styles.container}>
+              <div className={styles.whyPanel}>
+                <div className={styles.whyHeading}>
+                  <div><p className={styles.eyebrow}>Why choose Pixelplast</p><h2 id="why-pixelplast-heading">More Than a<br />Product Manufacturer</h2></div>
+                  <p>{category.technicalNote}</p>
+                </div>
+                <div className={styles.benefits}>
+                  {benefits.map(({ icon: Icon, title, text }, index) => <div className={styles.benefit} key={title}><Icon aria-hidden="true" /><div><span>0{index + 1}</span><h3>{title}</h3><p>{text}</p></div></div>)}
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section className={styles.contact} aria-labelledby="product-contact-heading">
+            <div className={styles.container}>
+              <div className={styles.contactPanel}>
+                <div><p className={styles.eyebrow}>Let us build together</p><h2 id="product-contact-heading">Need a Custom {category.slug === "spools" ? "Spool " : ""}Solution?</h2></div>
+                <div className={styles.contactCopy}><p>Share your specifications and our team will help you find the right solution for your application.</p><Link className={styles.quote} href="/contact#quote">Request a quote <ArrowUpRight aria-hidden="true" /></Link></div>
+                <div className={styles.contactImage} aria-hidden="true"><Image src={category.heroImage} alt="" fill sizes="30vw" /></div>
+              </div>
+            </div>
+          </section>
+        </div>
       </main>
 
       <SiteFooter />

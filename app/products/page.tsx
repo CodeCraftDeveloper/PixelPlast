@@ -10,7 +10,11 @@ import {
   Disc,
   Gauge,
   Layers,
-  MessageSquare,
+  Factory,
+  Truck,
+  Settings,
+  Leaf,
+  Recycle,
   PackageCheck,
   ShieldCheck,
   Users,
@@ -19,11 +23,12 @@ import {
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SITE_URL } from "@/lib/site";
+import styles from "./products-overview.module.css";
 
 export const metadata: Metadata = {
   title: "Products & Standard Range",
   description:
-    "Explore Pixelplast attached-lid totes, industrial spools, pallets, crates, and storage bins designed for industrial strength and repeatability.",
+    "Explore Pixelplast injection moulding products — attached-lid plastic tote bins, precision plastic spools, injection moulded pallets, industrial plastic crates, and storage bins designed for industrial strength and repeatability.",
   robots: { index: true, follow: true },
   alternates: {
     canonical: `${SITE_URL}/products/`,
@@ -35,6 +40,7 @@ const featuredProductsList = [
   { title: "Industrial spools", slug: "spools", icon: Disc },
   { title: "Pallets", slug: "pallets", icon: Layers },
   { title: "Crates & bins", slug: "crates", icon: Boxes },
+  { title: "Storage bins", slug: "bins", icon: Archive },
 ] as const;
 
 const productRangeItems = [
@@ -111,20 +117,19 @@ export default function ProductsPage() {
       </a>
       <SiteHeader />
 
-      <main id="main-content" className="canva-catalogue-page">
+      <main id="main-content" className={styles.page}>
         {/* SECTION 1: HERO */}
         <section className="canva-hero" aria-labelledby="hero-title">
           <div className="site-container canva-hero-grid">
             {/* Left Copy */}
             <div className="canva-hero-copy">
+              <p className="canva-kicker">INDUSTRIAL PLASTIC SOLUTIONS</p>
               <h1 id="hero-title">
-                BUILT FOR<br />
-                HANDLING.<br />
-                MADE FOR<br />
-                REPEAT USE.
+                Injection Moulded<br />Plastic Products.<br />
+                <span>Built for Repeat Use.</span>
               </h1>
               <p className="canva-hero-lead">
-                Industrial plastic solutions designed for strength, consistency and everyday performance.
+                Industrial plastic injection moulding products designed for strength, consistency and everyday performance across tote bins, spools, crates, pallets and storage bins.
               </p>
               <ul className="canva-hero-checks" aria-label="Key features">
                 <li>
@@ -153,7 +158,7 @@ export default function ProductsPage() {
                 </li>
               </ul>
               <a href="#range" className="canva-pill-button">
-                Explore range
+                Explore Our Products <ArrowRight aria-hidden="true" />
               </a>
             </div>
 
@@ -181,9 +186,7 @@ export default function ProductsPage() {
             {/* Right Featured Products Sidebar */}
             <aside className="canva-hero-sidebar" aria-label="Featured Products Overview">
               <h2>Featured<br />Products</h2>
-              <p className="canva-sidebar-desc">
-                Versatile, practical and made for industrial environments.
-              </p>
+
               <div className="canva-sidebar-items">
                 {featuredProductsList.map((item) => {
                   const IconComponent = item.icon;
@@ -202,7 +205,7 @@ export default function ProductsPage() {
                 })}
               </div>
               <a href="#range" className="canva-link-arrow">
-                View details <ArrowRight aria-hidden="true" />
+                View our full range <ArrowRight aria-hidden="true" />
               </a>
             </aside>
           </div>
@@ -211,72 +214,34 @@ export default function ProductsPage() {
         {/* SECTION 2: OUR SOLUTIONS (DYNAMIC 2X2 MOSAIC WITH LARGE CIRCLES & PROPORTIONAL CUTOUTS) */}
         <section className="canva-solutions" aria-labelledby="solutions-title">
           <div className="site-container canva-solutions-grid">
-            <div className="canva-solutions-mosaic" aria-label="Product solutions grid">
-              {/* Tile 1: Tote with large sage green circle */}
-              <Link href="/products/tote-bins" className="canva-mosaic-tile" aria-label="View attached-lid totes">
-                <span className="canva-mosaic-circle canva-circle-sage" aria-hidden="true" />
-                <div className="canva-mosaic-img-wrap">
-                  <Image
-                    src="/assets/01_products_photos_composites/03_attached_lid_tote.png"
-                    alt="Attached-lid tote container"
-                    fill
-                    sizes="(max-width: 900px) 45vw, 22vw"
-                  />
-                </div>
-              </Link>
-
-              {/* Tile 2: Spool with large coral circle */}
-              <Link href="/products/spools" className="canva-mosaic-tile" aria-label="View industrial spools">
-                <span className="canva-mosaic-circle canva-circle-coral" aria-hidden="true" />
-                <div className="canva-mosaic-img-wrap">
-                  <Image
-                    src="/assets/01_products_photos_composites/06_industrial_spool.png"
-                    alt="Industrial precision spool"
-                    fill
-                    sizes="(max-width: 900px) 45vw, 22vw"
-                  />
-                </div>
-              </Link>
-
-              {/* Tile 3: Crate with large beige circle */}
-              <Link href="/products/crates" className="canva-mosaic-tile" aria-label="View crates and bins">
-                <span className="canva-mosaic-circle canva-circle-beige" aria-hidden="true" />
-                <div className="canva-mosaic-img-wrap">
-                  <Image
-                    src="/assets/01_products_photos_composites/04_crate_and_bin.png"
-                    alt="Industrial plastic crate"
-                    fill
-                    sizes="(max-width: 900px) 45vw, 22vw"
-                  />
-                </div>
-              </Link>
-
-              {/* Tile 4: Pallet with large amber circle */}
-              <Link href="/products/pallets" className="canva-mosaic-tile" aria-label="View industrial pallets">
-                <span className="canva-mosaic-circle canva-circle-amber" aria-hidden="true" />
-                <div className="canva-mosaic-img-wrap">
-                  <Image
-                    src="/assets/01_products_photos_composites/05_green_pallet.png"
-                    alt="Heavy duty plastic pallet"
-                    fill
-                    sizes="(max-width: 900px) 45vw, 22vw"
-                  />
-                </div>
-              </Link>
+            <div className={styles.categories} aria-label="Product categories">
+              {productRangeItems.map((item) => (
+                <Link href={`/products/${item.slug}`} key={item.slug} className={styles.category}>
+                  <span className={styles.categoryArt}>
+                    <Image src={item.image} alt="" fill sizes="(max-width: 600px) 28vw, 10vw" />
+                  </span>
+                  <span>{item.title}</span>
+                </Link>
+              ))}
             </div>
 
             <div className="canva-solutions-copy">
               <p className="canva-kicker">OUR SOLUTIONS</p>
               <h2 id="solutions-title">
-                Practical products for every stage of your supply chain.
+                Injection Moulding Products for Every Stage of Your Supply Chain.
               </h2>
               <p>
-                From storage and handling to transport and organisation, our plastic products are built to perform in demanding industrial environments. A wide range. Reliable by design.
+                From heavy duty plastic tote bins and industrial plastic crates to precision spools and injection moulded pallets — our plastic products are built to perform in demanding industrial environments. A wide range. Reliable by design.
               </p>
               <a href="#range" className="canva-pill-button">
-                Explore range
+                Explore Solutions <ArrowRight aria-hidden="true" />
               </a>
             </div>
+          </div>
+          <div className={`site-container ${styles.trust}`}>
+            <div><Factory aria-hidden="true" /><span><strong>Built for industry</strong><small>For demanding industrial environments</small></span></div>
+            <div><Truck aria-hidden="true" /><span><strong>Built for long-term use</strong><small>Strong, durable and reusable</small></span></div>
+            <div><Settings aria-hidden="true" /><span><strong>Custom solutions</strong><small>Discuss your requirements with our team</small></span></div>
           </div>
         </section>
 
@@ -284,7 +249,7 @@ export default function ProductsPage() {
         <section className="canva-range" id="range" aria-labelledby="range-title">
           <div className="site-container">
             <div className="canva-range-header">
-              <h2 id="range-title">Our Product Range</h2>
+              <div><p className="canva-kicker">OUR PRODUCT RANGE</p><h2 id="range-title">Reliable Products. Real-World Performance.</h2></div>
             </div>
 
             <div className="canva-range-grid">
@@ -315,14 +280,19 @@ export default function ProductsPage() {
             <div className="canva-manufacturing-copy">
               <p className="canva-kicker">OUR MANUFACTURING</p>
               <h2 id="manufacturing-title">
-                Engineered with precision. Produced with care.
+                Precision Plastic Injection Moulding — Produced with Care.
               </h2>
               <p>
-                Our state-of-the-art injection moulding facility is equipped with modern machinery and supported by skilled teams. From raw material to finished product, every step is managed in-house to ensure consistency and reliability.
+                Our state-of-the-art plastic injection moulding facility is equipped with modern machinery and supported by skilled teams. From raw material to finished injection moulded plastic components, every step is managed in-house to ensure consistency and reliability.
               </p>
-              <Link href="/capabilities" className="canva-link-arrow">
+              <Link href="/capabilities" className="canva-pill-button">
                 Explore our capabilities <ArrowRight aria-hidden="true" />
               </Link>
+              <div className={styles.manufacturingFacts}>
+                <div><strong>Modern Machinery</strong><small>Injection moulding technology</small></div>
+                <div><strong>In-House Production</strong><small>From material to component</small></div>
+                <div><strong>Consistent Quality</strong><small>Attention at every stage</small></div>
+              </div>
             </div>
             <div className="canva-manufacturing-art">
               <Image
@@ -340,7 +310,7 @@ export default function ProductsPage() {
           <div className="site-container">
             <div className="canva-quality-header">
               <p className="canva-kicker">QUALITY ASSURANCE</p>
-              <h2 id="quality-title">Quality you can rely on.</h2>
+              <h2 id="quality-title">Quality Injection Moulding You Can Rely On.</h2>
             </div>
 
             <div className="canva-quality-grid">
@@ -374,11 +344,16 @@ export default function ProductsPage() {
             <div className="canva-sustainability-copy">
               <p className="canva-kicker">SUSTAINABLE BY DESIGN</p>
               <h2 id="sustainability-title">
-                Made to be used. Made to be better.
+                Injection Moulded Products — Made to Be Better.
               </h2>
               <p>
                 Our products are designed for long service life and repeated use, helping reduce waste across operations. We are committed to responsible manufacturing and continuous improvement.
               </p>
+              <div className={styles.sustainabilityFacts}>
+                <div><Leaf aria-hidden="true" /><span>Durable by design</span></div>
+                <div><Recycle aria-hidden="true" /><span>Repeated use</span></div>
+                <div><Users aria-hidden="true" /><span>A sustainable future</span></div>
+              </div>
               <Link href="/sustainability" className="canva-link-arrow">
                 Learn more <ArrowRight aria-hidden="true" />
               </Link>
@@ -386,7 +361,12 @@ export default function ProductsPage() {
           </div>
         </section>
 
-     
+        <section className={styles.cta} aria-labelledby="enquiry-title">
+          <div className={`site-container ${styles.ctaInner}`}>
+            <div><p className="canva-kicker">WORK TOGETHER</p><h2 id="enquiry-title">Let?s Build a More Efficient,<br />Sustainable Tomorrow.</h2></div>
+            <div><p>Talk to our team about your requirements. We?ll help you find the right solution for your operations.</p><Link href="/contact#quote" className="canva-pill-button">Request a Quote <ArrowRight aria-hidden="true" /></Link></div>
+          </div>
+        </section>
       </main>
 
       <SiteFooter />

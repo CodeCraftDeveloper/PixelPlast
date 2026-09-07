@@ -5,6 +5,10 @@ import {
   ArrowRight,
   ArrowUpRight,
   Check,
+  Factory,
+  Settings2,
+  UsersRound,
+  Wrench,
   MoveRight,
   Phone,
 } from "lucide-react";
@@ -137,15 +141,15 @@ export default function HomePage() {
           <div className="site-container hero-grid">
             <div className="hero-copy">
               <p className="eyebrow eyebrow--light">
-                Pixel Technoplast Private Limited / Smart Plastic Solutions
+                Plastic Injection Moulding Company / Smart Plastic Solutions
               </p>
               <div id="hero-title">
                 <KineticHeading />
               </div>
               <p className="hero-deck">
-                Manufacturing heavy-duty tote bins, precision ABS &amp; PP
-                plastic spools, and custom OEM components for industrial
-                programs.
+                Custom Plastic Injection Moulding manufacturer serving industries with
+                heavy-duty tote bins, precision ABS &amp; PP
+                plastic spools, injection moulded plastic crates, and OEM plastic components.
               </p>
               <div className="hero-actions">
                 <Button asChild variant="light" size="lg">
@@ -161,6 +165,9 @@ export default function HomePage() {
               </div>
             </div>
 
+            <aside className="hero-manufacturing" aria-labelledby="hero-manufacturing-title">
+              <p className="hero-manufacturing-eyebrow">Built to scale</p>
+              <h2 id="hero-manufacturing-title">160 to 3000 tonnes<br />of moulding capacity.</h2>
             <div
               className="hero-range"
               aria-label="Injection moulding machine range from 160 to 3000 Tonnes"
@@ -182,6 +189,16 @@ export default function HomePage() {
                 production scale.
               </p>
             </div>
+              <ul className="hero-capability-grid">
+                <li><Factory aria-hidden="true" /><strong>Modern machinery</strong><span>160–3000 T</span></li>
+                <li><Settings2 aria-hidden="true" /><strong>Automated production</strong><span>Consistent process control</span></li>
+                <li><Wrench aria-hidden="true" /><strong>In-house tool room</strong><span>Mould maintenance &amp; support</span></li>
+                <li><UsersRound aria-hidden="true" /><strong>Skilled engineering team</strong><span>Experienced technical support</span></li>
+              </ul>
+              <Link className="hero-manufacturing-link" href="/capabilities">
+                Our manufacturing <ArrowRight aria-hidden="true" />
+              </Link>
+            </aside>
           </div>
 
           <svg
@@ -261,7 +278,7 @@ export default function HomePage() {
                 </div>
 
                 <p className="why-choose-description">
-                  <strong>Pixel Technoplast Private Limited</strong>, operating under the <strong>Pixelplast</strong> brand, is a leading manufacturer of high-quality plastic material handling solutions, pallets, crates, tote bins, and precision ABS &amp; PP spools, serving automotive, agriculture, pharmaceutical, and manufacturing sectors. With specialized in-house tooling inspection and advanced injection moulding technology, we deliver reliable, durable, and cost-effective solutions tailored to client requirements.
+                  <strong>Pixel Technoplast Private Limited</strong>, operating under the <strong>Pixelplast</strong> brand, is a leading <strong>Plastic Injection Moulding Manufacturer in India</strong> delivering high-quality industrial plastic injection moulding solutions — including heavy duty plastic tote bins, plastic storage crates, industrial plastic pallets, and precision ABS &amp; PP plastic spools. Serving automotive, agriculture, pharmaceutical, and manufacturing sectors with specialized in-house tooling and advanced injection moulding technology, we produce reliable, durable, and cost-effective <strong>injection moulded plastic components</strong> tailored to client requirements.
                 </p>
 
                 {/* Verified Stats Banner */}
@@ -301,14 +318,14 @@ export default function HomePage() {
             <Reveal>
               <p className="eyebrow">Capabilities &amp; Services</p>
               <h2 id="services-heading">
-                From initial mould design to high-volume production.
+                Plastic Injection Moulding — From Mould Design to High-Volume Production.
               </h2>
             </Reveal>
             <Reveal delay={0.08}>
               <p className="services-intro">
                 Specialized injection-moulding solutions for standard
-                material-handling products and custom industrial OEM
-                manufacturing programs.
+                material-handling products — plastic tote bins manufacturer, plastic storage crates manufacturer — and custom industrial OEM
+                plastic manufacturing programs.
               </p>
             </Reveal>
           </div>
@@ -482,13 +499,13 @@ export default function HomePage() {
               </p>
               <h2 id="manufacturing-heading">
                 <span className="h2-accent">160 to 3000 Tonnes</span> of
-                Precision Capacity.
+                Industrial Plastic Injection Moulding Capacity.
               </h2>
               <p className="manufacturing-deck">
-                Our plant houses modern injection
+                Our plant near Delhi NCR houses modern injection
                 moulding machines, automated material handling, and auxiliary
-                tooling systems to handle intricate components up to large
-                structural mouldings.
+                tooling systems — a full-scale plastic injection moulding company
+                handling intricate plastic parts manufacturing up to large structural mouldings.
               </p>
 
               <div className="tonnage-tier-grid">
@@ -584,7 +601,7 @@ export default function HomePage() {
               <div>
                 <p className="eyebrow">OEM Manufacturing Pathway</p>
                 <h2 id="process-heading">
-                  A Controlled Route from Prototype to Batch Delivery.
+                  OEM Plastic Manufacturing — From Prototype to Batch Delivery.
                 </h2>
               </div>
               <Button asChild variant="ghost" className="text-link-button">
@@ -623,11 +640,11 @@ export default function HomePage() {
             <Reveal className="industries-intro">
               <p className="eyebrow eyebrow--light">Application Context</p>
               <h2 id="industries-heading">
-                Tailored Solutions for Core Industries.
+                Injection Moulding Products for Core Industries.
               </h2>
               <p>
-                From automotive assembly lines to pharmaceutical cold chains and
-                high-speed cable extrusion, we adapt polymers and mould
+                From automotive assembly lines to pharmaceutical cold chains,
+                wire spool and cable spool winding, and high-speed cable extrusion — we adapt polymers and mould
                 parameters for your operational reality.
               </p>
               <Button asChild variant="light">
@@ -664,7 +681,7 @@ export default function HomePage() {
               <div>
                 <p className="eyebrow">Verified Systems</p>
                 <h2 id="quality-heading">
-                  Quality Built into Every Injection Cycle.
+                  Quality Injection Moulded Plastic Components — Every Cycle.
                 </h2>
               </div>
               <p>
@@ -703,7 +720,7 @@ export default function HomePage() {
               <div className="home-cta-copy">
                 <p className="eyebrow eyebrow--light">Get in Touch</p>
                 <h2 id="home-cta-heading">
-                  Let&apos;s Discuss Your Plastic Product Requirement.
+                  Let&apos;s Discuss Your Injection Moulding Requirement.
                 </h2>
                 <p className="home-cta-desc">
                   Share your component specifications, expected volume, and delivery

@@ -27,8 +27,8 @@ export function SiteFooter() {
           <p className="footer-wordmark">PIXELPLAST</p>
           <p>{company.tagline}</p>
           <p>
-            Injection-moulded tote bins, plastic spools, and custom OEM parts
-            for industrial programs.
+            Injection-moulded tote bins, plastic storage crates, heavy duty plastic pallets, plastic spools, and custom OEM parts
+            — your trusted plastic injection moulding company for industrial programs.
           </p>
         </div>
 
@@ -66,7 +66,7 @@ export function SiteFooter() {
 
       <div className="site-container footer-legal">
         <p>© {new Date().getFullYear()} {company.legalName}. All rights reserved.</p>
-        <p>Plastic injection moulding · Dadri, UP</p>
+        <p>Plastic Injection Moulding · Dadri, UP · India</p>
       </div>
     </footer>
   );

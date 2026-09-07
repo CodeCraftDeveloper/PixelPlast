@@ -39,14 +39,14 @@ export function ProductGallery({ product }: { product: ProductSpec }) {
       </figure>
       <div
         className="product-gallery-thumbs"
-        role="tablist"
+        role="group"
         aria-label="Product photos"
       >
         {images.map((image, index) => (
           <button
             type="button"
-            role="tab"
-            aria-selected={index === active}
+            aria-pressed={index === active}
+            aria-label={`Show ${image.label}`}
             className={cn(index === active && "is-active")}
             key={image.src}
             onClick={() => setActive(index)}

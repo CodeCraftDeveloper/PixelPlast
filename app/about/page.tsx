@@ -26,7 +26,7 @@ import {
 export const metadata: Metadata = {
   title: "About Pixelplast",
   description:
-    "Learn how Pixelplast combines large-scale plastic injection moulding, in-house tooling, process discipline, and verified quality systems.",
+    "About Pixelplast — a Plastic Injection Moulding Manufacturer in India combining large-scale injection moulding, in-house tooling, process discipline, and verified quality systems.",
 };
 
 const identityPrinciples = [
@@ -86,7 +86,7 @@ export default function AboutPage() {
               </p>
               <h1 id="about-hero-heading">ABOUT US</h1>
               <p className="about-redesign-hero-deck">
-                Large-scale plastic injection moulding, dependable processes,
+                A Plastic Injection Moulding Manufacturer in India delivering large-scale injection moulding, dependable processes,
                 and practical engineering support for repeat production.
               </p>
             </Reveal>
@@ -97,16 +97,16 @@ export default function AboutPage() {
           <div className="site-container about-redesign-story-grid">
             <Reveal className="about-redesign-story-copy">
               <p className="eyebrow">About company</p>
-              <h2 id="about-story-heading">Built around repeatable manufacturing.</h2>
+              <h2 id="about-story-heading">Built Around Repeatable Plastic Injection Moulding.</h2>
               <p>
                 Pixelplast manufactures plastic injection-moulded products with
                 an emphasis on precision, consistency, and dependable execution.
-                Our portfolio includes industrial tote bins and plastic spools,
+                As a custom plastic injection moulding company, our portfolio includes heavy duty plastic tote bins, injection moulded plastic crates, industrial plastic pallets, and precision ABS &amp; PP plastic spools,
                 supported by custom OEM manufacturing capability.
               </p>
               <p>
                 From requirement review and tooling alignment to controlled batch
-                production, we bring machinery, process discipline, and technical
+                production of injection moulded plastic components, we bring machinery, process discipline, and technical
                 teams together around real industrial applications.
               </p>
               <Button asChild variant="ghost" className="about-redesign-story-link">
@@ -141,7 +141,7 @@ export default function AboutPage() {
               <div>
                 <p className="eyebrow">What we do</p>
                 <h2 id="about-capabilities-heading">
-                  Built on engineering and manufacturing strength.
+                  Built on Injection Moulding and Manufacturing Strength.
                 </h2>
               </div>
               <p>
@@ -239,7 +239,7 @@ export default function AboutPage() {
                       src={image}
                       alt={title}
                       fill
-                      sizes="(max-width: 600px) 170px, (max-width: 900px) 180px, 200px"
+                      sizes="(max-width: 600px) 92vw, (max-width: 900px) 45vw, 24vw"
                       className="about-redesign-team-image"
                     />
                   </div>

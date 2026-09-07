@@ -20,7 +20,7 @@ import { company } from "@/data/company";
 export const metadata: Metadata = {
   title: "Contact Us | Pixelplast",
   description:
-    "Get in touch with Pixelplast for industrial plastic injection moulding, product inquiries, custom OEM tooling, and bulk requirement quotes.",
+    "Get a quote from Pixelplast — Plastic Injection Moulding Manufacturer in India. Contact us for industrial plastic injection moulding, product inquiries, custom OEM tooling, and bulk requirement quotes.",
 };
 
 const contactChannels = [
@@ -83,11 +83,11 @@ export default function ContactPage() {
               </nav>
               <p className="contact-kicker">GET IN TOUCH</p>
               <h1 id="contact-heading">
-                Let&apos;s build the right<br />plastic solution together.
+                Get a Quote from<br />our Injection Moulding Team.
               </h1>
               <p className="contact-hero-deck">
                 Direct access to our engineering, tooling, and sales teams. Fast
-                turnaround for standard product lines, OEM tooling briefs, and
+                turnaround for standard product lines — plastic tote bins, spools, crates, pallets — OEM tooling briefs, and
                 volume RFQs.
               </p>
             </Reveal>
@@ -101,7 +101,7 @@ export default function ContactPage() {
             <div className="contact-info-col">
               <Reveal>
                 <p className="contact-section-tag">Direct Channels</p>
-                <h2>Speak directly with our team.</h2>
+                <h2>Speak Directly with Our Injection Moulding Team.</h2>
                 <p className="contact-info-lead">
                   Whether you need immediate catalogue dispatches or engineering
                   consultation for a new mould program, our specialists are ready
@@ -181,12 +181,12 @@ export default function ContactPage() {
             <Reveal className="facility-copy">
               <p className="contact-section-tag">Plant Visit &amp; Audits</p>
               <h2 id="facility-heading">
-                Facility walk-throughs available.
+                Injection Moulding Facility Walk-Throughs Available.
               </h2>
               <p>
-                Our plant houses a full-spectrum injection moulding operation,
+                Our plant near Delhi NCR houses a full-spectrum plastic injection moulding operation,
                 dedicated tooling maintenance, and in-house quality control
-                testing—all under one roof. Walk-throughs are available upon
+                testing — all under one roof. As a plastic injection moulding manufacturer, walk-throughs are available upon
                 request.
               </p>
 

@@ -24,7 +24,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Pixelplast | Plastic Injection Moulding, Tote Bins & Spools",
+    default: "Pixelplast | Plastic Injection Moulding Company in India",
     template: "%s | Pixelplast",
   },
   robots: {
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     shortcut: "/assets/pixelplast.png?v=20260827",
   },
   description:
-    "Plastic injection-moulded tote bins, plastic spools, and custom OEM parts from Pixel Technoplast Private Limited.",
+    "Plastic Injection Moulding Manufacturer in India — heavy duty plastic tote bins, injection moulded plastic crates, industrial plastic pallets, precision plastic spools, and custom OEM plastic components from Pixel Technoplast Private Limited.",
   verification: {
     google: "i7r6zZojqoOWZU-tUKU9CTTTWq-PllTikFnORIzKoSc",
   },

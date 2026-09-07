@@ -10,7 +10,7 @@ import { Reveal } from "@/components/motion/Reveal";
 export const metadata: Metadata = {
   title: "Sustainability",
   description:
-    "Pixelplast's direction for considered plastic manufacturing, reusable product formats, controlled production, and environmental management.",
+    "Pixelplast's sustainable plastic injection moulding direction — reusable product formats, controlled production, and environmental management.",
 };
 
 const focusPoints = [
@@ -57,7 +57,7 @@ export default function SustainabilityPage() {
           <div className="sustainability-reference-hero-shade" aria-hidden="true" />
           <div className="sustainability-reference-hero-title">
             <p>Responsible manufacturing</p>
-            <h1 id="sustainability-heading">Sustainability</h1>
+              <h1 id="sustainability-heading">Sustainable Injection Moulding</h1>
           </div>
         </section>
 
@@ -68,7 +68,7 @@ export default function SustainabilityPage() {
           <div className="sustainability-reference-container">
             <Reveal className="sustainability-reference-intro">
               <h2 id="sustainability-story-heading">
-                At Pixelplast, we believe responsible manufacturing begins with
+                At Pixelplast, we believe responsible plastic injection moulding begins with
                 considered decisions.
               </h2>
             </Reveal>

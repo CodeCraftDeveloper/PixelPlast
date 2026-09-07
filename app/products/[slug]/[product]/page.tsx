@@ -6,8 +6,21 @@ import {
   ArrowLeft,
   ArrowRight,
   ArrowUpRight,
-  Check,
   Ruler,
+  ShieldCheck,
+  Leaf,
+  Layers3,
+  Forklift,
+  Sun,
+  Recycle,
+  Box,
+  Tag,
+  Thermometer,
+  FileCheck,
+  Award,
+  Palette,
+  Settings,
+  Gem,
 } from "lucide-react";
 
 import { SiteFooter } from "@/components/layout/SiteFooter";
@@ -21,6 +34,16 @@ import {
   type ProductSpec,
 } from "@/app/products/data";
 import { ProductGallery } from "./ProductGallery";
+import styles from "./product-detail.module.css";
+
+const featureIcons = [Leaf, Layers3, Forklift, ShieldCheck, Sun, Recycle];
+const specIcons: Record<string, typeof Ruler> = {
+  "Product Code": Tag, Dimensions: Ruler, "Static Capacity": Layers3,
+  "Dynamic Capacity": Layers3, "Racking Capacity": Box, Material: Recycle,
+  "Colour Options": Palette, "Fork Access": Forklift,
+  "Operating Temperature": Thermometer, "Export Compliance": FileCheck,
+  "Test Standard": Award,
+};
 
 type ProductPageProps = {
   params: Promise<{ slug: string; product: string }>;
@@ -102,10 +125,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   const { category, product } = match;
 
-  const siblings = productCategories
-    .filter((item) => item.slug !== category.slug)
-    .slice(0, 3);
-
   const specs = getSpecRows(category, product);
 
   return (
@@ -115,14 +134,26 @@ export default async function ProductPage({ params }: ProductPageProps) {
       </a>
       <SiteHeader />
 
-      <main id="main-content" className="product-detail-page">
+      <main id="main-content" className={`product-detail-page ${styles.page}`}>
         <section
           className={`product-detail-hero product-detail-hero--${category.slug} product-detail-hero--single`}
         >
-          <div
-            className="site-container product-detail-breadcrumbs"
+          <div className="site-container product-detail-hero-frame pd-hero-grid">
+            <div>
+              <ProductGallery product={product} />
+              <div className={styles.galleryNotes}>
+                <span><Leaf />{product.material ?? product.materials ?? category.shortTitle}</span>
+                <span><ShieldCheck />{product.code}</span>
+                <span><Box />{product.tagline}</span>
+              </div>
+            </div>
+            <div className="product-info">
+          <nav
+            className="product-detail-breadcrumbs"
             aria-label="Breadcrumb"
           >
+            <Link href="/">Home</Link>
+            <span aria-hidden="true">/</span>
             <Link href="/products">Products</Link>
             <span aria-hidden="true">/</span>
             <Link href={`/products/${category.slug}`}>
@@ -130,12 +161,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             </Link>
             <span aria-hidden="true">/</span>
             <span>{product.title}</span>
-          </div>
-
-          <div className="site-container product-detail-hero-frame pd-hero-grid">
-            <ProductGallery product={product} />
-
-            <div className="product-info">
+          </nav>
               <p className="eyebrow">
                 {product.code} / {category.shortTitle}
               </p>
@@ -151,6 +177,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   Talk to an Engineer <ArrowRight aria-hidden="true" />
                 </Link>
               </div>
+              <div className={styles.heroBenefits}>
+                <span><Settings />{specs[1]?.value ?? product.code}</span>
+                <span><Gem />{product.material ?? product.materials ?? product.tagline}</span>
+                <span><Leaf />{category.shortTitle}</span>
+              </div>
             </div>
           </div>
         </section>
@@ -161,24 +192,28 @@ export default async function ProductPage({ params }: ProductPageProps) {
         >
           <div className="site-container product-spec-sheet-grid">
             <div>
-              <p className="eyebrow eyebrow--light">Technical Specification</p>
-              <h2 id="product-specs-heading">Full Specifications.</h2>
+              <p className="eyebrow">Technical Specifications</p>
+              <h2 id="product-specs-heading">Full Injection Moulding Specifications.</h2>
               <p className="product-spec-sheet-lead">
                 Approved dimensions and load ratings for engineering,
                 purchasing and inspection reference.
               </p>
             </div>
+            <a className={styles.specRequest} href={company.emailHref}><FileCheck /> Request Spec Sheet <ArrowUpRight /></a>
 
             <dl className="product-spec-sheet">
-              {specs.map((row) => (
+              {[...specs, ...category.specExtras].map((row) => {
+                const Icon = specIcons[row.label] ?? Ruler;
+                return (
                 <div key={row.label}>
                   <dt>
-                    <Ruler aria-hidden="true" /> {row.label}
+                    <Icon aria-hidden="true" /> {row.label}
                   </dt>
                   <dd>{row.value}</dd>
                 </div>
-              ))}
+              );})}
             </dl>
+            <p className="product-spec-note">{category.specNote}</p>
           </div>
         </section>
 
@@ -188,20 +223,59 @@ export default async function ProductPage({ params }: ProductPageProps) {
         >
           <div className="site-container product-features-grid">
             <div>
-              <p className="eyebrow">Designed & Verified</p>
+              <p className="eyebrow">Key Features & Benefits</p>
               <h2 id="product-features-heading">
-                Built for Continuous Operation.
+                Injection Moulded Plastic Components — Built for Continuous Operation.
               </h2>
+              <p className="product-features-copy">
+                Explore the material, handling and performance features of {product.title}.
+              </p>
             </div>
-            <ul className="product-features-list">
-              {product.features.map((feature, index) => (
-                <li key={feature}>
-                  <span>{String(index + 1).padStart(2, "0")}</span>
-                  <Check aria-hidden="true" />
-                  <strong>{feature}</strong>
-                </li>
+            <div>
+              <ul className="product-features-list">
+                {product.features.map((feature, index) => {
+                  const Icon = featureIcons[index % featureIcons.length];
+                  return (
+                  <li key={feature}>
+                    <span>{String(index + 1).padStart(2, "0")}</span>
+                    <Icon aria-hidden="true" />
+                    <strong>{feature}</strong>
+                  </li>
+                );})}
+              </ul>
+              <ul className="product-verified-list">
+                {product.verified.map((item) => (
+                  <li key={item}>
+                    <ShieldCheck aria-hidden="true" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* SEO CONTENT */}
+        <section
+          className="product-seo-section"
+          aria-labelledby="product-seo-heading"
+        >
+          <div className="site-container product-seo-grid">
+            <div>
+              <p className="eyebrow">About the Product</p>
+              <h2 id="product-seo-heading">
+                About {product.title} — Injection Moulded Plastic Components.
+              </h2>
+            <div className="product-seo-copy">
+              {product.seo.map((paragraph) => (
+                <p key={paragraph.slice(0, 32)}>{paragraph}</p>
               ))}
-            </ul>
+            </div>
+            </div>
+            <figure className={styles.overviewImage}>
+              <Image src={product.image} alt={product.imageAlt} fill sizes="(max-width: 760px) 100vw, 50vw" />
+              <figcaption>Quality in every detail</figcaption>
+            </figure>
           </div>
         </section>
 
@@ -239,7 +313,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                             src={item.image}
                             alt={item.imageAlt}
                             fill
-                            sizes="(max-width: 640px) 100vw, 50vw"
+                            sizes="(max-width: 640px) 100vw, 33vw"
                           />
                         </div>
                         <span className="product-card-code">{item.code}</span>
@@ -273,18 +347,15 @@ export default async function ProductPage({ params }: ProductPageProps) {
             <div>
               <p>
                 Share your target volumes, operating environment and drawings.
-                Our team will confirm tooling, cycle times and a formal
+                Our team as a plastic injection moulding company will confirm tooling, cycle times and a formal
                 quotation for {product.title}.
               </p>
               <div className="product-contact-actions">
                 <a href={company.emailHref}>
                   Request Formal Quote <ArrowUpRight aria-hidden="true" />
                 </a>
-                {siblings.map((item) => (
-                  <Link href={`/products/${item.slug}`} key={item.slug}>
-                    View {item.shortTitle} <ArrowRight aria-hidden="true" />
-                  </Link>
-                ))}
+                <Link href={`/products/${category.slug}`}>View {category.shortTitle} <ArrowRight aria-hidden="true" /></Link>
+                <Link href="/contact">Contact Us <ArrowRight aria-hidden="true" /></Link>
               </div>
             </div>
           </div>

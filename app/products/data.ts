@@ -35,6 +35,8 @@ export type ProductSpec = {
   colors?: string;
   effectiveHeight?: string;
   materials?: string;
+  seo: readonly string[];
+  verified: readonly string[];
 };
 
 export type ProductCategory = {
@@ -54,6 +56,9 @@ export type ProductCategory = {
   palletAdvantages?: readonly { title: string; description: string }[];
   products: readonly ProductSpec[];
   technicalNote: string;
+  seo: readonly string[];
+  specExtras: readonly { label: string; value: string }[];
+  specNote: string;
 };
 
 function gallery(
@@ -64,6 +69,13 @@ function gallery(
     alt: `${base} — Pixelplast product photo`,
     label,
   }));
+}
+
+function withHeroComposite(
+  key: ProductImageryKey,
+  shots: readonly ProductImage[],
+): readonly ProductImage[] {
+  return shots;
 }
 
 const crateDir = "/assets/products/crates/";
@@ -93,6 +105,36 @@ const localImages = {
   industrialSpool: "/assets/01_products_photos_composites/06_industrial_spool.png",
 };
 
+export const heroComposites: Record<ProductImageryKey, ProductImage> = {
+  pallets: {
+    src: "/assets/01_products_photos_composites/05_green_pallet.png",
+    alt: "Industrial plastic pallet in warehouse application",
+    label: "Pallet in Application",
+  },
+  crates: {
+    src: "/assets/01_products_photos_composites/04_crate_and_bin.png",
+    alt: "Stacked industrial plastic crates and storage bins",
+    label: "Crate & Bin System",
+  },
+  bins: {
+    src: "/assets/01_products_photos_composites/07_storage_bin.png",
+    alt: "Modular plastic storage bin in parts arrangement",
+    label: "Storage Bin System",
+  },
+  "tote-bins": {
+    src: "/assets/01_products_photos_composites/03_attached_lid_tote.png",
+    alt: "Attached-lid plastic tote container with lid open",
+    label: "Attached-Lid Tote",
+  },
+  spools: {
+    src: "/assets/01_products_photos_composites/06_industrial_spool.png",
+    alt: "Industrial plastic spool wound with filament or wire",
+    label: "Industrial Spool",
+  },
+};
+
+type ProductImageryKey = "pallets" | "crates" | "bins" | "tote-bins" | "spools";
+
 const spoolImages = [
   {
     src: "/assets/01_products_photos_composites/spool_generated.jpg",
@@ -105,6 +147,54 @@ const spoolImages = [
     label: "Spool Line",
   },
 ];
+
+function palletSeo(p: (typeof plasticPallets)[number]): readonly string[] {
+  return [
+    `${p.type} (${p.code}) is a ${p.dimensions} injection-moulded plastic pallet manufactured by Pixelplast for warehouse racking, internal logistics and export transport duty. The platform carries ${p.staticLoad} and supports ${p.dynamicLoad} of dynamic load through normal forklift and pallet-jack operations, with cross-racking performance rated at ${p.rackingLoad}.`,
+    `Moulded from ${p.material}, every ${p.type} delivers a non-absorbent, pest-proof and moisture-resistant deck that stays dimensionally consistent through washdown and cold-chain cycles. Supplied in ${p.color} with custom branding available on volume orders, it offers a durable, fully recyclable alternative to wooden pallets for food, automotive, pharmacy and automated warehouse environments.`,
+  ];
+}
+
+function crateSeo(
+  c: (typeof plasticCrates)[number],
+  title: string,
+): readonly string[] {
+  return [
+    `${title} (${c.code}) is a ${c.outer} plastic storage and distribution crate with a usable inner cavity of ${c.inner}, supplied in the ${c.versions} configuration. Reinforced ribbed construction and an impact-resistant polymer body protect contents through picking, transit, automated conveyor movement and warehouse stacking.`,
+    `Injection-moulded from food-grade, UV-stabilised polypropylene and high-density polyethylene, this crate nests tightly when empty to save floor space and stacks securely when loaded for stable multi-level handling. Available in ${c.colors}, it suits automotive components, agricultural produce, retail distribution and busy shopfloor material movement.`,
+  ];
+}
+
+function binSeo(
+  b: (typeof plasticBins)[number],
+  title: string,
+): readonly string[] {
+  return [
+    `${title} (${b.code}) is a ${b.outer} stackable front-open part bin engineered for modular small-parts storage and fast assembly picking, with an effective stacking height of ${b.effectiveHeight}. The wide hopper opening gives operators instant content visibility and hand access, cutting pick time in high-density kitting layouts.`,
+    `Produced from high-impact engineered polypropylene, the bin interconnects vertically and mounts to standard louvre panels, letting facilities build scalable storage walls around live workstations. Colour-coded ${b.colors} variants support quick SKU identification across service stations, electrical workshops and warehouse order-picking lines.`,
+  ];
+}
+
+function toteSeo(
+  t: (typeof toteBins)[number],
+  title: string,
+): readonly string[] {
+  return [
+    `${title} (${t.code}) is a reusable ${t.outer} attached-lid plastic tote with a usable cavity of ${t.inner}, provided in the ${t.versions} configuration. The interlocking lid secures contents through transit and automated conveyor routing, while the container nests when empty to cut return-freight volume.`,
+    `Built from virgin, food-contact grade polymer, this tamper-evident tote features a textured base for smooth conveyor travel and integrated tie-down slots for zip-seal security. Available in ${t.colors}, it is specified for pharmaceutical cold-chain, e-commerce fulfilment and closed-loop retail supply chains that demand reusable, hygienic returnable packaging.`,
+  ];
+}
+
+function spoolSeo(
+  s: (typeof spoolSizes)[number],
+  code: string,
+  title: string,
+): readonly string[] {
+  return [
+    `${title} (${code}) is a precision ${s.dimensions} plastic spool manufactured for continuous high-speed winding of wire, cable, optical fibre, 3D printing filament and industrial monofilament. Rib-reinforced flanges resist distortion under tension, and the bore geometry delivers accurate take-up and snag-free payoff.`,
+    `Produced from ${s.materials}, the spool combines low inertia with a smooth, non-marring payoff surface to protect conductor insulation and delivered product quality. Every unit is checked for flange deflection and bore concentricity, making it dependable across copper and aluminium wire lines, telecom cable extrusion and automated winding floors.`,
+  ];
+}
 
 const palletLabels: Record<string, [string, string, string, string]> = {
   PT0001: [
@@ -163,6 +253,46 @@ const palletLabels: Record<string, [string, string, string, string]> = {
   ],
 };
 
+const palletVerified: readonly string[] = [
+  "Load-rated to ISO 8611 static, dynamic and racking test protocols",
+  "Deflection checked within span limits on production racking rigs",
+  "ISPM-15 exempt — no fumigation or heat treatment for export",
+  "UV-stabilised polymer for outdoor yard and cold-store duty",
+  "100% recyclable; food-contact grades available on request",
+];
+
+const crateVerified: readonly string[] = [
+  "Single-piece injection moulding with rib-reinforced base",
+  "Nesting and stacking geometry verified on production tooling",
+  "Food-contact grade PP/HDPE compliant with FDA 21 CFR 177",
+  "Impact and chemical resistance tested under shopfloor use",
+  "UV-stabilised compound; fully recyclable at end of life",
+];
+
+const binVerified: readonly string[] = [
+  "Interlock stacking and louvre-panel mounting geometry verified",
+  "High-impact PP trialled for repeated handling and drops",
+  "Wide hopper access validated for ergonomic pick rates",
+  "Colour-stable, UV-stabilised moulding compound",
+  "RoHS-compliant and 100% recyclable polymer",
+];
+
+const toteVerified: readonly string[] = [
+  "Attached-lid sealing verified for tamper-evident transit",
+  "Conveyor-friendly base tested on belt and roller lines",
+  "Nesting validated to free up to 70% return-freight volume",
+  "Food-contact compound per FDA 21 CFR 177 and EU 10/2011",
+  "Dimensionally stable through cold-chain and washdown cycles",
+];
+
+const spoolVerified: readonly string[] = [
+  "Flange deflection and bore concentricity checked on every unit",
+  "Dynamic balance verified for high-RPM winding heads",
+  "Virgin ABS / engineered PP per material specification",
+  "Snag-free payoff geometry validated on customer winders",
+  "Dimensionally stable, low-inertia and recyclable at end of life",
+];
+
 const palletProducts: readonly ProductSpec[] = plasticPallets.map((p) => {
   const code = p.code.toLowerCase();
   const labels = palletLabels[p.code] ?? [
@@ -171,12 +301,15 @@ const palletProducts: readonly ProductSpec[] = plasticPallets.map((p) => {
     "Detail & Deck View",
     "Side Profile & Entry",
   ];
-  const images = gallery([
-    [`${palletDir}${code}-01.jpg`, p.type, labels[0]],
-    [`${palletDir}${code}-02.jpg`, p.type, labels[1]],
-    [`${palletDir}${code}-03.jpg`, p.type, labels[2]],
-    [`${palletDir}${code}-04.jpg`, p.type, labels[3]],
-  ]);
+  const images = withHeroComposite(
+    "pallets",
+    gallery([
+      [`${palletDir}${code}-01.jpg`, p.type, labels[0]],
+      [`${palletDir}${code}-02.jpg`, p.type, labels[1]],
+      [`${palletDir}${code}-03.jpg`, p.type, labels[2]],
+      [`${palletDir}${code}-04.jpg`, p.type, labels[3]],
+    ]),
+  );
   return {
     code: p.code,
     slug: p.code.toLowerCase(),
@@ -191,8 +324,8 @@ const palletProducts: readonly ProductSpec[] = plasticPallets.map((p) => {
       "Non-absorbent, hygienic & pest-proof deck",
       "UV-stabilised for indoor and outdoor use",
     ],
-    image: images[0].src,
-    imageAlt: images[0].alt,
+    image: images[1].src,
+    imageAlt: images[1].alt,
     images,
     type: p.type,
     dimensions: p.dimensions,
@@ -201,6 +334,8 @@ const palletProducts: readonly ProductSpec[] = plasticPallets.map((p) => {
     rackingLoad: p.rackingLoad,
     material: p.material,
     color: p.color,
+    seo: palletSeo(p),
+    verified: palletVerified,
   };
 });
 
@@ -250,12 +385,15 @@ const crateProducts: readonly ProductSpec[] = plasticCrates.map((c) => {
   const code = c.code.toLowerCase();
   const title = crateTitles[c.code];
   const base: { tagline: string; description: string } = crateCopy[c.code];
-  const images: readonly ProductImage[] = gallery([
-    [`${crateDir}${code}-01.jpg`, title, "Isometric View"],
-    [`${crateDir}${code}-02.jpg`, title, "Reverse Angle View"],
-    [`${crateDir}${code}-03.jpg`, title, "Handle & Rib Detail"],
-    [`${crateDir}${code}-04.jpg`, title, "Stacking Alignment"],
-  ]);
+  const images: readonly ProductImage[] = withHeroComposite(
+    "crates",
+    gallery([
+      [`${crateDir}${code}-01.jpg`, title, "Isometric View"],
+      [`${crateDir}${code}-02.jpg`, title, "Reverse Angle View"],
+      [`${crateDir}${code}-03.jpg`, title, "Handle & Rib Detail"],
+      [`${crateDir}${code}-04.jpg`, title, "Stacking Alignment"],
+    ]),
+  );
   return {
     code: c.code,
     slug: c.code.toLowerCase(),
@@ -269,25 +407,30 @@ const crateProducts: readonly ProductSpec[] = plasticCrates.map((c) => {
       "Secure stacking when in use",
       "Food-grade, UV-resistant material",
     ],
-    image: images[0].src,
-    imageAlt: images[0].alt,
+    image: images[1].src,
+    imageAlt: images[1].alt,
     images,
     outer: c.outer,
     inner: c.inner,
     versions: c.versions,
     colors: c.colors,
+    seo: crateSeo(c, title),
+    verified: crateVerified,
   };
 });
 
 const binProducts: readonly ProductSpec[] = plasticBins.map((b) => {
   const code = b.code.toLowerCase();
   const title = `Front-Open Part Bin ${b.code}`;
-  const images: readonly ProductImage[] = gallery([
-    [`${binDir}${code}-01.jpg`, title, "Front-Hopper View"],
-    [`${binDir}${code}-02.jpg`, title, "Reverse Perspective"],
-    [`${binDir}${code}-03.jpg`, title, "Hopper & Label Detail"],
-    [`${binDir}${code}-04.jpg`, title, "Vertical Interlock Stacking"],
-  ]);
+  const images: readonly ProductImage[] = withHeroComposite(
+    "bins",
+    gallery([
+      [`${binDir}${code}-01.jpg`, title, "Front-Hopper View"],
+      [`${binDir}${code}-02.jpg`, title, "Reverse Perspective"],
+      [`${binDir}${code}-03.jpg`, title, "Hopper & Label Detail"],
+      [`${binDir}${code}-04.jpg`, title, "Vertical Interlock Stacking"],
+    ]),
+  );
   return {
     code: b.code,
     slug: b.code.toLowerCase(),
@@ -301,12 +444,14 @@ const binProducts: readonly ProductSpec[] = plasticBins.map((b) => {
       "Reinforced labels & divider slots",
       "High-impact engineered polypropylene",
     ],
-    image: images[0].src,
-    imageAlt: images[0].alt,
+    image: images[1].src,
+    imageAlt: images[1].alt,
     images,
     outer: b.outer,
     effectiveHeight: b.effectiveHeight,
     colors: b.colors,
+    seo: binSeo(b, title),
+    verified: binVerified,
   };
 });
 
@@ -340,12 +485,15 @@ const toteProducts: readonly ProductSpec[] = toteBins.map((t) => {
     "Detail View",
     "Exploded View",
   ];
-  const images: readonly ProductImage[] = gallery([
-    [`${toteDir}${code}-01.jpg`, title, labels[0]],
-    [`${toteDir}${code}-02.jpg`, title, labels[1]],
-    [`${toteDir}${code}-03.jpg`, title, labels[2]],
-    [`${toteDir}${code}-04.jpg`, title, labels[3]],
-  ]);
+  const images: readonly ProductImage[] = withHeroComposite(
+    "tote-bins",
+    gallery([
+      [`${toteDir}${code}-01.jpg`, title, labels[0]],
+      [`${toteDir}${code}-02.jpg`, title, labels[1]],
+      [`${toteDir}${code}-03.jpg`, title, labels[2]],
+      [`${toteDir}${code}-04.jpg`, title, labels[3]],
+    ]),
+  );
   return {
     code: t.code,
     slug: t.code.toLowerCase(),
@@ -359,13 +507,15 @@ const toteProducts: readonly ProductSpec[] = toteBins.map((t) => {
       "Security tie-down slots for zip seals",
       "Space-efficient nesting when empty",
     ],
-    image: images[0].src,
-    imageAlt: images[0].alt,
+    image: images[1].src,
+    imageAlt: images[1].alt,
     images,
     outer: t.outer,
     inner: t.inner,
     versions: t.versions,
     colors: t.colors,
+    seo: toteSeo(t, title),
+    verified: toteVerified,
   };
 });
 
@@ -380,15 +530,15 @@ const spoolProducts: readonly ProductSpec[] = spoolSizes.map((s, idx) => {
         ? localImages.spoolGenerated
         : localImages.spoolMedium;
   const ordered = [
+    localImages.industrialSpool,
     primary,
     localImages.spoolGenerated,
-    localImages.industrialSpool,
     localImages.spoolMedium,
   ];
   const images: readonly ProductImage[] = gallery([
-    [ordered[0], title, "Isolated View"],
-    [ordered[1], title, "Profile View"],
-    [ordered[2], title, "Wound Line"],
+    [ordered[0], title, "Hero Composite"],
+    [ordered[1], title, "Isolated View"],
+    [ordered[2], title, "Profile View"],
     [ordered[3], title, "Range Reference"],
   ]);
   return {
@@ -404,11 +554,13 @@ const spoolProducts: readonly ProductSpec[] = spoolSizes.map((s, idx) => {
       "Snag-free payoff geometry",
       "High-impact ABS / engineered PP",
     ],
-    image: images[0].src,
-    imageAlt: images[0].alt,
+    image: images[1].src,
+    imageAlt: images[1].alt,
     images,
     dimensions: s.dimensions,
     materials: s.materials,
+    seo: spoolSeo(s, code, title),
+    verified: spoolVerified,
   };
 });
 
@@ -421,9 +573,9 @@ export const productCategories: readonly ProductCategory[] = [
     label: "Storage & Heavy Material Handling",
     heroTitleLines: ["Industrial", "Plastic", "Pallets"],
     description:
-      "Heavy-duty, hygienic, and fully recyclable injection-moulded plastic pallets engineered for warehouse racking, internal logistics, and export transit.",
+      "Heavy duty plastic pallets — hygienic, and fully recyclable injection moulded pallets engineered for warehouse racking, internal logistics, and export transit. A leading plastic pallets manufacturer in India.",
     overview:
-      "Built to last and designed for maximum operational efficiency. Pixelplast plastic pallets offer superior durability, chemical resistance, pest protection, and exact dimensional consistency over wooden alternatives.",
+      "Built to last and designed for maximum operational efficiency. As a premier plastic pallets manufacturer in India, Pixelplast plastic pallets offer superior durability, chemical resistance, pest protection, and exact dimensional consistency over wooden alternatives.",
     heroImage: "/assets/01_products_photos_composites/05_green_pallet.png",
     images: [
       {
@@ -474,6 +626,22 @@ export const productCategories: readonly ProductCategory[] = [
     products: palletProducts,
     technicalNote:
       "Static and dynamic load ratings are verified under uniform load distribution. Custom colours and branding available on volume orders.",
+    seo: [
+      "Pixelplast is an Indian manufacturer of injection-moulded plastic pallets for heavy-duty warehousing, racking systems, automated material handling and export logistics. The standard range spans high-capacity racking pallets, mesh pallets, nestable formats and close-packed ISO/EUR profiles from 1100×1100 mm to 1300×1100 mm, engineered for repeatable, predictable performance.",
+      "Compared with timber pallets, injection-moulded plastic pallets deliver exact dimensional consistency, up to 6000 kg static load, superior resistance to moisture, chemicals and pests, and complete recyclability. They rinse down quickly for food and pharmaceutical duty, stay splinter-free for automated conveyor and ASRS handling, and offer lower long-run cost of ownership through reuse across closed-loop supply chains.",
+      "Every Pixelplast pallet is produced from 100% virgin HDPE or high-impact PP, with recycled polymer blends available for cost-sensitive operations. Custom colours, corporate branding, logoed decks and application-specific geometry can be moulded on volume orders, supported by verified static, dynamic and racking load ratings.",
+    ],
+    specExtras: [
+      { label: "Fork Access", value: "4-way forklift & pallet-jack entry" },
+      {
+        label: "Operating Temperature",
+        value: "-20°C to +60°C (HDPE) · up to +110°C (PP)",
+      },
+      { label: "Export Compliance", value: "ISPM-15 exempt · no fumigation" },
+      { label: "Test Standard", value: "ISO 8611 load tested" },
+    ],
+    specNote:
+      "All load figures are stated under uniform load distribution at standard ambient conditions, verified to ISO 8611 test protocols. Capacity is derated at temperature extremes and for point-loading — confirm your duty cycle, cold-store temperature and racking span with our engineering team before specification.",
   },
   {
     slug: "crates",
@@ -483,10 +651,10 @@ export const productCategories: readonly ProductCategory[] = [
     label: "Storage & Distribution Crates",
     heroTitleLines: ["Industrial", "Plastic", "Crates"],
     description:
-      "Heavy-duty perforated and solid plastic storage crates designed for manufacturing sub-assemblies, agriculture, retail, and automated conveyor systems.",
+      "Heavy duty plastic crates — perforated and solid injection moulded plastic crates designed for manufacturing sub-assemblies, agriculture, retail, and automated conveyor systems. A trusted plastic storage crates manufacturer.",
     overview:
-      "Engineered with reinforced ribbed bases and ergonomic side hand-grips. Pixelplast industrial crates provide superior impact resistance, smooth nesting, and rigid stacking stability.",
-    heroImage: "/assets/products/crates/pt0010-01.jpg",
+      "As a leading industrial plastic crates manufacturer, Pixelplast crates are engineered with reinforced ribbed bases and ergonomic side hand-grips. Superior impact resistance, smooth nesting, and rigid stacking stability.",
+    heroImage: "/assets/01_products_photos_composites/04_crate_and_bin.png",
     images: [
       {
         src: "/assets/products/crates/pt0010-01.jpg",
@@ -522,6 +690,22 @@ export const productCategories: readonly ProductCategory[] = [
     products: crateProducts,
     technicalNote:
       "Available in SSP (Side Perforated), SCH (Solid), and FB/RB (Flat/Ribbed Base) configurations to suit wet or dry storage workflows.",
+    seo: [
+      "Pixelplast manufactures industrial plastic crates for parts storage, distribution and shopfloor material movement, in perforated (SSP/RB) and solid (SCH/FB) configurations from 540×360 mm to 650×450 mm footprints. Each crate is injection-moulded in a single piece with reinforced side walls and a ribbed base for strength and dimensional stability.",
+      "Designed to nest when empty and stack when loaded, these crates pack more usable volume into factory floors, cold stores and retail distribution centres while protecting contents from impact, oils and moisture. A textured, non-slip footprint works cleanly with conveyors, dollies and automated storage equipment.",
+      "Produced from food-grade, UV-stabilised polypropylene and high-density polyethylene, the crates are safe for agricultural produce and pharmaceutical handling and are fully recyclable at end of life. Standard blue and grey are offered along with custom colour moulding for product flow-coding in large-volume orders.",
+    ],
+    specExtras: [
+      { label: "Material Grade", value: "Food-contact grade PP / HDPE" },
+      {
+        label: "Operating Temperature",
+        value: "-20°C to +65°C continuous service",
+      },
+      { label: "Nesting", value: "Nests when empty · stacks when loaded" },
+      { label: "Compliance", value: "FDA 21 CFR 177 · fully recyclable" },
+    ],
+    specNote:
+      "Dimensions shown are nominal external (OD) and internal (ID) measurements taken from production tooling. Nesting and stacking performance assumes loaded crates of equal geometry are stacked squarely; wet or dust-laden duty suits the ribbed-base (RB) and solid (SCH/FB) variants.",
   },
   {
     slug: "bins",
@@ -531,10 +715,10 @@ export const productCategories: readonly ProductCategory[] = [
     label: "Component Picking & Assembly Storage",
     heroTitleLines: ["Modular", "Front-Open", "Part Bins"],
     description:
-      "Stackable front-hopper plastic bins designed for high-density small parts storage, fast assembly picking, and lean inventory organisation.",
+      "Injection moulded plastic storage bins — stackable front-hopper plastic bins designed for high-density small parts storage, fast assembly picking, and lean inventory organisation.",
     overview:
       "Optimised for hardware picking and assembly lines. Features a wide front hopper for instant content visibility and easy hand access while securely stacked or mounted on louvre panels.",
-    heroImage: "/assets/products/bins/pt0016-01.jpg",
+    heroImage: "/assets/01_products_photos_composites/07_storage_bin.png",
     images: [
       {
         src: "/assets/products/bins/pt0016-01.jpg",
@@ -567,6 +751,22 @@ export const productCategories: readonly ProductCategory[] = [
     products: binProducts,
     technicalNote:
       "Modular interlock design allows vertical stacking with full front access. Custom color-coding available for SKU differentiation.",
+    seo: [
+      "Pixelplast modular front-open part bins are the working solution for high-density small-part storage on assembly lines, service stations and warehouse order-picking floors. Ranging from PT0016 pocket bins to jumbo PT0018 containers, each bin combines a wide front hopper with a compact footprint to keep fasteners, hardware and electrical components visible and within reach.",
+      "The interlocking design stacks vertically with full front access and mounts cleanly to standard louvre panels, letting facilities build scalable storage walls around live workstations. Transparent hopper design, label slots and divider options support lean 5S practice and faster kitting without additional racking investment.",
+      "Moulded from high-impact engineered polypropylene, the bins are tough enough for daily industrial handling, resistant to oils and shop chemistry, and fully recyclable. Wide colour-coding options across the modular range enable instant SKU identification for companies scaling inventory without cost.",
+    ],
+    specExtras: [
+      { label: "Mounting", value: "Interlock stacking · louvre-panel mount" },
+      { label: "Material Grade", value: "High-impact polypropylene (PP)" },
+      {
+        label: "Operating Temperature",
+        value: "-20°C to +70°C continuous service",
+      },
+      { label: "Compliance", value: "RoHS compliant · 100% recyclable" },
+    ],
+    specNote:
+      "Effective stacking height refers to the usable front-open height once bins are interlocked in a vertical stack. For louvre-panel mounting, share your panel pitch and bin depth with our team so we can confirm the rear-geometry fit for your layout.",
   },
   {
     slug: "tote-bins",
@@ -576,10 +776,10 @@ export const productCategories: readonly ProductCategory[] = [
     label: "Security & Automated Logistics",
     heroTitleLines: ["Attached Lid", "Plastic Tote", "Bins"],
     description:
-      "Reusable, tamper-evident injection-moulded tote containers with interlocking attached lids engineered for automated warehousing, conveyor routing, and secure transit.",
+      "Heavy duty plastic tote bins — reusable, tamper-evident injection-moulded tote containers with interlocking attached lids engineered for automated warehousing, conveyor routing, and secure transit. A trusted plastic tote bins manufacturer.",
     overview:
-      "Pixelplast's attached-lid tote containers protect goods in transit. When closed, they stack securely; when empty, nested nesting saves up to 70% return freight volume.",
-    heroImage: "/assets/products/totes/pt0022-01.jpg",
+      "As a leading plastic storage tote manufacturer, Pixelplast's attached-lid tote containers protect goods in transit. When closed, they stack securely; when empty, nested nesting saves up to 70% return freight volume.",
+    heroImage: "/assets/01_products_photos_composites/03_attached_lid_tote.png",
     images: [
       {
         src: "/assets/products/totes/pt0022-01.jpg",
@@ -612,6 +812,25 @@ export const productCategories: readonly ProductCategory[] = [
     products: toteProducts,
     technicalNote:
       "Features textured base for smooth conveyor movement and integrated security tie-down slots for tamper-evident zip seals.",
+    seo: [
+      "Pixelplast attached-lid plastic tote bins are reusable injection-moulded containers engineered for secure transit, conveyor routing and closed-loop reverse logistics. Interlocking attached lids protect contents through every kilometre of the supply chain while maintaining full stackability for consolidated transport.",
+      "When empty, the totes nest inside one another to free up to 70% of return freight volume, cutting the environmental and cost impact of reusable packaging programmes. A textured base delivers smooth, predictable movement across belt conveyors and ASRS stations, while integrated tie-down slots accept tamper-evident zip seals for chain-of-custody integrity.",
+      "Moulded from 100% virgin, food-contact grade polypropylene and high-impact HDPE, these containers withstand cold-chain extremes, cleaning and repeated handling cycles. They are the practical choice for pharmaceutical cold-chain, e-commerce fulfilment and retail networks that require hygienic, auditable, reusable packaging.",
+    ],
+    specExtras: [
+      { label: "Nesting Savings", value: "Up to 70% return-freight volume" },
+      { label: "Sealing", value: "Tamper-evident zip-seal points" },
+      {
+        label: "Operating Temperature",
+        value: "-20°C to +65°C continuous service",
+      },
+      {
+        label: "Compliance",
+        value: "Food-contact · FDA 21 CFR 177 & EU 10/2011",
+      },
+    ],
+    specNote:
+      "Nesting savings are measured across a standard loaded/empty return cycle. For automated conveyor or ASRS routing, share transfer speeds and merge angles with our engineering team so we can confirm base-rider and pocket compatibility for your line.",
   },
   {
     slug: "spools",
@@ -621,9 +840,9 @@ export const productCategories: readonly ProductCategory[] = [
     label: "Wire, Cable & Industrial Winding",
     heroTitleLines: ["Precision", "Plastic", "Spools"],
     description:
-      "High-performance ABS and Polypropylene plastic spools manufactured for high-speed continuous winding of wire, cable, optical fiber, 3D filament, and monofilament.",
+      "High-performance ABS and Polypropylene plastic spools — injection moulded plastic spools manufactured for high-speed continuous winding of wire, cable, optical fiber, 3D filament, and monofilament. A precision spools manufacturer serving India and global markets.",
     overview:
-      "Manufactured with dynamic high-speed rotational balance and heavy-duty distortion-resistant flanges. Ensures snag-free payoff and precise take-up winding under high tension.",
+      "As a trusted wire spool manufacturer and cable spool manufacturer, every spool is manufactured with dynamic high-speed rotational balance and heavy-duty distortion-resistant flanges. Ensures snag-free payoff and precise take-up winding under high tension.",
     heroImage: "/assets/01_products_photos_composites/06_industrial_spool.png",
     images: spoolImages,
     highlights: [
@@ -641,6 +860,22 @@ export const productCategories: readonly ProductCategory[] = [
     products: spoolProducts,
     technicalNote:
       "All spools undergo strict flange deflection testing and bore concentricity inspection. Custom barrel widths and traverse lengths available upon request.",
+    seo: [
+      "Pixelplast precision plastic spools are manufactured for high-speed, continuous winding of copper and aluminium wire, automotive harnesses, optical fibre, telecom cable, 3D printing filament and industrial monofilament. Six standard dimensions are tooled for reliable drum supply to wire, cable and filament processing lines.",
+      "Every spool is built around rib-reinforced flanges and a snag-free payoff geometry that keeps tension stable and protects conductor insulation during processing, shipment and de-pooling. Dynamic rotational balance and precision bore concentricity minimise vibration and run-out on high-RPM winders, protecting both product and machine life.",
+      "Available in high-impact ABS and engineered polypropylene, the range is dimensionally stable, low-inertia and fully recyclable. Custom barrel widths, traverse lengths, colour identification and branding can be tooled for original equipment and contract reel programmes.",
+    ],
+    specExtras: [
+      { label: "Material Grade", value: "High-impact ABS / engineered PP" },
+      { label: "Winding Duty", value: "High-speed continuous take-up" },
+      {
+        label: "Dimension",
+        value: "Flange deflection & bore checks per unit",
+      },
+      { label: "Export", value: "Dimensionally stable · recyclable" },
+    ],
+    specNote:
+      "All spools pass individual flange deflection and bore concentricity inspection before dispatch. For high-tension or ultra-fine conductor lines, share your winding speed, flange diameter and traverse with our engineers so we can confirm the correct barrel geometry for your process.",
   },
 ];
 

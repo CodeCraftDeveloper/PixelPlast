@@ -22,7 +22,7 @@ import {
 export const metadata: Metadata = {
   title: "Capabilities",
   description:
-    "Explore Pixelplast plastic injection-moulding capabilities, including a 160 to 3000 Tonnes machine range, tool-room support, process automation, quality verification, and custom OEM manufacturing programs.",
+    "Explore Pixelplast plastic injection moulding capabilities — 160 to 3000 Tonnes machine range, tool-room support, process automation, quality verification, and custom OEM plastic manufacturing programs.",
 };
 
 const capabilityOverview = [
@@ -68,11 +68,11 @@ export default function CapabilitiesPage() {
               <Reveal className="capabilities-hero-copy">
                 <p className="eyebrow eyebrow--light">Capabilities / Pixelplast</p>
                 <h1 id="capabilities-hero-heading">
-                  <span>Manufacturing</span>
-                  <span>Tomorrow&apos;s Industry</span>
+                  <span>Plastic Injection</span>
+                  <span>Moulding Capabilities</span>
                 </h1>
                 <p>
-                  Injection moulding, tooling, automation, and program support
+                  Industrial plastic injection moulding, tooling, automation, and OEM program support
                   built around stable, repeatable production.
                 </p>
                 <div className="capabilities-hero-actions">
@@ -97,7 +97,7 @@ export default function CapabilitiesPage() {
             <Reveal className="capability-overview-intro">
               <p className="eyebrow">Capability overview</p>
               <h2 id="capability-overview-heading">
-                One manufacturing system. Five connected capabilities.
+                One Plastic Injection Moulding System. Five Connected Capabilities.
               </h2>
               <p>
                 Each program is considered as a complete production requirement:
@@ -147,12 +147,12 @@ export default function CapabilitiesPage() {
             <Reveal>
               <p className="eyebrow eyebrow--light">Injection moulding</p>
               <h2 id="capability-range-heading">
-                Range and repeatability under one roof.
+                Injection Moulding Range and Repeatability Under One Roof.
               </h2>
               <p>
-                Plastic injection-moulding machinery from 160 to 3000 Tonnes
+                As a plastic injection moulding company, our machinery from 160 to 3000 Tonnes
                 supports different product sizes, mould formats, and production
-                requirements.
+                requirements — plastic parts manufacturing at scale.
               </p>
             </Reveal>
 
@@ -176,7 +176,7 @@ export default function CapabilitiesPage() {
               <div>
                 <p className="eyebrow">OEM manufacturing programs</p>
                 <h2 id="capability-programs-heading">
-                  From your brief to repeatable production.
+                  OEM Plastic Manufacturing — From Your Brief to Repeatable Production.
                 </h2>
               </div>
               <p>
