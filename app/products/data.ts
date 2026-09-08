@@ -82,6 +82,7 @@ const crateDir = "/assets/products/crates/";
 const palletDir = "/assets/products/pallets/";
 const toteDir = "/assets/products/totes/";
 const binDir = "/assets/products/bins/";
+const spoolDir = "/assets/products/spools/";
 
 const localImages = {
   palletHeavy: "/assets/01_products_photos_composites/pallet_heavy_duty.jpg",
@@ -127,9 +128,9 @@ export const heroComposites: Record<ProductImageryKey, ProductImage> = {
     label: "Attached-Lid Tote",
   },
   spools: {
-    src: "/assets/01_products_photos_composites/06_industrial_spool.png",
-    alt: "Industrial plastic spool wound with filament or wire",
-    label: "Industrial Spool",
+    src: "/assets/products/spools/spool-06-01.jpg",
+    alt: "Precision plastic spool for high-speed winding and cable reeling",
+    label: "Precision Spool",
   },
 };
 
@@ -137,14 +138,24 @@ type ProductImageryKey = "pallets" | "crates" | "bins" | "tote-bins" | "spools";
 
 const spoolImages = [
   {
-    src: "/assets/01_products_photos_composites/spool_generated.jpg",
-    alt: "Pixelplast Precision ABS/PP Industrial Spool",
-    label: "Industrial Spool",
+    src: "/assets/products/spools/spool-06-01.jpg",
+    alt: "Pixelplast Waffle Lattice Industrial Cable Drum 515×310 mm",
+    label: "Cable Drum Spool",
   },
   {
-    src: "/assets/01_products_photos_composites/01_hero_product_composite.png",
-    alt: "Pixelplast Spool and Product Composite",
-    label: "Spool Line",
+    src: "/assets/products/spools/spool-02-01.jpg",
+    alt: "Pixelplast Radial-Rib Industrial Blue Spool 83×133 mm",
+    label: "Industrial Blue Spool",
+  },
+  {
+    src: "/assets/products/spools/spool-01-01.jpg",
+    alt: "Pixelplast Precision Dual-Tone Wire Spool 50×135 mm",
+    label: "Precision Wire Spool",
+  },
+  {
+    src: "/assets/products/spools/spool-05-01.jpg",
+    alt: "Pixelplast Tri-Window High-Capacity Spool 350×211 mm",
+    label: "High-Capacity Spool",
   },
 ];
 
@@ -519,33 +530,78 @@ const toteProducts: readonly ProductSpec[] = toteBins.map((t) => {
   };
 });
 
+const spoolTitles: Record<string, string> = {
+  "spool-01": "Precision Dual-Tone Wire Spool 50×135 mm",
+  "spool-02": "Radial-Rib Industrial Blue Spool 83×133 mm",
+  "spool-03": "Segmented 12-Spoke Filament Spool 55×200 mm",
+  "spool-04": "Solid Planar Heavy-Duty Spool 63×150 mm",
+  "spool-05": "Tri-Window High-Capacity Spool 350×211 mm",
+  "spool-06": "Waffle Lattice Industrial Cable Drum 515×310 mm",
+};
+
+const spoolLabels: Record<string, [string, string, string, string]> = {
+  "spool-01": [
+    "Isometric Studio View",
+    "Traverse Profile & Barrel Elevation",
+    "Arbor Bore & Silver Flange Macro Detail",
+    "Dual-Spool Production Staging Array",
+  ],
+  "spool-02": [
+    "Isometric Studio View",
+    "Traverse Profile & Flange Elevation",
+    "Radial Stiffening Ribs & 4-Pocket Hub Macro",
+    "Dual-Spool Production Staging Array",
+  ],
+  "spool-03": [
+    "Isometric Studio View",
+    "Traverse Profile & Slim Barrel Elevation",
+    "12-Spoke Flange & Drive Pin Slot Macro",
+    "Dual-Spool Production Staging Array",
+  ],
+  "spool-04": [
+    "Isometric Studio View",
+    "Traverse Profile & Flange Elevation",
+    "Solid Planar Flange & Cross-Arbor Bore Macro",
+    "Dual-Spool Production Staging Array",
+  ],
+  "spool-05": [
+    "Isometric Studio View",
+    "Deep-Barrel Traverse Elevation",
+    "Triangular Viewing Windows & Core Macro",
+    "Dual-Spool Production Staging Array",
+  ],
+  "spool-06": [
+    "Isometric Studio View",
+    "Heavy Cable Drum Traverse Elevation",
+    "Concentric Waffle Lattice Matrix Macro",
+    "Dual-Spool Production Staging Array",
+  ],
+};
+
 const spoolProducts: readonly ProductSpec[] = spoolSizes.map((s, idx) => {
+  const slug = `spool-0${idx + 1}`;
   const code = `Spool 0${idx + 1}`;
-  const title = `Precision Spool ${s.dimensions.split("×")[0].trim()}`;
-  const group = idx < 2 ? "small" : idx >= 4 ? "generated" : "medium";
-  const primary =
-    group === "small"
-      ? localImages.spoolSmall
-      : group === "generated"
-        ? localImages.spoolGenerated
-        : localImages.spoolMedium;
-  const ordered = [
-    localImages.industrialSpool,
-    primary,
-    localImages.spoolGenerated,
-    localImages.spoolMedium,
+  const title = spoolTitles[slug] ?? `Precision Spool ${s.dimensions.split("×")[0].trim()}`;
+  const labels = spoolLabels[slug] ?? [
+    "Isometric Studio View",
+    "Traverse Profile View",
+    "Arbor Bore Macro Detail",
+    "Production Staging View",
   ];
-  const images: readonly ProductImage[] = gallery([
-    [ordered[0], title, "Hero Composite"],
-    [ordered[1], title, "Isolated View"],
-    [ordered[2], title, "Profile View"],
-    [ordered[3], title, "Range Reference"],
-  ]);
+  const images: readonly ProductImage[] = withHeroComposite(
+    "spools",
+    gallery([
+      [`${spoolDir}${slug}-01.jpg`, title, labels[0]],
+      [`${spoolDir}${slug}-02.jpg`, title, labels[1]],
+      [`${spoolDir}${slug}-03.jpg`, title, labels[2]],
+      [`${spoolDir}${slug}-04.jpg`, title, labels[3]],
+    ]),
+  );
   return {
     code,
-    slug: `spool-0${idx + 1}`,
+    slug,
     title,
-    tagline: "High-speed winding spool",
+    tagline: "High-speed precision winding spool",
     description:
       "High-performance plastic spool manufactured for continuous high-speed winding of wire, cable, optical fibre, 3D filament and monofilament. Dynamic rotational balance and distortion-resistant flanges.",
     features: [
@@ -554,8 +610,8 @@ const spoolProducts: readonly ProductSpec[] = spoolSizes.map((s, idx) => {
       "Snag-free payoff geometry",
       "High-impact ABS / engineered PP",
     ],
-    image: images[1].src,
-    imageAlt: images[1].alt,
+    image: images[0].src,
+    imageAlt: images[0].alt,
     images,
     dimensions: s.dimensions,
     materials: s.materials,
@@ -843,7 +899,7 @@ export const productCategories: readonly ProductCategory[] = [
       "High-performance ABS and Polypropylene plastic spools — injection moulded plastic spools manufactured for high-speed continuous winding of wire, cable, optical fiber, 3D filament, and monofilament. A precision spools manufacturer serving India and global markets.",
     overview:
       "As a trusted wire spool manufacturer and cable spool manufacturer, every spool is manufactured with dynamic high-speed rotational balance and heavy-duty distortion-resistant flanges. Ensures snag-free payoff and precise take-up winding under high tension.",
-    heroImage: "/assets/01_products_photos_composites/06_industrial_spool.png",
+    heroImage: "/assets/products/spools/spool-06-01.jpg",
     images: spoolImages,
     highlights: [
       "6 standard dimensions",
