@@ -1,0 +1,53 @@
+{
+  "version": "1.0",
+  "license": "CC-BY-4.0",
+  "declaration": {
+    "url": "https://creativecommons.org/licenses/by/4.0/",
+    "spdx": "CC-BY-4.0",
+    "name": "Creative Commons Attribution 4.0 International"
+  },
+  "permissions": [
+    "read",
+    "reproduce",
+    "distribute",
+    "adapt",
+    "commercial-use"
+  ],
+  "conditions": [
+    "attribution"
+  ],
+  "prohibitions": [],
+  "attribution": {
+    "required": true,
+    "format": "© Pixel Technoplast Private Limited (trading as Pixelplast). Licensed under CC-BY-4.0."
+  },
+  "appliesTo": {
+    "contentTypes": [
+      "text",
+      "image",
+      "structured-data"
+    ],
+    "paths": [
+      "/",
+      "/about/",
+      "/capabilities/",
+      "/products/",
+      "/products/*/",
+      "/sustainability/",
+      "/contact/"
+    ],
+    "exclusions": [
+      "/assets/products/*",
+      "/assets/01_products_photos_composites/*",
+      "/og/",
+      "/icon.png",
+      "/apple-icon.png"
+    ]
+  },
+  "contact": {
+    "name": "Pixel Technoplast Private Limited",
+    "email": "info@pixelplast.in",
+    "url": "https://pixelplast.in/contact/"
+  },
+  "lastUpdated": "2026-10-03"
+}

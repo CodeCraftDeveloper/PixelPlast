@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
-  ArrowLeft,
   ArrowRight,
   ArrowUpRight,
   Ruler,
@@ -25,14 +24,21 @@ import {
 
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
+import { FaqSection, faqPageSchema } from "@/components/content/FaqSection";
 import { company } from "@/data/company";
-import { SITE_URL } from "@/lib/site";
+import { getProductFaqs } from "@/data/page-faqs";
 import {
   getProduct,
   productCategories,
   type ProductCategory,
   type ProductSpec,
 } from "@/app/products/data";
+import {
+  OG_IMAGE,
+  productMetaDescription,
+  productMetaTitle,
+  productStructuredData,
+} from "../../seo";
 import { ProductGallery } from "./ProductGallery";
 import styles from "./product-detail.module.css";
 
@@ -69,12 +75,31 @@ export async function generateMetadata({
 
   const { category, product } = match;
 
+  const title = productMetaTitle(product);
+  const description = productMetaDescription(product, category);
+  const url = `/products/${category.slug}/${product.slug}/`;
+
   return {
-    title: `${product.title} (${product.code})`,
-    description: product.description,
+    title,
+    description,
     robots: { index: true, follow: true },
     alternates: {
-      canonical: `${SITE_URL}/products/${category.slug}/${product.slug}/`,
+      canonical: url,
+    },
+    openGraph: {
+      type: "website",
+      url,
+      siteName: company.shortName,
+      title: `${title} | ${company.shortName}`,
+      description,
+      locale: "en_IN",
+      images: [{ ...OG_IMAGE, alt: product.imageAlt }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${title} | ${company.shortName}`,
+      description,
+      images: [OG_IMAGE.url],
     },
   };
 }
@@ -126,9 +151,25 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const { category, product } = match;
 
   const specs = getSpecRows(category, product);
+  const faqs = getProductFaqs(category, product);
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(productStructuredData(category, product)).replace(
+            /</g,
+            "\\u003c",
+          ),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(faqPageSchema(faqs)).replace(/</g, "\\u003c"),
+        }}
+      />
       <a className="skip-link" href="#main-content">
         Skip to content
       </a>
@@ -264,7 +305,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             <div>
               <p className="eyebrow">About the Product</p>
               <h2 id="product-seo-heading">
-                About {product.title} — Injection Moulded Plastic Components.
+                What Is {product.title}?
               </h2>
             <div className="product-seo-copy">
               {product.seo.map((paragraph) => (
@@ -333,39 +374,13 @@ export default async function ProductPage({ params }: ProductPageProps) {
           </div>
         </section>
 
-        <section
-          className="product-detail-contact"
-          aria-labelledby="product-contact-heading"
-        >
-          <div className="site-container product-detail-contact-grid">
-            <div>
-              <p className="eyebrow eyebrow--light">Project Review</p>
-              <h2 id="product-contact-heading">
-                Discuss Your {category.shortTitle.substring(0, 12)} Requirement.
-              </h2>
-            </div>
-            <div>
-              <p>
-                Share your target volumes, operating environment and drawings.
-                Our team as a plastic injection moulding company will confirm tooling, cycle times and a formal
-                quotation for {product.title}.
-              </p>
-              <div className="product-contact-actions">
-                <a href={company.emailHref}>
-                  Request Formal Quote <ArrowUpRight aria-hidden="true" />
-                </a>
-                <Link href={`/products/${category.slug}`}>View {category.shortTitle} <ArrowRight aria-hidden="true" /></Link>
-                <Link href="/contact">Contact Us <ArrowRight aria-hidden="true" /></Link>
-              </div>
-            </div>
-          </div>
-          <Link
-            className="product-back-link"
-            href={`/products/${category.slug}`}
-          >
-            <ArrowLeft aria-hidden="true" /> All {category.shortTitle}
-          </Link>
-        </section>
+        <FaqSection
+          items={faqs}
+          headingId="product-faq-heading"
+          eyebrow="Product FAQ"
+          title={`Questions about ${product.title}.`}
+          className="product-faq-section"
+        />
       </main>
 
       <SiteFooter />

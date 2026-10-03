@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -5,14 +6,11 @@ import {
   ArrowRight,
   ArrowUpRight,
   Check,
-  Factory,
-  Settings2,
-  UsersRound,
-  Wrench,
   MoveRight,
   Phone,
 } from "lucide-react";
 
+import { HeroVideo } from "@/app/home/HeroVideo";
 import { KineticHeading } from "@/app/home/KineticHeading";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
@@ -25,6 +23,91 @@ import {
   proofPoints,
   services,
 } from "@/data/company";
+
+const PAGE_TITLE = "Pixelplast | Plastic Injection Moulding Company in India";
+
+const PAGE_DESCRIPTION =
+  "Plastic injection moulding company in India: plastic pallets, crates, tote bins, ABS & PP spools and OEM parts on 160-3000 tonne presses. ISO certified.";
+
+const ORGANIZATION_ID = `${company.website}/#organization`;
+
+export const metadata: Metadata = {
+  title: { absolute: PAGE_TITLE },
+  description: PAGE_DESCRIPTION,
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    url: "/",
+    siteName: company.shortName,
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    locale: "en_IN",
+    images: [
+      {
+        url: "/og/home.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Pixelplast plastic injection moulding company in India",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    images: ["/og/home.jpg"],
+  },
+};
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": ORGANIZATION_ID,
+      name: company.shortName,
+      legalName: company.legalName,
+      alternateName: company.tagline,
+      url: company.website,
+      description: PAGE_DESCRIPTION,
+      logo: {
+        "@type": "ImageObject",
+        url: `${company.website}/assets/pixelplast-logo.webp`,
+        width: 981,
+        height: 347,
+      },
+      image: `${company.website}/og/home.jpg`,
+      telephone: company.phone,
+      email: company.email,
+      taxID: company.gst,
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "Khasra No. 427, Shed No. 3",
+        addressLocality: "Gautam Buddha Nagar",
+        addressRegion: "Uttar Pradesh",
+        postalCode: "203207",
+        addressCountry: "IN",
+      },
+      areaServed: { "@type": "Country", name: "India" },
+      contactPoint: {
+        "@type": "ContactPoint",
+        contactType: "sales",
+        telephone: company.phone,
+        email: company.email,
+        areaServed: "IN",
+        availableLanguage: ["English", "Hindi"],
+      },
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${company.website}/#website`,
+      url: company.website,
+      name: company.shortName,
+      inLanguage: "en-IN",
+      publisher: { "@id": ORGANIZATION_ID },
+    },
+  ],
+};
 
 const industryDetails = [
   {
@@ -59,7 +142,7 @@ const productFlowStages = [
     stage: "Bulk Storage & Racking",
     title: "Industrial Pallets",
     slug: "pallets",
-    image: "/assets/products/pallets/pt0001-01.jpg",
+    image: "/assets/products/pallets/pt0001-01.webp",
     alt: "Pixelplast heavy duty industrial plastic pallet",
     tagline: "Heavy-duty foundation for automated warehouse racking systems.",
     features: ["Up to 6000 kg static load", "Conveyor & ASRS ready", "Hygienic & pest-free"],
@@ -69,7 +152,7 @@ const productFlowStages = [
     stage: "Plant Sorting & Movement",
     title: "Crates & Bins",
     slug: "crates",
-    image: "/assets/products/crates/pt0010-01.jpg",
+    image: "/assets/products/crates/pt0010-01.webp",
     alt: "Pixelplast heavy-duty plastic crate",
     tagline: "Solid & perforated crates for internal shopfloor material flow.",
     features: ["Perforated & solid walls", "Reinforced ribbed base", "Ergonomic hand-grips"],
@@ -79,7 +162,7 @@ const productFlowStages = [
     stage: "Line Picking & Kitting",
     title: "Modular Part Bins",
     slug: "bins",
-    image: "/assets/products/bins/pt0016-01.jpg",
+    image: "/assets/products/bins/pt0016-01.webp",
     alt: "Pixelplast modular front-hopper parts bin",
     tagline: "High-density front-hopper bins for assembly and lean inventory.",
     features: ["Front-hopper instant access", "Stackable & panel-mount", "6 modular sizes"],
@@ -89,7 +172,7 @@ const productFlowStages = [
     stage: "Conveyance & Secure Transit",
     title: "Attached-Lid Totes",
     slug: "tote-bins",
-    image: "/assets/products/totes/pt0022-01.jpg",
+    image: "/assets/products/totes/pt0022-01.webp",
     alt: "Pixelplast attached lid tote container",
     tagline: "Tamper-evident nesting containers for automated closed-loop transit.",
     features: ["Interlocking lid design", "Up to 70% nesting return", "Zip-seal security slots"],
@@ -99,7 +182,7 @@ const productFlowStages = [
     stage: "Continuous Winding",
     title: "Precision Spools",
     slug: "spools",
-    image: "/assets/01_products_photos_composites/06_industrial_spool.png",
+    image: "/assets/01_products_photos_composites/06_industrial_spool.webp",
     alt: "Pixelplast precision plastic spool",
     tagline: "Dynamically balanced spools for wire, cable & 3D filament winding.",
     features: ["High-speed dynamic balance", "ABS & PP formulations", "Flange deflection tested"],
@@ -109,6 +192,12 @@ const productFlowStages = [
 export default function HomePage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
+        }}
+      />
       <a className="skip-link" href="#main-content">
         Skip to content
       </a>
@@ -117,19 +206,11 @@ export default function HomePage() {
       <main id="main-content">
         {/* HERO SECTION */}
         <section className="hero-section" aria-labelledby="hero-title">
-          <video
+          <HeroVideo
             className="hero-video"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
+            src="/assets/pixelplast-hero-resin.mp4"
             poster="/assets/pixelplast-hero-resin-poster.webp"
-            aria-hidden="true"
-            tabIndex={-1}
-          >
-            <source src="/assets/pixelplast-hero-resin.mp4" type="video/mp4" />
-          </video>
+          />
           <div className="hero-video-overlay" aria-hidden="true" />
 
           <div className="hero-cutouts" aria-hidden="true">
@@ -147,9 +228,9 @@ export default function HomePage() {
                 <KineticHeading />
               </div>
               <p className="hero-deck">
-                Custom Plastic Injection Moulding manufacturer serving industries with
-                heavy-duty tote bins, precision ABS &amp; PP
-                plastic spools, injection moulded plastic crates, and OEM plastic components.
+                We manufacture heavy-duty plastic tote bins, injection moulded
+                crates, precision ABS &amp; PP spools, and custom OEM components
+                on presses from 160 to 3000 tonnes.
               </p>
               <div className="hero-actions">
                 <Button asChild variant="light" size="lg">
@@ -165,9 +246,6 @@ export default function HomePage() {
               </div>
             </div>
 
-            <aside className="hero-manufacturing" aria-labelledby="hero-manufacturing-title">
-              <p className="hero-manufacturing-eyebrow">Built to scale</p>
-              <h2 id="hero-manufacturing-title">160 to 3000 tonnes<br />of moulding capacity.</h2>
             <div
               className="hero-range"
               aria-label="Injection moulding machine range from 160 to 3000 Tonnes"
@@ -176,12 +254,12 @@ export default function HomePage() {
               <div>
                 <div className="hero-range-value">
                   <span>160</span>
-                  <strong>TONNE</strong>
+                  <strong>TONNES</strong>
                 </div>
                 <MoveRight aria-hidden="true" />
                 <div className="hero-range-value">
                   <span>3000</span>
-                  <strong>TONNE</strong>
+                  <strong>TONNES</strong>
                 </div>
               </div>
               <p>
@@ -189,16 +267,6 @@ export default function HomePage() {
                 production scale.
               </p>
             </div>
-              <ul className="hero-capability-grid">
-                <li><Factory aria-hidden="true" /><strong>Modern machinery</strong><span>160–3000 T</span></li>
-                <li><Settings2 aria-hidden="true" /><strong>Automated production</strong><span>Consistent process control</span></li>
-                <li><Wrench aria-hidden="true" /><strong>In-house tool room</strong><span>Mould maintenance &amp; support</span></li>
-                <li><UsersRound aria-hidden="true" /><strong>Skilled engineering team</strong><span>Experienced technical support</span></li>
-              </ul>
-              <Link className="hero-manufacturing-link" href="/capabilities">
-                Our manufacturing <ArrowRight aria-hidden="true" />
-              </Link>
-            </aside>
           </div>
 
           <svg
@@ -258,11 +326,12 @@ export default function HomePage() {
               <Reveal className="why-choose-media-wrap">
                 <div className="why-choose-image-card">
                   <Image
-                    src="/assets/3.png"
+                    src="/assets/3.webp"
                     alt="Pixelplast modern injection moulding production plant"
-                    width={900}
-                    height={580}
+                    width={1600}
+                    height={900}
                     className="why-choose-img"
+                    sizes="(max-width: 900px) calc(100vw - 40px), (max-width: 1200px) 45vw, 520px"
                     priority
                   />
                 </div>
@@ -278,7 +347,20 @@ export default function HomePage() {
                 </div>
 
                 <p className="why-choose-description">
-                  <strong>Pixel Technoplast Private Limited</strong>, operating under the <strong>Pixelplast</strong> brand, is a leading <strong>Plastic Injection Moulding Manufacturer in India</strong> delivering high-quality industrial plastic injection moulding solutions — including heavy duty plastic tote bins, plastic storage crates, industrial plastic pallets, and precision ABS &amp; PP plastic spools. Serving automotive, agriculture, pharmaceutical, and manufacturing sectors with specialized in-house tooling and advanced injection moulding technology, we produce reliable, durable, and cost-effective <strong>injection moulded plastic components</strong> tailored to client requirements.
+                  <strong>Pixel Technoplast Private Limited</strong> trades as{" "}
+                  <strong>Pixelplast</strong>. We manufacture injection
+                  moulded plastic products at our own plant in Gautam Buddha
+                  Nagar, near Delhi NCR, running presses from 160 to 3000
+                  tonnes — from fine precision parts with tight tolerances
+                  through to heavy-duty structural mouldings. Our range covers
+                  industrial plastic pallets, heavy-duty tote bins, storage
+                  crates, front-open part bins, and dynamically balanced ABS and
+                  PP spools for wire and cable winding, in 20+ standard formats
+                  or moulded to your drawing. Tool room, material preparation,
+                  and production sit under one roof, so die maintenance and
+                  mould adjustments happen in-house. Every batch is checked by
+                  in-process SPC and CMM verification under ISO 9001:2015
+                  quality management, with full traceability.
                 </p>
 
                 {/* Verified Stats Banner */}
@@ -323,9 +405,9 @@ export default function HomePage() {
             </Reveal>
             <Reveal delay={0.08}>
               <p className="services-intro">
-                Specialized injection-moulding solutions for standard
-                material-handling products — plastic tote bins manufacturer, plastic storage crates manufacturer — and custom industrial OEM
-                plastic manufacturing programs.
+                Standard material-handling products moulded in volume, and
+                custom OEM components built to your drawing — from the first
+                tool through to full-batch production.
               </p>
             </Reveal>
           </div>
@@ -502,10 +584,10 @@ export default function HomePage() {
                 Industrial Plastic Injection Moulding Capacity.
               </h2>
               <p className="manufacturing-deck">
-                Our plant near Delhi NCR houses modern injection
-                moulding machines, automated material handling, and auxiliary
-                tooling systems — a full-scale plastic injection moulding company
-                handling intricate plastic parts manufacturing up to large structural mouldings.
+                Our plant near Delhi NCR runs modern injection moulding
+                presses with automated material handling and auxiliary tooling,
+                taking work from intricate precision parts through to large
+                structural mouldings.
               </p>
 
               <div className="tonnage-tier-grid">
@@ -518,7 +600,7 @@ export default function HomePage() {
                   </p>
                 </div>
                 <div className="tonnage-tier">
-                  <span className="tier-tag">500 – 1200 Tonnes</span>
+                  <span className="tier-tag">450 – 1200 Tonnes</span>
                   <strong>Medium Industrial</strong>
                   <p>
                     Standard tote containers, utility bins &amp; automotive
@@ -526,7 +608,7 @@ export default function HomePage() {
                   </p>
                 </div>
                 <div className="tonnage-tier">
-                  <span className="tier-tag">1500 – 3000 Tonnes</span>
+                  <span className="tier-tag">1200 – 3000 Tonnes</span>
                   <strong>Large Structural</strong>
                   <p>
                     Heavy-duty bulk totes, large housings &amp; structural
@@ -572,10 +654,10 @@ export default function HomePage() {
           <Reveal className="site-container">
             <figure className="facility-visual">
               <Image
-                src="/assets/1.png"
+                src="/assets/1.webp"
                 alt="Pixelplast injection-moulding production floor"
-                width={2037}
-                height={1146}
+                width={2000}
+                height={1209}
                 sizes="(max-width: 900px) calc(100vw - 40px), min(1280px, calc(100vw - 48px))"
               />
               <figcaption className="facility-visual-caption">
@@ -643,9 +725,9 @@ export default function HomePage() {
                 Injection Moulding Products for Core Industries.
               </h2>
               <p>
-                From automotive assembly lines to pharmaceutical cold chains,
-                wire spool and cable spool winding, and high-speed cable extrusion — we adapt polymers and mould
-                parameters for your operational reality.
+                From automotive assembly lines to pharmaceutical cold chains
+                and high-speed cable winding, we tune polymer grade and mould
+                parameters to suit the way your operation actually runs.
               </p>
               <Button asChild variant="light">
                 <Link href="/contact">
@@ -685,8 +767,9 @@ export default function HomePage() {
                 </h2>
               </div>
               <p>
-                Certified quality management protocols ensure strict dimensional
-                tolerance, flawless finish, and continuous traceability.
+                Certified quality management protocols hold every batch to
+                tight dimensional tolerances, consistent surface finish, and
+                full traceability.
               </p>
             </Reveal>
 
@@ -710,53 +793,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* CALL TO ACTION SECTION */}
-        <section
-          className="section home-cta-section"
-          aria-labelledby="home-cta-heading"
-        >
-          <div className="site-container">
-            <Reveal className="home-cta-card">
-              <div className="home-cta-copy">
-                <p className="eyebrow eyebrow--light">Get in Touch</p>
-                <h2 id="home-cta-heading">
-                  Let&apos;s Discuss Your Injection Moulding Requirement.
-                </h2>
-                <p className="home-cta-desc">
-                  Share your component specifications, expected volume, and delivery
-                  timeline with our technical engineering team.
-                </p>
-                <div className="home-cta-actions">
-                  <Button asChild variant="light" size="lg" className="canva-pill-light-btn">
-                    <Link href="/contact">
-                      Contact Us &amp; Request a Quote <ArrowRight aria-hidden="true" />
-                    </Link>
-                  </Button>
-                  <Button asChild variant="outline" size="lg" className="canva-pill-outline-btn">
-                    <a href={company.phoneHref}>
-                      <Phone aria-hidden="true" /> {company.phone}
-                    </a>
-                  </Button>
-                </div>
-              </div>
-
-              <div className="home-cta-stats">
-                <div className="cta-stat-item">
-                  <strong>160 – 3000</strong>
-                  <span>Tonnes Machine Range</span>
-                </div>
-                <div className="cta-stat-item">
-                  <strong>24 / 7</strong>
-                  <span>Continuous Manufacturing</span>
-                </div>
-                <div className="cta-stat-item">
-                  <strong>NCR</strong>
-                  <span>Strategically Located Plant</span>
-                </div>
-              </div>
-            </Reveal>
-          </div>
-        </section>
+       
       </main>
 
       <SiteFooter />

@@ -6,7 +6,6 @@ import {
   Compass,
   Crosshair,
   Eye,
-  MapPin,
   RefreshCw,
   ScanEye,
   ShieldCheck,
@@ -17,16 +16,98 @@ import { SiteHeader } from "@/components/layout/SiteHeader";
 import { Reveal } from "@/components/motion/Reveal";
 import { Button } from "@/components/ui/button";
 import {
+  company,
   companyMilestones,
   companyValues,
   facilityStats,
   qualityProcess,
 } from "@/data/company";
 
+const PAGE_TITLE =
+  "About Pixelplast | Plastic Injection Moulding Manufacturer in India";
+
+const PAGE_DESCRIPTION =
+  "Learn about Pixelplast, a plastic injection moulding manufacturer in Gautam Buddha Nagar running 160 to 3000 tonne presses with in-house tooling.";
+
+const ORGANIZATION_ID = `${company.website}/#organization`;
+
 export const metadata: Metadata = {
-  title: "About Pixelplast",
-  description:
-    "About Pixelplast — a Plastic Injection Moulding Manufacturer in India combining large-scale injection moulding, in-house tooling, process discipline, and verified quality systems.",
+  title: { absolute: PAGE_TITLE },
+  description: PAGE_DESCRIPTION,
+  alternates: { canonical: "/about/" },
+  openGraph: {
+    type: "website",
+    url: "/about/",
+    siteName: company.shortName,
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    locale: "en_IN",
+    images: [
+      {
+        url: "/og/home.jpg",
+        width: 1200,
+        height: 630,
+        alt: "About Pixelplast, a plastic injection moulding manufacturer in India",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    images: ["/og/home.jpg"],
+  },
+};
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "AboutPage",
+      "@id": `${company.website}/about#webpage`,
+      url: `${company.website}/about`,
+      name: "About Pixelplast",
+      description: PAGE_DESCRIPTION,
+      about: { "@id": ORGANIZATION_ID },
+      inLanguage: "en-IN",
+    },
+    {
+      "@type": "Organization",
+      "@id": ORGANIZATION_ID,
+      name: company.shortName,
+      legalName: company.legalName,
+      alternateName: company.tagline,
+      url: company.website,
+      description: PAGE_DESCRIPTION,
+      logo: {
+        "@type": "ImageObject",
+        url: `${company.website}/assets/pixelplast-logo.webp`,
+        width: 981,
+        height: 347,
+      },
+      image: `${company.website}/og/home.jpg`,
+      telephone: company.phone,
+      email: company.email,
+      taxID: company.gst,
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "Khasra No. 427, Shed No. 3",
+        addressLocality: "Gautam Buddha Nagar",
+        addressRegion: "Uttar Pradesh",
+        postalCode: "203207",
+        addressCountry: "IN",
+      },
+      areaServed: { "@type": "Country", name: "India" },
+      contactPoint: {
+        "@type": "ContactPoint",
+        contactType: "sales",
+        telephone: company.phone,
+        email: company.email,
+        areaServed: "IN",
+        availableLanguage: ["English", "Hindi"],
+      },
+    },
+  ],
 };
 
 const identityPrinciples = [
@@ -40,28 +121,34 @@ const operatingTeams = [
   {
     title: "Production Engineering",
     description: "Manufacturing alignment for stable, efficient production.",
-    image: "/assets/image.png",
+    image: "/assets/image.webp",
   },
   {
     title: "Tool-Room Specialists",
     description: "Tooling support for sampling, maintenance, and continuity.",
-    image: "/assets/ww.png",
+    image: "/assets/ww.webp",
   },
   {
     title: "Quality & Validation",
     description: "Inspection, traceability, and dimensional verification.",
-    image: "/assets/quality.png",
+    image: "/assets/quality.webp",
   },
   {
     title: "Customer Program Support",
     description: "Practical coordination from requirement review to delivery.",
-    image: "/assets/9.png",
+    image: "/assets/9.webp",
   },
 ] as const;
 
 export default function AboutPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
+        }}
+      />
       <a className="skip-link" href="#main-content">Skip to content</a>
       <SiteHeader />
 
@@ -69,7 +156,7 @@ export default function AboutPage() {
         <section className="about-redesign-hero" aria-labelledby="about-hero-heading">
           <Image
             className="about-redesign-hero-image"
-            src="/assets/01_products_photos_composites/08_injection_moulding_factory.png"
+            src="/assets/01_products_photos_composites/08_injection_moulding_factory.webp"
             alt="Pixelplast plastic injection-moulding production floor"
             fill
             priority
@@ -84,10 +171,12 @@ export default function AboutPage() {
                 <span aria-hidden="true">/</span>
                 About us
               </p>
-              <h1 id="about-hero-heading">ABOUT US</h1>
+              <h1 id="about-hero-heading">ABOUT PIXELPLAST</h1>
               <p className="about-redesign-hero-deck">
-                A Plastic Injection Moulding Manufacturer in India delivering large-scale injection moulding, dependable processes,
-                and practical engineering support for repeat production.
+                A plastic injection moulding manufacturer in India, running
+                presses from 160 to 3000 tonnes with in-house tooling,
+                controlled processes, and practical engineering support for
+                repeat production.
               </p>
             </Reveal>
           </div>
@@ -97,12 +186,14 @@ export default function AboutPage() {
           <div className="site-container about-redesign-story-grid">
             <Reveal className="about-redesign-story-copy">
               <p className="eyebrow">About company</p>
-              <h2 id="about-story-heading">Built Around Repeatable Plastic Injection Moulding.</h2>
+              <h2 id="about-story-heading">What Does Pixelplast Manufacture?</h2>
               <p>
                 Pixelplast manufactures plastic injection-moulded products with
                 an emphasis on precision, consistency, and dependable execution.
-                As a custom plastic injection moulding company, our portfolio includes heavy duty plastic tote bins, injection moulded plastic crates, industrial plastic pallets, and precision ABS &amp; PP plastic spools,
-                supported by custom OEM manufacturing capability.
+                Our portfolio covers heavy duty plastic tote bins, injection
+                moulded plastic crates, industrial plastic pallets, and
+                precision ABS &amp; PP plastic spools, supported by custom OEM
+                manufacturing capability.
               </p>
               <p>
                 From requirement review and tooling alignment to controlled batch
@@ -120,7 +211,7 @@ export default function AboutPage() {
               <span className="about-redesign-plate about-redesign-plate--top" aria-hidden="true" />
               <figure>
                 <Image
-                  src="/assets/4.png"
+                  src="/assets/4.webp"
                   alt="Injection-moulding machines inside the Pixelplast production facility"
                   fill
                   sizes="(max-width: 900px) calc(100vw - 40px), 52vw"
@@ -257,7 +348,7 @@ export default function AboutPage() {
               <span aria-hidden="true" />
               <figure>
                 <Image
-                  src="/assets/6.png"
+                  src="/assets/6.webp"
                   alt="Plastic injection-moulding machinery at the Pixelplast facility"
                   fill
                   sizes="(max-width: 900px) calc(100vw - 40px), 48vw"
@@ -269,7 +360,7 @@ export default function AboutPage() {
             <Reveal className="about-redesign-process-copy" delay={0.08}>
               <p className="eyebrow">Quality pathway</p>
               <h2 id="about-process-heading">
-                Controlled checks from material to dispatch.
+                Controlled Checks from Material to Dispatch.
               </h2>
 
               <div className="about-redesign-process-list">

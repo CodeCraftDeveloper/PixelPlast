@@ -20,7 +20,7 @@ const word: Variants = {
 
 export function KineticHeading() {
   const reduceMotion = usePrefersReducedMotion();
-  const lines = ["Plastic Injection Moulding.", "Built for Industry."];
+  const lines = ["Plastic Injection Moulding", "Manufacturer in India"];
 
   return (
     <motion.h1
