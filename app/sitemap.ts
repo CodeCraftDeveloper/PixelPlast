@@ -15,7 +15,7 @@ const staticPages: MetadataRoute.Sitemap = [
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const productPages: MetadataRoute.Sitemap = productCategories.map(
+  const categoryPages: MetadataRoute.Sitemap = productCategories.map(
     ({ slug }) => ({
       url: `${SITE_URL}/products/${slug}/`,
       changeFrequency: "monthly",
@@ -23,5 +23,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }),
   );
 
-  return [...staticPages, ...productPages];
+  const productPages: MetadataRoute.Sitemap = productCategories.flatMap(
+    ({ slug, products }) =>
+      products.map((product) => ({
+        url: `${SITE_URL}/products/${slug}/${product.slug}/`,
+        changeFrequency: "monthly",
+        priority: 0.7,
+      })),
+  );
+
+  return [...staticPages, ...categoryPages, ...productPages];
 }

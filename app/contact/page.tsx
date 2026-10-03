@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import {
-  ArrowRight,
   Factory,
   Mail,
   MessageSquare,
@@ -17,10 +16,80 @@ import { SiteHeader } from "@/components/layout/SiteHeader";
 import { Reveal } from "@/components/motion/Reveal";
 import { company } from "@/data/company";
 
+const PAGE_TITLE = "Contact Us | Pixelplast";
+
+const PAGE_DESCRIPTION =
+  "Get a quote from Pixelplast — Plastic Injection Moulding Manufacturer in India. Contact us for industrial plastic injection moulding, product inquiries, custom OEM tooling, and bulk requirement quotes.";
+
+const ORGANIZATION_ID = `${company.website}/#organization`;
+
 export const metadata: Metadata = {
-  title: "Contact Us | Pixelplast",
-  description:
-    "Get a quote from Pixelplast — Plastic Injection Moulding Manufacturer in India. Contact us for industrial plastic injection moulding, product inquiries, custom OEM tooling, and bulk requirement quotes.",
+  title: { absolute: PAGE_TITLE },
+  description: PAGE_DESCRIPTION,
+  alternates: { canonical: "/contact/" },
+  openGraph: {
+    type: "website",
+    url: "/contact/",
+    siteName: company.shortName,
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    locale: "en_IN",
+    images: [
+      {
+        url: "/og/home.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Contact Pixelplast — Plastic Injection Moulding Manufacturer in India",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    images: ["/og/home.jpg"],
+  },
+};
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ContactPage",
+      "@id": `${company.website}/contact#webpage`,
+      url: `${company.website}/contact`,
+      name: PAGE_TITLE,
+      description: PAGE_DESCRIPTION,
+      about: { "@id": ORGANIZATION_ID },
+      inLanguage: "en-IN",
+      mainEntity: {
+        "@type": "Organization",
+        "@id": ORGANIZATION_ID,
+        name: company.shortName,
+        legalName: company.legalName,
+        url: company.website,
+        telephone: company.phone,
+        email: company.email,
+        taxID: company.gst,
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: "Khasra No. 427, Shed No. 3",
+          addressLocality: "Gautam Buddha Nagar",
+          addressRegion: "Uttar Pradesh",
+          postalCode: "203207",
+          addressCountry: "IN",
+        },
+      },
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${company.website}/contact#breadcrumb`,
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: `${company.website}/` },
+        { "@type": "ListItem", position: 2, name: "Contact", item: `${company.website}/contact/` },
+      ],
+    },
+  ],
 };
 
 const contactChannels = [
@@ -44,28 +113,64 @@ const faqs = [
   {
     question: "How do I request a quote and what details should I share?",
     answer:
-      "Use the enquiry form or contact us directly. Sharing the product type, application, expected quantity, drawing or sample status, and delivery location helps our team return an accurate price and production estimate faster.",
+      "Use the enquiry form or contact our team directly. Include the product type, application, expected quantity, drawing or sample status, material requirements, and delivery location so we can review the requirement accurately.",
+  },
+  {
+    question: "Can I enquire about standard products as well as custom components?",
+    answer:
+      "Yes. Pixelplast manufactures standard pallets, crates, bins, attached-lid totes, and plastic spools, alongside customer-defined OEM components developed from drawings, specifications, and application requirements.",
+  },
+  {
+    question: "Which materials do you manufacture with?",
+    answer:
+      "Material selection depends on the product and its operating requirements. Our standard ranges include HDPE and PP products, while our plastic spool range includes ABS and PP options. Custom programs are reviewed against the required application and performance criteria.",
   },
   {
     question: "Do you support custom colours and branding on volume orders?",
     answer:
-      "Yes. We offer custom masterbatch colour matching, screen printing, hot stamping, and mould-insert brand embossing for corporate identities across volume programs.",
+      "Custom colours and branding can be reviewed for volume requirements. Share your colour reference, artwork, expected quantity, and intended application with the enquiry so our team can confirm the suitable manufacturing route.",
   },
   {
-    question: "Can we develop custom tooling for our proprietary components?",
+    question: "Can Pixelplast develop tooling for a custom OEM component?",
     answer:
-      "Absolutely. Our dedicated in-house tool room handles complete DFM analysis, mould design alignment, sampling trials, and mass manufacturing for custom OEM programs.",
+      "Yes. Custom OEM programs can include DFM review, material alignment, mould tooling, sampling trials, validation, and production planning. An in-house tool room supports sampling and ongoing mould maintenance.",
   },
   {
     question: "Is a plant visit or technical audit possible before ordering?",
     answer:
-      "Yes. We welcome OEM procurement and engineering teams to tour our production floor, inspect tooling maintenance, and review quality control testing procedures. Schedule a visit via phone and we will arrange the walk-through.",
+      "Plant walk-throughs can be arranged on request. Contact the team in advance with your preferred date and the purpose of the visit so the relevant production, tooling, or quality personnel can be available.",
   },
 ] as const;
+
+const faqStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": `${company.website}/contact/#faq`,
+  mainEntity: faqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: faq.answer,
+    },
+  })),
+};
 
 export default function ContactPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(faqStructuredData).replace(/</g, "\\u003c"),
+        }}
+      />
       <a className="skip-link" href="#main-content">
         Skip to content
       </a>
@@ -219,7 +324,7 @@ export default function ContactPage() {
             <Reveal className="facility-art" delay={0.1}>
               <div className="facility-img-frame">
                 <Image
-                  src="/assets/01_products_photos_composites/08_injection_moulding_factory.png"
+                  src="/assets/01_products_photos_composites/08_injection_moulding_factory.webp"
                   alt="Pixelplast manufacturing facility and injection moulding machinery"
                   fill
                   sizes="(max-width: 900px) 95vw, 50vw"
@@ -234,25 +339,31 @@ export default function ContactPage() {
         </section>
 
         {/* FREQUENTLY ASKED QUESTIONS */}
-        <section className="contact-faq-section" aria-labelledby="faq-heading">
-          <div className="site-container">
+        <section className="contact-faq-section" id="faq" aria-labelledby="faq-heading">
+          <div className="site-container contact-faq-layout">
             <Reveal className="contact-faq-head">
               <p className="contact-section-tag">Common Questions</p>
               <h2 id="faq-heading">Frequently Asked Questions</h2>
               <p>
-                Everything you need to know about placing orders, tooling trials,
-                and technical compliance with Pixelplast.
+                Practical answers for product enquiries, custom tooling programs,
+                and factory visits.
               </p>
             </Reveal>
 
-            <div className="contact-faq-grid">
+            <Reveal className="contact-faq-list" delay={0.08}>
               {faqs.map((faq, index) => (
-                <Reveal className="contact-faq-card" delay={index * 0.05} key={faq.question}>
-                  <h3>{faq.question}</h3>
+                <details className="contact-faq-item" key={faq.question}>
+                  <summary>
+                    <span className="contact-faq-index" aria-hidden="true">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span>{faq.question}</span>
+                    <span className="contact-faq-toggle" aria-hidden="true" />
+                  </summary>
                   <p>{faq.answer}</p>
-                </Reveal>
+                </details>
               ))}
-            </div>
+            </Reveal>
           </div>
         </section>
       </main>
