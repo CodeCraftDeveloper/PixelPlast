@@ -22,18 +22,45 @@ import {
 
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
-import { SITE_URL } from "@/lib/site";
+import { company } from "@/data/company";
+import {
+  OG_IMAGE,
+  PRODUCTS_PAGE_DESCRIPTION,
+  PRODUCTS_PAGE_TITLE,
+  productsIndexStructuredData,
+} from "./seo";
 import styles from "./products-overview.module.css";
 
 export const metadata: Metadata = {
-  title: "Products & Standard Range",
-  description:
-    "Explore Pixelplast injection moulding products — attached-lid plastic tote bins, precision plastic spools, injection moulded pallets, industrial plastic crates, and storage bins designed for industrial strength and repeatability.",
+  title: { absolute: PRODUCTS_PAGE_TITLE },
+  description: PRODUCTS_PAGE_DESCRIPTION,
   robots: { index: true, follow: true },
   alternates: {
-    canonical: `${SITE_URL}/products/`,
+    canonical: "/products/",
+  },
+  openGraph: {
+    type: "website",
+    url: "/products/",
+    siteName: company.shortName,
+    title: PRODUCTS_PAGE_TITLE,
+    description: PRODUCTS_PAGE_DESCRIPTION,
+    locale: "en_IN",
+    images: [
+      {
+        ...OG_IMAGE,
+        alt: "Injection moulded plastic products manufactured by Pixelplast",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: PRODUCTS_PAGE_TITLE,
+    description: PRODUCTS_PAGE_DESCRIPTION,
+    images: [OG_IMAGE.url],
   },
 };
+
+const structuredData = productsIndexStructuredData();
 
 const featuredProductsList = [
   { title: "Attached-lid totes", slug: "tote-bins", icon: Archive },
@@ -48,35 +75,35 @@ const productRangeItems = [
     slug: "tote-bins",
     title: "Attached-Lid Totes",
     description: "Secure, stackable and easy to handle. Ideal for storage and transit.",
-    image: "/assets/01_products_photos_composites/03_attached_lid_tote.png",
+    image: "/assets/01_products_photos_composites/03_attached_lid_tote.webp",
     alt: "Pixelplast Attached-Lid Tote",
   },
   {
     slug: "crates",
     title: "Crates & Bins",
     description: "Durable, space-efficient and built for everyday use across industries.",
-    image: "/assets/01_products_photos_composites/04_crate_and_bin.png",
+    image: "/assets/01_products_photos_composites/04_crate_and_bin.webp",
     alt: "Pixelplast Industrial Crate",
   },
   {
     slug: "pallets",
     title: "Pallets",
     description: "Rugged and reliable pallets designed for safe handling and stacking.",
-    image: "/assets/01_products_photos_composites/05_green_pallet.png",
+    image: "/assets/01_products_photos_composites/05_green_pallet.webp",
     alt: "Pixelplast Heavy Duty Green Pallet",
   },
   {
     slug: "spools",
     title: "Industrial Spools",
     description: "Strong and stable spools for cables, wires and filament winding.",
-    image: "/assets/01_products_photos_composites/06_industrial_spool.png",
+    image: "/assets/01_products_photos_composites/06_industrial_spool.webp",
     alt: "Pixelplast Industrial Precision Spool",
   },
   {
     slug: "bins",
     title: "Storage Bins",
     description: "Organised storage for parts and components. Practical and long-lasting.",
-    image: "/assets/01_products_photos_composites/07_storage_bin.png",
+    image: "/assets/01_products_photos_composites/07_storage_bin.webp",
     alt: "Pixelplast Modular Front-Open Storage Bin",
   },
 ] as const;
@@ -112,6 +139,12 @@ const qualitySteps = [
 export default function ProductsPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
+        }}
+      />
       <a className="skip-link" href="#main-content">
         Skip to content
       </a>
@@ -174,7 +207,7 @@ export default function ProductsPage() {
 
               <span className="canva-hero-composite" aria-hidden="true">
                 <Image
-                  src="/assets/01_products_photos_composites/01_hero_product_composite.png"
+                  src="/assets/01_products_photos_composites/01_hero_product_composite.webp"
                   alt=""
                   fill
                   priority
@@ -228,10 +261,10 @@ export default function ProductsPage() {
             <div className="canva-solutions-copy">
               <p className="canva-kicker">OUR SOLUTIONS</p>
               <h2 id="solutions-title">
-                Injection Moulding Products for Every Stage of Your Supply Chain.
+                What Injection Moulded Products Does Pixelplast Manufacture?
               </h2>
               <p>
-                From heavy duty plastic tote bins and industrial plastic crates to precision spools and injection moulded pallets — our plastic products are built to perform in demanding industrial environments. A wide range. Reliable by design.
+                <strong>Injection moulded industrial products</strong> are reusable plastic components formed in precision tooling for consistent dimensions and repeat performance. Pixelplast manufactures heavy duty tote bins, industrial crates, precision spools, pallets and storage bins for demanding industrial environments.
               </p>
               <a href="#range" className="canva-pill-button">
                 Explore Solutions <ArrowRight aria-hidden="true" />
@@ -283,7 +316,7 @@ export default function ProductsPage() {
                 Precision Plastic Injection Moulding — Produced with Care.
               </h2>
               <p>
-                Our state-of-the-art plastic injection moulding facility is equipped with modern machinery and supported by skilled teams. From raw material to finished injection moulded plastic components, every step is managed in-house to ensure consistency and reliability.
+                <strong>Plastic injection moulding</strong> is a manufacturing process that forms heated polymer inside a precision mould. At Pixelplast, modern machinery and skilled teams manage the process from raw material to finished component for consistent, reliable output.
               </p>
               <Link href="/capabilities" className="canva-pill-button">
                 Explore our capabilities <ArrowRight aria-hidden="true" />
@@ -296,7 +329,7 @@ export default function ProductsPage() {
             </div>
             <div className="canva-manufacturing-art">
               <Image
-                src="/assets/1.png"
+                src="/assets/1.webp"
                 alt="Advanced injection moulding plant machinery"
                 fill
                 sizes="(max-width: 900px) 95vw, 50vw"
@@ -310,7 +343,7 @@ export default function ProductsPage() {
           <div className="site-container">
             <div className="canva-quality-header">
               <p className="canva-kicker">QUALITY ASSURANCE</p>
-              <h2 id="quality-title">Quality Injection Moulding You Can Rely On.</h2>
+              <h2 id="quality-title">How Is Injection Moulding Quality Checked?</h2>
             </div>
 
             <div className="canva-quality-grid">
@@ -335,7 +368,7 @@ export default function ProductsPage() {
           <div className="site-container canva-sustainability-grid">
             <div className="canva-sustainability-art">
               <Image
-                src="/assets/01_products_photos_composites/09_sustainability_product_composite.png"
+                src="/assets/01_products_photos_composites/09_sustainability_product_composite.webp"
                 alt="Sustainable circular plastic packaging and pallets"
                 fill
                 sizes="(max-width: 900px) 95vw, 50vw"
@@ -361,12 +394,7 @@ export default function ProductsPage() {
           </div>
         </section>
 
-        <section className={styles.cta} aria-labelledby="enquiry-title">
-          <div className={`site-container ${styles.ctaInner}`}>
-            <div><p className="canva-kicker">WORK TOGETHER</p><h2 id="enquiry-title">Let?s Build a More Efficient,<br />Sustainable Tomorrow.</h2></div>
-            <div><p>Talk to our team about your requirements. We?ll help you find the right solution for your operations.</p><Link href="/contact#quote" className="canva-pill-button">Request a Quote <ArrowRight aria-hidden="true" /></Link></div>
-          </div>
-        </section>
+
       </main>
 
       <SiteFooter />

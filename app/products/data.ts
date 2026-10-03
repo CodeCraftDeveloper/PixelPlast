@@ -84,51 +84,29 @@ const toteDir = "/assets/products/totes/";
 const binDir = "/assets/products/bins/";
 const spoolDir = "/assets/products/spools/";
 
-const localImages = {
-  palletHeavy: "/assets/01_products_photos_composites/pallet_heavy_duty.jpg",
-  palletGenerated: "/assets/01_products_photos_composites/pallet_generated.jpg",
-  palletSolid: "/assets/01_products_photos_composites/pallet_solid.jpg",
-  greenPallet: "/assets/01_products_photos_composites/05_green_pallet.png",
-  cratePerforated: "/assets/01_products_photos_composites/crate_perforated.jpg",
-  crateSolid: "/assets/01_products_photos_composites/crate_solid.jpg",
-  crateGenerated: "/assets/01_products_photos_composites/crate_generated.jpg",
-  crateAndBin: "/assets/01_products_photos_composites/04_crate_and_bin.png",
-  binGenerated: "/assets/01_products_photos_composites/bin_generated.jpg",
-  storageBin: "/assets/01_products_photos_composites/07_storage_bin.png",
-  toteStandard: "/assets/01_products_photos_composites/tote_standard.jpg",
-  toteDeep: "/assets/01_products_photos_composites/tote_deep.jpg",
-  toteGenerated: "/assets/01_products_photos_composites/tote_generated.jpg",
-  attachedLid: "/assets/01_products_photos_composites/03_attached_lid_tote.png",
-  heroComposite: "/assets/01_products_photos_composites/01_hero_product_composite.png",
-  spoolSmall: "/assets/01_products_photos_composites/spool_small.jpg",
-  spoolMedium: "/assets/01_products_photos_composites/spool_medium.jpg",
-  spoolGenerated: "/assets/01_products_photos_composites/spool_generated.jpg",
-  industrialSpool: "/assets/01_products_photos_composites/06_industrial_spool.png",
-};
-
 export const heroComposites: Record<ProductImageryKey, ProductImage> = {
   pallets: {
-    src: "/assets/01_products_photos_composites/05_green_pallet.png",
+    src: "/assets/01_products_photos_composites/05_green_pallet.webp",
     alt: "Industrial plastic pallet in warehouse application",
     label: "Pallet in Application",
   },
   crates: {
-    src: "/assets/01_products_photos_composites/04_crate_and_bin.png",
+    src: "/assets/01_products_photos_composites/04_crate_and_bin.webp",
     alt: "Stacked industrial plastic crates and storage bins",
     label: "Crate & Bin System",
   },
   bins: {
-    src: "/assets/01_products_photos_composites/07_storage_bin.png",
+    src: "/assets/01_products_photos_composites/07_storage_bin.webp",
     alt: "Modular plastic storage bin in parts arrangement",
     label: "Storage Bin System",
   },
   "tote-bins": {
-    src: "/assets/01_products_photos_composites/03_attached_lid_tote.png",
+    src: "/assets/01_products_photos_composites/03_attached_lid_tote.webp",
     alt: "Attached-lid plastic tote container with lid open",
     label: "Attached-Lid Tote",
   },
   spools: {
-    src: "/assets/products/spools/spool-06-01.jpg",
+    src: "/assets/products/spools/spool-06-01.webp",
     alt: "Precision plastic spool for high-speed winding and cable reeling",
     label: "Precision Spool",
   },
@@ -138,22 +116,22 @@ type ProductImageryKey = "pallets" | "crates" | "bins" | "tote-bins" | "spools";
 
 const spoolImages = [
   {
-    src: "/assets/products/spools/spool-06-01.jpg",
+    src: "/assets/products/spools/spool-06-01.webp",
     alt: "Pixelplast Waffle Lattice Industrial Cable Drum 515×310 mm",
     label: "Cable Drum Spool",
   },
   {
-    src: "/assets/products/spools/spool-02-01.jpg",
+    src: "/assets/products/spools/spool-02-01.webp",
     alt: "Pixelplast Radial-Rib Industrial Blue Spool 83×133 mm",
     label: "Industrial Blue Spool",
   },
   {
-    src: "/assets/products/spools/spool-01-01.jpg",
+    src: "/assets/products/spools/spool-01-01.webp",
     alt: "Pixelplast Precision Dual-Tone Wire Spool 50×135 mm",
     label: "Precision Wire Spool",
   },
   {
-    src: "/assets/products/spools/spool-05-01.jpg",
+    src: "/assets/products/spools/spool-05-01.webp",
     alt: "Pixelplast Tri-Window High-Capacity Spool 350×211 mm",
     label: "High-Capacity Spool",
   },
@@ -315,10 +293,10 @@ const palletProducts: readonly ProductSpec[] = plasticPallets.map((p) => {
   const images = withHeroComposite(
     "pallets",
     gallery([
-      [`${palletDir}${code}-01.jpg`, p.type, labels[0]],
-      [`${palletDir}${code}-02.jpg`, p.type, labels[1]],
-      [`${palletDir}${code}-03.jpg`, p.type, labels[2]],
-      [`${palletDir}${code}-04.jpg`, p.type, labels[3]],
+      [`${palletDir}${code}-01.webp`, p.type, labels[0]],
+      [`${palletDir}${code}-02.webp`, p.type, labels[1]],
+      [`${palletDir}${code}-03.webp`, p.type, labels[2]],
+      [`${palletDir}${code}-04.webp`, p.type, labels[3]],
     ]),
   );
   return {
@@ -399,10 +377,10 @@ const crateProducts: readonly ProductSpec[] = plasticCrates.map((c) => {
   const images: readonly ProductImage[] = withHeroComposite(
     "crates",
     gallery([
-      [`${crateDir}${code}-01.jpg`, title, "Isometric View"],
-      [`${crateDir}${code}-02.jpg`, title, "Reverse Angle View"],
-      [`${crateDir}${code}-03.jpg`, title, "Handle & Rib Detail"],
-      [`${crateDir}${code}-04.jpg`, title, "Stacking Alignment"],
+      [`${crateDir}${code}-01.webp`, title, "Isometric View"],
+      [`${crateDir}${code}-02.webp`, title, "Reverse Angle View"],
+      [`${crateDir}${code}-03.webp`, title, "Handle & Rib Detail"],
+      [`${crateDir}${code}-04.webp`, title, "Stacking Alignment"],
     ]),
   );
   return {
@@ -436,10 +414,10 @@ const binProducts: readonly ProductSpec[] = plasticBins.map((b) => {
   const images: readonly ProductImage[] = withHeroComposite(
     "bins",
     gallery([
-      [`${binDir}${code}-01.jpg`, title, "Front-Hopper View"],
-      [`${binDir}${code}-02.jpg`, title, "Reverse Perspective"],
-      [`${binDir}${code}-03.jpg`, title, "Hopper & Label Detail"],
-      [`${binDir}${code}-04.jpg`, title, "Vertical Interlock Stacking"],
+      [`${binDir}${code}-01.webp`, title, "Front-Hopper View"],
+      [`${binDir}${code}-02.webp`, title, "Reverse Perspective"],
+      [`${binDir}${code}-03.webp`, title, "Hopper & Label Detail"],
+      [`${binDir}${code}-04.webp`, title, "Vertical Interlock Stacking"],
     ]),
   );
   return {
@@ -499,10 +477,10 @@ const toteProducts: readonly ProductSpec[] = toteBins.map((t) => {
   const images: readonly ProductImage[] = withHeroComposite(
     "tote-bins",
     gallery([
-      [`${toteDir}${code}-01.jpg`, title, labels[0]],
-      [`${toteDir}${code}-02.jpg`, title, labels[1]],
-      [`${toteDir}${code}-03.jpg`, title, labels[2]],
-      [`${toteDir}${code}-04.jpg`, title, labels[3]],
+      [`${toteDir}${code}-01.webp`, title, labels[0]],
+      [`${toteDir}${code}-02.webp`, title, labels[1]],
+      [`${toteDir}${code}-03.webp`, title, labels[2]],
+      [`${toteDir}${code}-04.webp`, title, labels[3]],
     ]),
   );
   return {
@@ -591,10 +569,10 @@ const spoolProducts: readonly ProductSpec[] = spoolSizes.map((s, idx) => {
   const images: readonly ProductImage[] = withHeroComposite(
     "spools",
     gallery([
-      [`${spoolDir}${slug}-01.jpg`, title, labels[0]],
-      [`${spoolDir}${slug}-02.jpg`, title, labels[1]],
-      [`${spoolDir}${slug}-03.jpg`, title, labels[2]],
-      [`${spoolDir}${slug}-04.jpg`, title, labels[3]],
+      [`${spoolDir}${slug}-01.webp`, title, labels[0]],
+      [`${spoolDir}${slug}-02.webp`, title, labels[1]],
+      [`${spoolDir}${slug}-03.webp`, title, labels[2]],
+      [`${spoolDir}${slug}-04.webp`, title, labels[3]],
     ]),
   );
   return {
@@ -629,18 +607,18 @@ export const productCategories: readonly ProductCategory[] = [
     label: "Storage & Heavy Material Handling",
     heroTitleLines: ["Industrial", "Plastic", "Pallets"],
     description:
-      "Heavy duty plastic pallets — hygienic, and fully recyclable injection moulded pallets engineered for warehouse racking, internal logistics, and export transit. A leading plastic pallets manufacturer in India.",
+      "Heavy duty plastic pallets — hygienic and fully recyclable injection moulded pallets engineered for warehouse racking, internal logistics and export transit. A leading plastic pallets manufacturer in India.",
     overview:
       "Built to last and designed for maximum operational efficiency. As a premier plastic pallets manufacturer in India, Pixelplast plastic pallets offer superior durability, chemical resistance, pest protection, and exact dimensional consistency over wooden alternatives.",
-    heroImage: "/assets/01_products_photos_composites/05_green_pallet.png",
+    heroImage: "/assets/01_products_photos_composites/05_green_pallet.webp",
     images: [
       {
-        src: "/assets/01_products_photos_composites/pallet_generated.jpg",
+        src: "/assets/01_products_photos_composites/pallet_generated.webp",
         alt: "Heavy-Duty Blue Industrial Pallet",
         label: "PT0001 Heavy-Duty",
       },
       {
-        src: "/assets/01_products_photos_composites/01_hero_product_composite.png",
+        src: "/assets/01_products_photos_composites/01_hero_product_composite.webp",
         alt: "Pixelplast Pallets and Industrial Product Composite",
         label: "Pallet In-Use",
       },
@@ -707,23 +685,23 @@ export const productCategories: readonly ProductCategory[] = [
     label: "Storage & Distribution Crates",
     heroTitleLines: ["Industrial", "Plastic", "Crates"],
     description:
-      "Heavy duty plastic crates — perforated and solid injection moulded plastic crates designed for manufacturing sub-assemblies, agriculture, retail, and automated conveyor systems. A trusted plastic storage crates manufacturer.",
+      "Heavy duty plastic crates — perforated and solid injection moulded plastic crates designed for manufacturing sub-assemblies, agriculture, retail, and automated conveyor systems. A trusted plastic crate manufacturer.",
     overview:
       "As a leading industrial plastic crates manufacturer, Pixelplast crates are engineered with reinforced ribbed bases and ergonomic side hand-grips. Superior impact resistance, smooth nesting, and rigid stacking stability.",
-    heroImage: "/assets/01_products_photos_composites/04_crate_and_bin.png",
+    heroImage: "/assets/01_products_photos_composites/04_crate_and_bin.webp",
     images: [
       {
-        src: "/assets/products/crates/pt0010-01.jpg",
+        src: "/assets/products/crates/pt0010-01.webp",
         alt: "PT0010 650×450 Jumbo Crate",
         label: "PT0010 Perforated",
       },
       {
-        src: "/assets/products/crates/pt0012-01.jpg",
+        src: "/assets/products/crates/pt0012-01.webp",
         alt: "PT0012 Solid-Base Crate",
         label: "PT0012 Solid",
       },
       {
-        src: "/assets/products/crates/pt0010-04.jpg",
+        src: "/assets/products/crates/pt0010-04.webp",
         alt: "Stacked Industrial Storage Crates",
         label: "Stacking Interlock",
       },
@@ -771,23 +749,23 @@ export const productCategories: readonly ProductCategory[] = [
     label: "Component Picking & Assembly Storage",
     heroTitleLines: ["Modular", "Front-Open", "Part Bins"],
     description:
-      "Injection moulded plastic storage bins — stackable front-hopper plastic bins designed for high-density small parts storage, fast assembly picking, and lean inventory organisation.",
+      "Injection moulded plastic storage bins — stackable front-hopper plastic bins designed for high-density small parts storage, fast assembly picking and lean inventory organisation.",
     overview:
       "Optimised for hardware picking and assembly lines. Features a wide front hopper for instant content visibility and easy hand access while securely stacked or mounted on louvre panels.",
-    heroImage: "/assets/01_products_photos_composites/07_storage_bin.png",
+    heroImage: "/assets/01_products_photos_composites/07_storage_bin.webp",
     images: [
       {
-        src: "/assets/products/bins/pt0016-01.jpg",
+        src: "/assets/products/bins/pt0016-01.webp",
         alt: "Modular Front-Open Storage Bin PT0016",
         label: "PT0016 Standard",
       },
       {
-        src: "/assets/products/bins/pt0018-01.jpg",
+        src: "/assets/products/bins/pt0018-01.webp",
         alt: "Large Modular Storage Bin PT0018",
         label: "PT0018 Jumbo",
       },
       {
-        src: "/assets/products/bins/pt0016-04.jpg",
+        src: "/assets/products/bins/pt0016-04.webp",
         alt: "Vertical Interlocking Modular Storage Bins",
         label: "Stacking Interlock",
       },
@@ -832,23 +810,23 @@ export const productCategories: readonly ProductCategory[] = [
     label: "Security & Automated Logistics",
     heroTitleLines: ["Attached Lid", "Plastic Tote", "Bins"],
     description:
-      "Heavy duty plastic tote bins — reusable, tamper-evident injection-moulded tote containers with interlocking attached lids engineered for automated warehousing, conveyor routing, and secure transit. A trusted plastic tote bins manufacturer.",
+      "Heavy duty plastic tote bins — reusable, tamper-evident injection moulded tote containers with interlocking attached lids engineered for automated warehousing, conveyor routing and secure transit. A trusted plastic tote bin manufacturer.",
     overview:
-      "As a leading plastic storage tote manufacturer, Pixelplast's attached-lid tote containers protect goods in transit. When closed, they stack securely; when empty, nested nesting saves up to 70% return freight volume.",
-    heroImage: "/assets/01_products_photos_composites/03_attached_lid_tote.png",
+      "As a leading plastic storage tote manufacturer, Pixelplast's attached-lid tote containers protect goods in transit. When closed, they stack securely; when empty, nesting saves up to 70% return freight volume.",
+    heroImage: "/assets/01_products_photos_composites/03_attached_lid_tote.webp",
     images: [
       {
-        src: "/assets/products/totes/pt0022-01.jpg",
+        src: "/assets/products/totes/pt0022-01.webp",
         alt: "PT0022 Attached Lid Tote Container",
         label: "PT0022 Standard",
       },
       {
-        src: "/assets/products/totes/pt0023-01.jpg",
+        src: "/assets/products/totes/pt0023-01.webp",
         alt: "PT0023 Deep Attached Lid Tote Container",
         label: "PT0023 Deep",
       },
       {
-        src: "/assets/products/totes/pt0024-01.jpg",
+        src: "/assets/products/totes/pt0024-01.webp",
         alt: "PT0024 Compact Attached Lid Tote Container",
         label: "PT0024 Compact",
       },
@@ -896,10 +874,10 @@ export const productCategories: readonly ProductCategory[] = [
     label: "Wire, Cable & Industrial Winding",
     heroTitleLines: ["Precision", "Plastic", "Spools"],
     description:
-      "High-performance ABS and Polypropylene plastic spools — injection moulded plastic spools manufactured for high-speed continuous winding of wire, cable, optical fiber, 3D filament, and monofilament. A precision spools manufacturer serving India and global markets.",
+      "High-performance ABS and Polypropylene plastic spools — injection moulded plastic spools manufactured for high-speed continuous winding of wire, cable, optical fibre, 3D filament and monofilament. A precision spool manufacturer serving India and global markets.",
     overview:
       "As a trusted wire spool manufacturer and cable spool manufacturer, every spool is manufactured with dynamic high-speed rotational balance and heavy-duty distortion-resistant flanges. Ensures snag-free payoff and precise take-up winding under high tension.",
-    heroImage: "/assets/products/spools/spool-06-01.jpg",
+    heroImage: "/assets/products/spools/spool-06-01.webp",
     images: spoolImages,
     highlights: [
       "6 standard dimensions",

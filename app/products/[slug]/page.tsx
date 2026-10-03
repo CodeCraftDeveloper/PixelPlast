@@ -20,7 +20,12 @@ import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { ProductRange } from "./ProductRange";
 import styles from "./category-middle.module.css";
-import { SITE_URL } from "@/lib/site";
+import { company } from "@/data/company";
+import {
+  OG_IMAGE,
+  categoryMetaDescription,
+  categoryStructuredData,
+} from "../seo";
 import {
   getProductCategory,
   productCategories,
@@ -48,12 +53,30 @@ export async function generateMetadata({
     return { title: "Product category not found" };
   }
 
+  const title = `${category.title} | ${company.shortName}`;
+  const description = categoryMetaDescription(category);
+
   return {
-    title: category.title,
-    description: category.description,
+    title: { absolute: title },
+    description,
     robots: { index: true, follow: true },
     alternates: {
-      canonical: `${SITE_URL}/products/${category.slug}/`,
+      canonical: `/products/${category.slug}/`,
+    },
+    openGraph: {
+      type: "website",
+      url: `/products/${category.slug}/`,
+      siteName: company.shortName,
+      title,
+      description,
+      locale: "en_IN",
+      images: [{ ...OG_IMAGE, alt: `${category.title} by Pixelplast` }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [OG_IMAGE.url],
     },
   };
 }
@@ -163,6 +186,15 @@ export default async function ProductCategoryPage({
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(categoryStructuredData(category)).replace(
+            /</g,
+            "\\u003c",
+          ),
+        }}
+      />
       <a className="skip-link" href="#main-content">
         Skip to content
       </a>
@@ -254,7 +286,7 @@ export default async function ProductCategoryPage({
               </div>
               <div className={styles.overviewCopy}>
                 <p className={styles.eyebrow}>Category overview</p>
-                <h2 id="category-overview-heading">Engineered Injection Moulding for Demanding Industrial Workflows</h2>
+                <h2 id="category-overview-heading">What Are {category.shortTitle}?</h2>
                 <p>{category.overview}</p>
                 <ul className={styles.highlights}>
                   {features.slice(0, 4).map((feature, index) => {

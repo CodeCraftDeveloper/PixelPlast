@@ -31,13 +31,6 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
-  icons: {
-    icon: {
-      url: "/assets/pixelplast.png?v=20260827",
-      type: "image/png",
-    },
-    shortcut: "/assets/pixelplast.png?v=20260827",
-  },
   description:
     "Plastic Injection Moulding Manufacturer in India — heavy duty plastic tote bins, injection moulded plastic crates, industrial plastic pallets, precision plastic spools, and custom OEM plastic components from Pixel Technoplast Private Limited.",
   verification: {

@@ -16,13 +16,105 @@ import { Reveal } from "@/components/motion/Reveal";
 import { Button } from "@/components/ui/button";
 import {
   capabilityEquipment,
+  company,
   manufacturingPillars,
 } from "@/data/company";
 
+const PAGE_TITLE = "Plastic Injection Moulding Capabilities | Pixelplast";
+
+const PAGE_DESCRIPTION =
+  "Pixelplast injection moulding capabilities: 160 to 3000 tonne presses, an in-house tool room, process automation, CMM verification, and custom OEM programs.";
+
+const ORGANIZATION_ID = `${company.website}/#organization`;
+const SERVICE_ID = `${company.website}/capabilities#service`;
+
 export const metadata: Metadata = {
-  title: "Capabilities",
-  description:
-    "Explore Pixelplast plastic injection moulding capabilities — 160 to 3000 Tonnes machine range, tool-room support, process automation, quality verification, and custom OEM plastic manufacturing programs.",
+  title: { absolute: PAGE_TITLE },
+  description: PAGE_DESCRIPTION,
+  alternates: { canonical: "/capabilities/" },
+  openGraph: {
+    type: "website",
+    url: "/capabilities/",
+    siteName: company.shortName,
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    locale: "en_IN",
+    images: [
+      {
+        url: "/og/home.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Plastic injection moulding capabilities at Pixelplast, India",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    images: ["/og/home.jpg"],
+  },
+};
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": `${company.website}/capabilities#webpage`,
+      url: `${company.website}/capabilities`,
+      name: PAGE_TITLE,
+      description: PAGE_DESCRIPTION,
+      about: { "@id": SERVICE_ID },
+      inLanguage: "en-IN",
+    },
+    {
+      "@type": "Service",
+      "@id": SERVICE_ID,
+      name: "Plastic Injection Moulding",
+      serviceType: "Plastic injection moulding",
+      description: PAGE_DESCRIPTION,
+      url: `${company.website}/capabilities`,
+      provider: { "@id": ORGANIZATION_ID },
+      areaServed: { "@type": "Country", name: "India" },
+    },
+    {
+      "@type": "Organization",
+      "@id": ORGANIZATION_ID,
+      name: company.shortName,
+      legalName: company.legalName,
+      alternateName: company.tagline,
+      url: company.website,
+      description: PAGE_DESCRIPTION,
+      logo: {
+        "@type": "ImageObject",
+        url: `${company.website}/assets/pixelplast-logo.webp`,
+        width: 981,
+        height: 347,
+      },
+      image: `${company.website}/og/home.jpg`,
+      telephone: company.phone,
+      email: company.email,
+      taxID: company.gst,
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "Khasra No. 427, Shed No. 3",
+        addressLocality: "Gautam Buddha Nagar",
+        addressRegion: "Uttar Pradesh",
+        postalCode: "203207",
+        addressCountry: "IN",
+      },
+      areaServed: { "@type": "Country", name: "India" },
+      contactPoint: {
+        "@type": "ContactPoint",
+        contactType: "sales",
+        telephone: company.phone,
+        email: company.email,
+        areaServed: "IN",
+        availableLanguage: ["English", "Hindi"],
+      },
+    },
+  ],
 };
 
 const capabilityOverview = [
@@ -40,6 +132,12 @@ const capabilityIcons = [Factory, Wrench, Cpu, ShieldCheck, Boxes] as const;
 export default function CapabilitiesPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
+        }}
+      />
       <a className="skip-link" href="#main-content">
         Skip to content
       </a>
@@ -53,7 +151,7 @@ export default function CapabilitiesPage() {
           <div className="capabilities-hero-frame">
             <Image
               className="capabilities-hero-image"
-              src="/assets/7.png"
+              src="/assets/7.webp"
               alt="Plastic injection-moulding machines on the Pixelplast production floor"
               fill
               priority
@@ -97,10 +195,11 @@ export default function CapabilitiesPage() {
             <Reveal className="capability-overview-intro">
               <p className="eyebrow">Capability overview</p>
               <h2 id="capability-overview-heading">
-                One Plastic Injection Moulding System. Five Connected Capabilities.
+                What Plastic Injection Moulding Capabilities Does Pixelplast Offer?
               </h2>
               <p>
-                Each program is considered as a complete production requirement:
+                <strong>Plastic injection moulding capability</strong> combines tooling, machinery,
+                process control, production and verification. Each Pixelplast program is considered as a complete production requirement:
                 from mould and process alignment through repeat output and
                 verification.
               </p>
@@ -132,7 +231,7 @@ export default function CapabilitiesPage() {
         <section className="capability-range" aria-labelledby="capability-range-heading">
           <div className="capability-range-media">
             <Image
-              src="/assets/3.png"
+              src="/assets/3.webp"
               alt="Pixelplast injection-moulding production environment"
               fill
               sizes="(max-width: 900px) 100vw, 52vw"
@@ -150,9 +249,9 @@ export default function CapabilitiesPage() {
                 Injection Moulding Range and Repeatability Under One Roof.
               </h2>
               <p>
-                As a plastic injection moulding company, our machinery from 160 to 3000 Tonnes
-                supports different product sizes, mould formats, and production
-                requirements — plastic parts manufacturing at scale.
+                Our machinery from 160 to 3000 tonnes covers different product
+                sizes, mould formats, and production requirements — from
+                precision parts through to large structural mouldings.
               </p>
             </Reveal>
 
@@ -176,7 +275,7 @@ export default function CapabilitiesPage() {
               <div>
                 <p className="eyebrow">OEM manufacturing programs</p>
                 <h2 id="capability-programs-heading">
-                  OEM Plastic Manufacturing — From Your Brief to Repeatable Production.
+                  How Does an OEM Plastic Manufacturing Program Work?
                 </h2>
               </div>
               <p>
@@ -215,7 +314,7 @@ export default function CapabilitiesPage() {
             <Reveal className="capability-quality-copy">
               <p className="eyebrow eyebrow--light">Quality verification</p>
               <h2 id="capability-quality-heading">
-                Defined checkpoints support dependable output.
+                Defined Checkpoints Support Dependable Output.
               </h2>
               <p>
                 Visual, dimensional, and requirement-based reviews are aligned
